@@ -9,6 +9,7 @@ import lombok.*;
 @Table(name = "admin")
 @Getter
 @Setter
+@ToString
 public class Admin {
 
     @Id
