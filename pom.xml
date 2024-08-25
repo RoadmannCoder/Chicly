@@ -47,6 +47,13 @@
             <artifactId>ehcache</artifactId>
             <version>3.9.9</version>
         </dependency>
+<!--        provide annotations for getters and setters-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.28</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
