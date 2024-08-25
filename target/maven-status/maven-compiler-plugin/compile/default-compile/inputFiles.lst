@@ -1,6 +1,14 @@
+<<<<<<< HEAD
+F:\Study\Chicly\src\main\java\com\chickly\DataAccessLayer\Repository\CustomerRepository.java
+F:\Study\Chicly\src\main\java\com\chickly\DataAccessLayer\Entities\Product.java
+F:\Study\Chicly\src\main\java\com\chickly\Main.java
+F:\Study\Chicly\src\main\java\com\chickly\DataAccessLayer\Entities\Account.java
+F:\Study\Chicly\src\main\java\com\chickly\DataAccessLayer\DBContext\JPAutil.java
+=======
 D:\JavaProject\Chicly\src\main\java\com\chickly\DataAccessLayer\Entities\Account.java
 D:\JavaProject\Chicly\src\main\java\com\chickly\Main.java
 D:\JavaProject\Chicly\src\main\java\com\chickly\DataAccessLayer\Repository\CustomerRepository.java
 D:\JavaProject\Chicly\src\main\java\com\chickly\DataAccessLayer\Entities\Customer.java
 D:\JavaProject\Chicly\src\main\java\com\chickly\DataAccessLayer\Entities\Admin.java
 D:\JavaProject\Chicly\src\main\java\com\chickly\DataAccessLayer\DBContext\JPAutil.java
+>>>>>>> origin/master
