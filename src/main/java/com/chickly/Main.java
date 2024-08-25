@@ -1,7 +1,10 @@
 package com.chickly;
 
+import com.chickly.DataAccessLayer.Entities.Admin;
+
 public class Main {
+
     public static void main(String[] args) {
-        System.out.println("Hello World");
+        Admin admin = new Admin();
     }
 }
