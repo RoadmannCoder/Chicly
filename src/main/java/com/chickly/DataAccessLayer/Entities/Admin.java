@@ -9,13 +9,15 @@ import lombok.*;
 @Table(name = "admin")
 @Getter
 @Setter
-@ToString
+@RequiredArgsConstructor
+@NoArgsConstructor
 public class Admin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long Id;
+    private Integer id;
 
+    @NonNull
     @Embedded
     private Account account;
 }
