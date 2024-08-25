@@ -1,6 +1,6 @@
 package com.chickly.DataAccessLayer.Repository;
 
-import com.chickly.DataAccessLayer.DBContext.JpaUtil;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 
