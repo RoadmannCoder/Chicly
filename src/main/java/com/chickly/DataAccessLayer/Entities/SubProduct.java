@@ -2,8 +2,11 @@ package com.chickly.DataAccessLayer.Entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "subProduct")
@@ -19,14 +22,12 @@ public class SubProduct {
     @Enumerated(EnumType.STRING)
     private Size size;
 
-    @Column(name = "quantity", nullable = false)
+    @NonNull
     private int quantity;
-
-    @Column(name = "color", nullable = false)
+    @NonNull
     private String color;
-
-    @Column(name = "price", nullable = false)
-    private float price;
+    @NonNull
+    private BigDecimal price;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -42,7 +43,7 @@ public class SubProduct {
     public SubProduct() {
     }
 
-    public SubProduct( Product product, Size size, int quantity, String color, float price) {
+    public SubProduct( Product product, Size size, int quantity, String color, BigDecimal price) {
         this.product = product;
         this.size = size;
         this.quantity = quantity;
