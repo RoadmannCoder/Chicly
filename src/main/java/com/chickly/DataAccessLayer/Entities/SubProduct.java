@@ -1,10 +1,7 @@
 package com.chickly.DataAccessLayer.Entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -13,6 +10,8 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class SubProduct {
 
     @Id
@@ -20,6 +19,8 @@ public class SubProduct {
     private Integer id;
 
     @Enumerated(EnumType.STRING)
+    @NonNull
+
     private Size size;
 
     @NonNull
@@ -33,6 +34,7 @@ public class SubProduct {
     @JoinColumn(name = "product_id")
     private Product product;
 
+
     public enum Size {
         SMALL,
         MEDIUM,
@@ -40,14 +42,5 @@ public class SubProduct {
         XLARGE
     }
 
-    public SubProduct() {
-    }
 
-    public SubProduct( Product product, Size size, int quantity, String color, BigDecimal price) {
-        this.product = product;
-        this.size = size;
-        this.quantity = quantity;
-        this.color = color;
-        this.price = price;
-    }
 }

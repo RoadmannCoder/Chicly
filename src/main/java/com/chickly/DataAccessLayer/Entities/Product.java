@@ -1,9 +1,7 @@
 package com.chickly.DataAccessLayer.Entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.Set;
 
@@ -12,29 +10,34 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID;
+    private int id;
 
-    @Column(name="description", length=50)
+    @NonNull
     private String description;
 
-    @Column(name="name", length=50)
+    @NonNull
     private String name;
 
-    @Column(name="gender", length=50)
+    @NonNull
     private String gender;
 
-    @Column(name="isDeleted", length=50)
+    @NonNull
     private String isDeleted;
+
+    @ManyToOne
+    @JoinColumn(name = "subCategory_id")
+    private SubCategory subCategory;
+
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<SubProduct> subProducts;
 
-    public Product() {
-    }
 
     public void addSubProduct(SubProduct subProduct) {
         subProducts.add(subProduct);
