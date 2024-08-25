@@ -1,4 +1,12 @@
 package com.chickly.DataAccessLayer.Repository;
 
-public class CustomerRepository {
+import com.chickly.DataAccessLayer.DBContext.JpaUtil;
+import com.chickly.DataAccessLayer.Entities.Customer;
+import jakarta.persistence.EntityManager;
+
+public class CustomerRepository extends GenericCrudManager<Customer> {
+
+    protected CustomerRepository() {
+        super(JpaUtil.getEntityManagerFactory().createEntityManager(), Customer.class);
+    }
 }
