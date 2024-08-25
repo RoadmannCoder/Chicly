@@ -1,6 +1,5 @@
 package com.chickly.DataAccessLayer.Entities;
 
-import com.chickly.DataAccessLayer.EntitiesEmbeddedIds.SubProductId;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,8 +12,9 @@ import lombok.ToString;
 @ToString
 public class SubProduct {
 
-    @EmbeddedId
-    private SubProductId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Enumerated(EnumType.STRING)
     private Size size;
@@ -28,7 +28,6 @@ public class SubProduct {
     @Column(name = "price", nullable = false)
     private float price;
 
-    @MapsId("productId")
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
@@ -43,8 +42,7 @@ public class SubProduct {
     public SubProduct() {
     }
 
-    public SubProduct(SubProductId id, Product product, Size size, int quantity, String color, float price) {
-        this.id = id;
+    public SubProduct( Product product, Size size, int quantity, String color, float price) {
         this.product = product;
         this.size = size;
         this.quantity = quantity;
