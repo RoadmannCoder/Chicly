@@ -1,9 +1,12 @@
-D:\JavaProject\Chicly\src\main\java\com\chickly\DataAccessLayer\DBContext\JPAutil.java
+D:\JavaProject\Chicly\src\main\java\com\chickly\DataAccessLayer\DBContext\JpaUtil.java
 D:\JavaProject\Chicly\src\main\java\com\chickly\DataAccessLayer\Entities\Account.java
 D:\JavaProject\Chicly\src\main\java\com\chickly\DataAccessLayer\Entities\Address.java
 D:\JavaProject\Chicly\src\main\java\com\chickly\DataAccessLayer\Entities\Admin.java
+D:\JavaProject\Chicly\src\main\java\com\chickly\DataAccessLayer\Entities\Category.java
 D:\JavaProject\Chicly\src\main\java\com\chickly\DataAccessLayer\Entities\Customer.java
 D:\JavaProject\Chicly\src\main\java\com\chickly\DataAccessLayer\Entities\Product.java
+D:\JavaProject\Chicly\src\main\java\com\chickly\DataAccessLayer\Entities\SubCategory.java
 D:\JavaProject\Chicly\src\main\java\com\chickly\DataAccessLayer\Entities\SubProduct.java
 D:\JavaProject\Chicly\src\main\java\com\chickly\DataAccessLayer\Repository\CustomerRepository.java
+D:\JavaProject\Chicly\src\main\java\com\chickly\DataAccessLayer\Repository\GenericCrudManager.java
 D:\JavaProject\Chicly\src\main\java\com\chickly\Main.java
