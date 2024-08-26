@@ -1,7 +1,7 @@
 package com.chickly;
 
 import com.chickly.DataAccessLayer.Entities.*;
-import com.chickly.DataAccessLayer.EntitiesEmbeddedId.ShoppingCartId;
+import com.chickly.DataAccessLayer.EntitiesEmbeddedId.CustomerSubProductId;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
@@ -9,7 +9,6 @@ import jakarta.persistence.Persistence;
 
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -90,14 +89,14 @@ public class Main {
             subProductSet2.add(subProduct2);
             product2.setSubProducts(subProductSet2);
             // Create ShoppingCart entries
-            ShoppingCart cartEntry1 = new ShoppingCart();
-            cartEntry1.setId(new ShoppingCartId(customer1.getId(), subProduct1.getId()));
+            ShoppingCartItems cartEntry1 = new ShoppingCartItems();
+            cartEntry1.setId(new CustomerSubProductId(customer1.getId(), subProduct1.getId()));
             cartEntry1.setCustomer(customer1);
             cartEntry1.setSubProduct(subProduct1);
             cartEntry1.setQuantity(2);
 
-            ShoppingCart cartEntry2 = new ShoppingCart();
-            cartEntry2.setId(new ShoppingCartId(customer1.getId(), subProduct2.getId()));
+            ShoppingCartItems cartEntry2 = new ShoppingCartItems();
+            cartEntry2.setId(new CustomerSubProductId(customer1.getId(), subProduct2.getId()));
             cartEntry2.setCustomer(customer1);
             cartEntry2.setSubProduct(subProduct2);
             cartEntry2.setQuantity(1);

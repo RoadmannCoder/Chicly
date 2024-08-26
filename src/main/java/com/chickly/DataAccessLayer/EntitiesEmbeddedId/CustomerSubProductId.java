@@ -9,15 +9,15 @@ import java.util.Objects;
 @Embeddable
 @Getter
 @Setter
-public class ShoppingCartId implements Serializable {
+public class CustomerSubProductId implements Serializable {
 
     private Integer customerId;
     private Integer subProductId;
 
-    public ShoppingCartId() {
+    public CustomerSubProductId() {
     }
 
-    public ShoppingCartId(Integer customerId, Integer subProductId) {
+    public CustomerSubProductId(Integer customerId, Integer subProductId) {
         this.customerId = customerId;
         this.subProductId = subProductId;
     }
@@ -26,7 +26,7 @@ public class ShoppingCartId implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ShoppingCartId that = (ShoppingCartId) o;
+        CustomerSubProductId that = (CustomerSubProductId) o;
         return Objects.equals(customerId, that.customerId) &&
                 Objects.equals(subProductId, that.subProductId);
     }

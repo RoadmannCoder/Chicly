@@ -1,11 +1,10 @@
 package com.chickly.DataAccessLayer.Entities;
 
 
-import com.chickly.DataAccessLayer.EntitiesEmbeddedId.ShoppingCartId;
+import com.chickly.DataAccessLayer.EntitiesEmbeddedId.CustomerSubProductId;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -14,9 +13,9 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 //@RequiredArgsConstructor
-public class ShoppingCart {
+public class ShoppingCartItems {
     @EmbeddedId
-    private ShoppingCartId id;
+    private CustomerSubProductId id;
 
 
     @ManyToOne
@@ -31,7 +30,6 @@ public class ShoppingCart {
 
     @Column(name="quantity")
     private Integer quantity;
-
 
 
 }
