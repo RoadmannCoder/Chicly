@@ -53,4 +53,5 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ShoppingCart> shoppingCart;
+
 }
