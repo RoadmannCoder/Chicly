@@ -13,8 +13,13 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-            <property name="jakarta.persistence.schema-generation.database.action"
-                      value="drop-and-create" />
+
+            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+
         </properties>
     </persistence-unit>
 </persistence>
+        <!--            <property name="jakarta.persistence.schema-generation.database.action"-->
+        <!--                value="drop-and-create" />-->
+        <!--            <property name="hibernate.hbm2ddl.auto" value="update"/>-->
+        <!--            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
