@@ -20,21 +20,26 @@ public class Main {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
 
-        Account account = new Account("admin","asdas");
-        Account account2 = new Account("user","123213");
-        Account account3 = new Account("user1","123213");
+        Account account = new Account("jjj","asdas");
+        Account account2 = new Account("jjjjasd","123213");
+        Account account3 = new Account("jjsjj","123213");
         Admin admin = new Admin(account);
-        Address address = new Address("asd", "asdas", "asd", "asd");
-        Customer customer = new Customer("a", "mandor", new BigDecimal(213) ,Date.valueOf(LocalDate.now()),
-        "asdhgmail.com", "01205405",address,account2 );
-        Customer customer2 = new Customer("ahmed", "mandor", new BigDecimal(213) ,Date.valueOf(LocalDate.now()), "asdhgmail", "01205405",address,account3 );
+        Address address = new Address("aasdsd", "asdas", "asd", "asd");
 
+        Customer customer2 = new Customer("ahmasded", "mandor", new BigDecimal(213) ,Date.valueOf(LocalDate.now()), "asasddddgmail", "01205405",address,account3 );
 
 
 
         entityManager.persist(admin);
-        entityManager.persist(customer);
         entityManager.persist(customer2);
+
+
+        Customer customer = new Customer("asdada", "mandssor", new BigDecimal(213) ,Date.valueOf(LocalDate.now()),
+                "asdasaddgmail.com", "01205405",address,account2 );
+
+
+
+        entityManager.persist(customer);
         entityManager.getTransaction().commit();
 
 
