@@ -52,6 +52,6 @@ public class Customer {
     private Account account;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ShoppingCart> shoppingCart;
+    private Set<ShoppingCartItems> shoppingCartItems;
 
 }

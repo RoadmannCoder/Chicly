@@ -44,7 +44,7 @@ public class SubProduct {
     }
 
     @OneToMany(mappedBy = "subProduct", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ShoppingCart> shoppingCart;
+    private Set<ShoppingCartItems> shoppingCartItems;
 
 
 
