@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Entity
 @Table(name = "subProduct")
@@ -41,6 +42,11 @@ public class SubProduct {
         LARGE,
         XLARGE
     }
+
+    @OneToMany(mappedBy = "subProduct", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ShoppingCart> shoppingCart;
+
+
 
 
 }
