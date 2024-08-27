@@ -35,18 +35,12 @@ public class SubProduct {
     @JoinColumn(name = "product_id")
     private Product product;
 
-
     public enum Size {
         SMALL,
         MEDIUM,
         LARGE,
         XLARGE
     }
-
-    @OneToMany(mappedBy = "subProduct", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ShoppingCart> shoppingCart;
-
-
 
 
 }

@@ -8,6 +8,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -51,7 +52,13 @@ public class Customer {
     @Embedded
     private Account account;
 
+    @OneToMany(mappedBy ="customer")
+    private Set<Order> orders = new HashSet<>();
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ShoppingCart> shoppingCart;
 
+    public void addOrder(Order order){
+        order.setCustomer(this);
+        orders.add(order);
+    }
 }

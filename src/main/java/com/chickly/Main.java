@@ -1,6 +1,7 @@
 package com.chickly;
 
 import com.chickly.DataAccessLayer.Entities.*;
+import com.chickly.DataAccessLayer.EntitiesEmbeddedId.OrderProductId;
 import com.chickly.DataAccessLayer.EntitiesEmbeddedId.ShoppingCartId;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -104,6 +105,30 @@ public class Main {
 
             em.persist(cartEntry1);
             em.persist(cartEntry2);
+
+
+
+            transaction.commit();
+
+            transaction.begin();
+            Order orderEntry1 = new Order();
+            orderEntry1.setStatus(Order.Status.PENDING);
+            customer1.addOrder(orderEntry1);
+            em.persist(orderEntry1);
+            em.persist(customer1);
+            OrderProductId orderProductId = new OrderProductId(orderEntry1.getId(),product1.getId());
+
+            OrderItem orderItem1 = new OrderItem();
+            orderItem1.setId(orderProductId);
+            orderItem1.setQuantity(1);
+            orderItem1.setProduct(product1);
+            orderItem1.setOrder(orderEntry1);
+            orderItem1.setPrice(subProduct1.getPrice());
+            orderEntry1.getOrderItems().add(orderItem1);
+
+            em.persist(customer1);
+            em.persist(orderEntry1);
+            em.persist(product1);
 
             transaction.commit();
 
