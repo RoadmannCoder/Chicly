@@ -5,15 +5,17 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 @Getter
 @Setter
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class Order{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @NonNull
     private Status status = Status.PENDING;
@@ -22,6 +24,13 @@ public class Order{
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
     private Date createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<OrderItem> orderItems = new HashSet<OrderItem>();
 
     public enum Status {
         PENDING,

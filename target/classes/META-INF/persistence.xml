@@ -10,16 +10,22 @@
             <property name="jakarta.persistence.jdbc.user" value="admin"/>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.jdbc.password" value="tsWcnnJ#JX#u^7ga"/>
+<!--            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create" />-->
+
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
 
-            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <!-- Enable Bean Validation during lifecycle events -->
+            <property name="jakarta.persistence.validation.mode" value="AUTO" />
 
+            <!-- Hibernate Validator properties -->
+            <!-- Enable validation in the DDL generation -->
+            <property name="hibernate.hbm2ddl.auto" value="create" />
+            <property name="hibernate.validator.apply_to_ddl" value="true" />
+
+            <!-- Enable fail-fast mode (optional) -->
+            <property name="hibernate.validator.fail_fast" value="false" />
         </properties>
     </persistence-unit>
 </persistence>
-        <!--            <property name="jakarta.persistence.schema-generation.database.action"-->
-        <!--                value="drop-and-create" />-->
-        <!--            <property name="hibernate.hbm2ddl.auto" value="update"/>-->
-        <!--            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
