@@ -55,7 +55,7 @@ public class Customer {
     @OneToMany(mappedBy ="customer")
     private Set<Order> orders = new HashSet<>();
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ShoppingCart> shoppingCart;
+    private Set<CartItems> shoppingCart;
 
     public void addOrder(Order order){
         order.setCustomer(this);
