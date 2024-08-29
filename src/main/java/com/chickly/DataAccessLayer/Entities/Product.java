@@ -30,6 +30,7 @@ public class Product {
     @NonNull
     private String isDeleted;
 
+
     @ManyToOne
     @JoinColumn(name = "subCategory_id")
     private SubCategory subCategory;

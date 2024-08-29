@@ -7,34 +7,42 @@ import jakarta.persistence.Query;
 import java.util.List;
 
 
-public abstract class GenericCrudManager<T> {
+public abstract class GenericCrudManager<T, U extends Object > {
 
-    private final EntityManager entityManager;
+    public final EntityManager entityManager;
     private final Class<T> objectClass;
     protected GenericCrudManager(EntityManager entityManager,Class<T> objectClass){
         this.entityManager = entityManager;
         this.objectClass = objectClass;
     }
-    protected void create(T entityObject){
+    public void create(T entityObject){
         System.out.println("Inserting......");
         entityManager.getTransaction().begin();
         entityManager.persist(entityObject);
         entityManager.getTransaction().commit();
     }
-    protected T readBy(T genericValue){
-        return entityManager.find(objectClass,genericValue);
+    public T readBy(String fieldName,U genericValue){
+
+        try {
+            String jpql = "FROM " + objectClass.getSimpleName() + " record WHERE record." + fieldName + " = :genericValue";
+            Query query = entityManager.createQuery(jpql);
+            query.setParameter("genericValue", genericValue);
+            return (T) query.getSingleResult();
+        }catch (Exception e){
+            throw new RuntimeException("Failed to get the entity by field value", e);
+        }
     }
-    protected List<T> readAll(){
+    public List<T> readAll(){
         String jpql = "Select all From "+objectClass.getSimpleName()+" all";
         return entityManager.createQuery(jpql,objectClass).getResultList();
     }
-    protected T update(T entityObject){
+    public T update(T entityObject){
         entityManager.getTransaction().begin();
         T updateEntity = entityManager.merge(entityObject);
         entityManager.getTransaction().commit();
         return updateEntity;
     }
-    protected void delete(T entityObject){
+    public void delete(T entityObject){
         entityManager.getTransaction().begin();
         if (!entityManager.contains(entityObject)) {
             entityObject = entityManager.merge(entityObject);
@@ -43,7 +51,7 @@ public abstract class GenericCrudManager<T> {
         entityManager.remove(entityObject);
         entityManager.getTransaction().commit();
     }
-    protected T deleteById(int id) throws RuntimeException{
+    public T deleteById(int id) throws RuntimeException{
         try {
 
             entityManager.getTransaction().begin();
@@ -59,13 +67,14 @@ public abstract class GenericCrudManager<T> {
             throw new RuntimeException("cannot delete this item");
         }
     }
-    protected void deleteBy(String fieldName, T genericValue){
+    public void deleteBy(String fieldName, U genericValue){
         entityManager.getTransaction().begin();
         try {
             String jpql = "DELETE FROM " + objectClass.getSimpleName() + " record WHERE record." + fieldName + " = :genericValue";
             Query query = entityManager.createQuery(jpql);
             query.setParameter("genericValue", genericValue);
             query.executeUpdate();
+            System.out.println("Record Got Deleted");
             entityManager.getTransaction().commit();
         }catch (Exception e){
             throw new RuntimeException("Failed to delete the entity by field value", e);

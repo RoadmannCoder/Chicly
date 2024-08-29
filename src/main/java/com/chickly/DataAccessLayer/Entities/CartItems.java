@@ -14,7 +14,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 //@RequiredArgsConstructor
-public class ShoppingCart {
+public class CartItems {
     @EmbeddedId
     private ShoppingCartId id;
 
