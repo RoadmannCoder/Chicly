@@ -2,31 +2,28 @@ package com.chickly.DataAccessLayer.Entities;
 
 import com.chickly.DataAccessLayer.EntitiesEmbeddedId.OrderProductId;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @Entity
 @Getter
 @Setter
+@IdClass(OrderProductId.class)
+@NoArgsConstructor
 public class OrderItem {
 
-    @EmbeddedId
-    private OrderProductId id;
-    @NonNull
     private Integer quantity = 1;
     private BigDecimal price;
 
-    @ManyToOne
-    @MapsId("productId")
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @Id
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
+    private SubProduct subProduct;
 
-    @ManyToOne
-    @MapsId("orderId")
-    @JoinColumn(name = "order_id")
+    @Id
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
 
