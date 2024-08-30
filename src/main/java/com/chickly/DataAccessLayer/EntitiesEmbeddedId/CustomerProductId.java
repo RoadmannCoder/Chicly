@@ -2,12 +2,13 @@ package com.chickly.DataAccessLayer.EntitiesEmbeddedId;
 
 import lombok.*;
 
+import java.io.Serializable;
 
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class OrderProductId {
+public class CustomerProductId implements Serializable {
+    private Integer customer;
     private Integer subProduct;
-    private Integer order;
 }
