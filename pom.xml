@@ -27,6 +27,7 @@
             <artifactId>mysql-connector-j</artifactId>
             <version>9.0.0</version>
         </dependency>
+        <!-- for connection pooling -->
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
@@ -37,16 +38,6 @@
             <artifactId>hibernate-hikaricp</artifactId>
             <version>6.5.2.Final</version>
         </dependency>
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-jcache</artifactId>
-            <version>6.5.2.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.ehcache</groupId>
-            <artifactId>ehcache</artifactId>
-            <version>3.9.9</version>
-        </dependency>
 <!--        provide annotations for getters and setters-->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -54,15 +45,17 @@
             <version>1.18.30</version>
             <scope>provided</scope>
         </dependency>
+        <!-- validating Entities -->
+        <!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>8.0.0.Final</version> <!-- Check for the latest version -->
+            <version>8.0.1.Final</version>
         </dependency>
         <dependency>
-            <groupId>jakarta.validation</groupId>
-            <artifactId>jakarta.validation-api</artifactId>
-            <version>3.0.2</version> <!-- Check for the latest version -->
+            <groupId>org.glassfish.expressly</groupId>
+            <artifactId>expressly</artifactId>
+            <version>5.0.0</version>
         </dependency>
     </dependencies>
     <build>
