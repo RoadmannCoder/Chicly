@@ -15,10 +15,13 @@ public class ProductRepository extends GenericCrudManager<Product,Object> {
         super(entityManager, Product.class);
     }
     public List<SubProduct> readSubProducts(Product product){
-        CriteriaBuilder query = JpaUtil.getEntityManagerFactory().getCriteriaBuilder();
-        CriteriaQuery<SubProduct> subProductCriteriaQuery = query.createQuery(SubProduct.class);
-        Root<SubProduct> subProductRoot = subProductCriteriaQuery.from(SubProduct.class);
-        subProductCriteriaQuery.select(subProductRoot).where(query.equal(subProductRoot.get("product").get("id"),product.getId()));
-        return entityManager.createQuery(subProductCriteriaQuery).getResultList();
+//        CriteriaBuilder query = JpaUtil.getEntityManagerFactory().getCriteriaBuilder();
+//        CriteriaQuery<SubProduct> subProductCriteriaQuery = query.createQuery(SubProduct.class);
+//        Root<SubProduct> subProductRoot = subProductCriteriaQuery.from(SubProduct.class);
+//        subProductCriteriaQuery.select(subProductRoot).where(query.equal(subProductRoot.get("product").get("id"),product.getId()));
+//        return entityManager.createQuery(subProductCriteriaQuery).getResultList();
+        String jpql = "Select sub From "+SubProduct.class.getSimpleName()+" sub "+" WHERE sub.product.id = "+product.getId();
+        return entityManager.createQuery(jpql,SubProduct.class).getResultList();
     }
+
 }

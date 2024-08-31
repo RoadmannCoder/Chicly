@@ -9,7 +9,6 @@ import java.util.Set;
 @Table(name = "product")
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class Product {
