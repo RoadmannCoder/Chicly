@@ -28,30 +28,41 @@ public class Customer{
     @Size(min = 2,max = 50 , message = "must be between 2 to 50 characters")
     private String firstName;
 
+    @NotNull
     @NonNull
     @Size(min = 2,max = 50 , message = "must be between 2 to 50 characters")
     private String lastName;
 
+    @NotNull
     @NonNull
     private BigDecimal creditLimit;
 
+    @NotNull
     @NonNull
     @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
 
     @Email(message = "Invalid email address")
+    @NotNull
     @NonNull
+    @Column(unique = true)
     private String email;
 
+    @NotNull
     @NonNull
+    @Column(unique = true)
     private String phoneNumber;
 
+    @NotNull
     @NonNull
     private String job;
+
+    @NotNull
     @NonNull
     @Embedded
     private Address address;
 
+    @NotNull
     @NonNull
     @Embedded
     private Account account;
