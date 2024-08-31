@@ -1,6 +1,7 @@
 package com.chickly.DataAccessLayer.Entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.Email;
 import lombok.*;
@@ -22,6 +23,7 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotNull
     @NonNull
     @Size(min = 2,max = 50 , message = "must be between 2 to 50 characters")
     private String firstName;
@@ -55,7 +57,7 @@ public class Customer {
     @OneToMany(mappedBy ="customer")
     private Set<Order> orders = new HashSet<>();
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<CartItems> shoppingCart;
+    private Set<CartItems> shoppingCart = new HashSet<>();
 
     public void addOrder(Order order){
         order.setCustomer(this);
