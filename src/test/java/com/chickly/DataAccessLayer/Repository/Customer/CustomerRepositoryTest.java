@@ -7,6 +7,7 @@ import com.chickly.DataAccessLayer.Repository.CustomerRepository;
 import com.chickly.DataAccessLayer.Repository.ProductRepository;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.function.Executable;
 
@@ -53,8 +54,11 @@ public class CustomerRepositoryTest {
     }
     @Test
     void testDeleteCustomerFromDB(){
+        customerRepository.deleteById(1);
+        assertThrows(RuntimeException.class,()->customerRepository.findBy("id",1));
 
     }
+
 
 
 
