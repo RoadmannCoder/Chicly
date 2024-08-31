@@ -47,6 +47,8 @@ public class Customer{
     private String phoneNumber;
 
     @NonNull
+    private String job;
+    @NonNull
     @Embedded
     private Address address;
 
