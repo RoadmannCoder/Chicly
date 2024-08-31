@@ -16,8 +16,7 @@ public class Address {
     private String street;
     @NonNull
     private String city;
-    @NonNull
-    private String state;
+
     @NonNull
     private String zip;
     private String description;

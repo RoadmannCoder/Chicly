@@ -17,6 +17,8 @@ public class Order{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Enumerated(EnumType.STRING)
     @NonNull
     private Status status = Status.PENDING;
 
