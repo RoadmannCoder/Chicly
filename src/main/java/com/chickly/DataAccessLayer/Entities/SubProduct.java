@@ -21,11 +21,10 @@ public class SubProduct {
 
     @Enumerated(EnumType.STRING)
     @NonNull
-
-    private Size size;
+    private Size size = Size.MEDIUM;
 
     @NonNull
-    private int quantity;
+    private Integer stock;
     @NonNull
     private String color;
     @NonNull
