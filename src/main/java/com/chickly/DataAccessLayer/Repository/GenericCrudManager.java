@@ -35,7 +35,7 @@ public abstract class GenericCrudManager<T, U extends Object > {
             throw new RuntimeException("Something went wrong during the transaction!");
         }
     }
-    public T readBy(String fieldName,U genericValue){
+    public T findBy(String fieldName,U genericValue){
 
         try {
             String jpql = "FROM " + objectClass.getSimpleName() + " record WHERE record." + fieldName + " = :genericValue";
@@ -46,7 +46,7 @@ public abstract class GenericCrudManager<T, U extends Object > {
             throw new RuntimeException("Failed to get the entity by field value", e);
         }
     }
-    public List<T> readAll(){
+    public List<T> findAll(){
         String jpql = "Select all From "+objectClass.getSimpleName()+" all";
         return entityManager.createQuery(jpql,objectClass).getResultList();
     }
