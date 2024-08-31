@@ -1,16 +1,11 @@
-package com.chickly.DataAccessLayer.Repository;
+package com.chickly.DataAccessLayer.Repository.Product;
 
 import com.chickly.DataAccessLayer.Entities.Product;
-import com.chickly.DataAccessLayer.Entities.SubProduct;
-import jakarta.persistence.EntityManager;
+import com.chickly.DataAccessLayer.Repository.ProductRepository;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import jakarta.validation.constraints.AssertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.annotation.Testable;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 

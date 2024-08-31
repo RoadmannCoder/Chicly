@@ -2,7 +2,10 @@ package com.chickly.DataAccessLayer.Repository;
 
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -11,15 +14,26 @@ public abstract class GenericCrudManager<T, U extends Object > {
 
     public final EntityManager entityManager;
     private final Class<T> objectClass;
+    protected final Logger LOGGER = LoggerFactory.getLogger(getClass());
     protected GenericCrudManager(EntityManager entityManager,Class<T> objectClass){
         this.entityManager = entityManager;
         this.objectClass = objectClass;
     }
     public void create(T entityObject){
-        System.out.println("Inserting......");
-        entityManager.getTransaction().begin();
-        entityManager.persist(entityObject);
-        entityManager.getTransaction().commit();
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            System.out.println("Inserting......");
+            transaction.begin();
+            entityManager.persist(entityObject);
+            transaction.commit();
+        }catch(RuntimeException ex){
+            if(transaction.isActive()){
+                transaction.rollback();
+            }
+            System.err.println("Transaction failed and rolled back: " + ex.getMessage());
+            LOGGER.error("Rollback failure", ex);
+            throw new RuntimeException("Something went wrong during the transaction!");
+        }
     }
     public T readBy(String fieldName,U genericValue){
 
