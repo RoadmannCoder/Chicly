@@ -1,6 +1,7 @@
 package com.chickly.DataAccessLayer.Entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.Email;
@@ -23,14 +24,12 @@ public class Customer{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotNull
+    @NotEmpty
     @NonNull
-    @Size(min = 2,max = 50 , message = "must be between 2 to 50 characters")
     private String firstName;
 
-    @NotNull
+    @NotEmpty
     @NonNull
-    @Size(min = 2,max = 50 , message = "must be between 2 to 50 characters")
     private String lastName;
 
     @NotNull
@@ -43,26 +42,25 @@ public class Customer{
     private Date dateOfBirth;
 
     @Email(message = "Invalid email address")
-    @NotNull
+    @NotEmpty
     @NonNull
     @Column(unique = true)
     private String email;
 
-    @NotNull
+    @NotEmpty
     @NonNull
     @Column(unique = true)
     private String phoneNumber;
 
-    @NotNull
+    @NotEmpty
     @NonNull
     private String job;
 
-    @NotNull
+
     @NonNull
     @Embedded
     private Address address;
 
-    @NotNull
     @NonNull
     @Embedded
     private Account account;

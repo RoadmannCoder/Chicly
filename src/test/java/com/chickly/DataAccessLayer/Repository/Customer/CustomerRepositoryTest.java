@@ -33,6 +33,7 @@ public class CustomerRepositoryTest {
 
     @Test
     void testInsertCustomerToDB(){
+
         Customer customer = new Customer("Mandour","Waleed", BigDecimal.valueOf(300000L), new Date(96, 3, 12),"mandour.waleed@hotmail.com","0123456789","Softwar Engineer",new Address("Haram","Helwan","12111","YES"),new Account("ManWal","123"));
         customerRepository.create(customer);
         assertNotNull(customer.getId());

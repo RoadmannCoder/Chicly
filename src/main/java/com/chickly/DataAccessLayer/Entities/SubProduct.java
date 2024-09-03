@@ -1,6 +1,7 @@
 package com.chickly.DataAccessLayer.Entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -21,13 +22,16 @@ public class SubProduct {
 
     @Enumerated(EnumType.STRING)
     @NonNull
-    private Size size = Size.MEDIUM;
+    @NotNull
+    private Size size;
 
     @NonNull
     private Integer stock;
     @NonNull
+    @NotNull
     private String color;
     @NonNull
+    @NotNull
     private BigDecimal price;
 
     @ManyToOne

@@ -1,109 +1,105 @@
 package com.chickly.DataAccessLayer.Repository.SubProduct;
 
-import com.chickly.DataAccessLayer.Entities.Category;
 import com.chickly.DataAccessLayer.Entities.Product;
-import com.chickly.DataAccessLayer.Entities.SubCategory;
 import com.chickly.DataAccessLayer.Entities.SubProduct;
-import com.chickly.DataAccessLayer.Repository.CategoryRepository;
 import com.chickly.DataAccessLayer.Repository.ProductRepository;
-import com.chickly.DataAccessLayer.Repository.SubCategoryRepository;
 import com.chickly.DataAccessLayer.Repository.SubProductRepository;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class SubProductRepositoryTest {
+
     private static SubProductRepository subProductRepository;
     private static ProductRepository productRepository;
     private static EntityManagerFactory entityManagerFactory;
     private static Product jeanProduct;
-    private static Product shirtProduct;
-    private static Product shoesProduct;
 
     @BeforeAll
     public static void setUp() {
         entityManagerFactory = Persistence.createEntityManagerFactory("h2Testing");
-        subProductRepository = new SubProductRepository(entityManagerFactory.createEntityManager());
-        productRepository = new ProductRepository(entityManagerFactory.createEntityManager());
-        jeanProduct = new Product("Blue Jeans","Jeans","UNISEX","1");
-        shirtProduct = new Product("V-Neck Shirt","Shirt","UNIXSEX","1");
-        shoesProduct = new Product("Sneakers Shoes","Air Jordan 1","UNISEX","1");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        subProductRepository = new SubProductRepository(entityManager);
+        productRepository = new ProductRepository(entityManager);
+
+        // Initialize a sample product
+        jeanProduct = new Product("Blue Jeans", "Jeans", "UNISEX", "1");
         productRepository.create(jeanProduct);
-        productRepository.create(shirtProduct);
-        productRepository.create(shoesProduct);
-
     }
-    @Test
-    void testInsertSubProductToDB(){
 
-        SubProduct subProduct = new SubProduct(10,"Blue",new BigDecimal(100));
+    @Test
+    void testInsertSubProduct() {
+        SubProduct subProduct = new SubProduct(SubProduct.Size.MEDIUM, 10, "Blue", new BigDecimal(100));
         subProduct.setProduct(jeanProduct);
         subProductRepository.create(subProduct);
-        assertNotNull(subProduct.getId());
-        assertSame(subProductRepository.findBy("id",subProduct.getId()).getId(),subProduct.getId());
-        assertSame(subProductRepository.findBy("stock",subProduct.getStock()).getStock(),subProduct.getStock());
 
+        SubProduct fetchedSubProduct = subProductRepository.findBy("id", subProduct.getId());
+        assertNotNull(fetchedSubProduct);
+        assertEquals(subProduct.getId(), fetchedSubProduct.getId());
+        assertEquals(subProduct.getStock(), fetchedSubProduct.getStock());
     }
 
     @Test
-    void testInsertEmptySubProductToDB(){
+    void testInsertEmptySubProduct() {
         SubProduct subProduct = new SubProduct();
-        assertThrows(RuntimeException.class,()-> subProductRepository.create(subProduct));
+        assertThrows(RuntimeException.class, () -> subProductRepository.create(subProduct));
     }
 
     @Test
-    void testfindSubProductsByProductID(){
-
-        SubProduct subProduct1 = new SubProduct(10,"Blue",new BigDecimal(100));
+    void testFindSubProductsByProductID() {
+        SubProduct subProduct1 = new SubProduct(SubProduct.Size.MEDIUM, 10, "Blue", new BigDecimal(100));
         subProduct1.setProduct(jeanProduct);
         subProductRepository.create(subProduct1);
-        SubProduct subProduct2 = new SubProduct(10,"Black",new BigDecimal(100));
+
+        SubProduct subProduct2 = new SubProduct(SubProduct.Size.MEDIUM, 10, "Black", new BigDecimal(100));
         subProduct2.setProduct(jeanProduct);
         subProductRepository.create(subProduct2);
-        SubProduct subProduct3 = new SubProduct(10,"Green",new BigDecimal(100));
-        subProduct3.setProduct(jeanProduct);
-        subProductRepository.create(subProduct3);
-        SubProduct subProduct4 = new SubProduct(10,"Red",new BigDecimal(100));
-        subProduct4.setProduct(jeanProduct);
-        subProductRepository.create(subProduct4);
-        List<SubProduct> subProducts = new ArrayList<>();
-        subProducts.add(subProduct1);
-        subProducts.add(subProduct2);
-        subProducts.add(subProduct3);
-        subProducts.add(subProduct4);
-        assertEquals(subProductRepository.findSubCProductsByProductID(jeanProduct),subProducts);
 
+        List<SubProduct> fetchedSubProducts = subProductRepository.findSubCProductsByProductID(jeanProduct);
+
+        assertNotNull(fetchedSubProducts);
+        assertEquals(2, fetchedSubProducts.size());
+        assertTrue(fetchedSubProducts.contains(subProduct1));
+        assertTrue(fetchedSubProducts.contains(subProduct2));
     }
+
     @Test
-    void testUpdateSubProductToDB(){
-        SubProduct subProduct = subProductRepository.findBy("id",1);
-        SubProduct subProduct1 = new SubProduct(subProduct.getStock(),subProduct.getColor(),subProduct.getPrice());
+    void testUpdateSubProduct() {
+        SubProduct subProduct = new SubProduct(SubProduct.Size.MEDIUM, 10, "Red", new BigDecimal(100));
+        subProduct.setProduct(jeanProduct);
+        subProductRepository.create(subProduct);
+
         subProduct.setColor("Yellow");
         subProductRepository.update(subProduct);
-        assertNotSame(subProductRepository.findBy("id",subProduct.getId()).getColor(),subProduct1.getColor());
-        assertSame(subProductRepository.findBy("id",subProduct.getId()).getColor(),subProduct.getColor());
+
+        SubProduct updatedSubProduct = subProductRepository.findBy("id", subProduct.getId());
+        assertNotNull(updatedSubProduct);
+        assertEquals("Yellow", updatedSubProduct.getColor());
     }
 
     @Test
-    void testDeleteSubProductFromDB(){
-        subProductRepository.deleteById(1);
-        assertThrows(RuntimeException.class,()->subProductRepository.findBy("id",1));
+    void testDeleteSubProduct() {
+        SubProduct subProduct = new SubProduct(SubProduct.Size.MEDIUM, 10, "Blue", new BigDecimal(100));
+        subProduct.setProduct(jeanProduct);
+        subProductRepository.create(subProduct);
 
+        subProductRepository.deleteById(subProduct.getId());
+
+        assertThrows(RuntimeException.class, () -> subProductRepository.findBy("id", subProduct.getId()));
     }
 
-
-
-
     @AfterAll
-    public static void tearDownClass(){
+    public static void tearDown() {
         subProductRepository.entityManager.close();
         productRepository.entityManager.close();
         entityManagerFactory.close();

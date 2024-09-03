@@ -1,6 +1,7 @@
 package com.chickly.DataAccessLayer.Entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.util.Set;
@@ -21,9 +22,11 @@ public class Product {
     private String description;
 
     @NonNull
+    @NotEmpty
     private String name;
 
     @NonNull
+    @NotEmpty
     private String gender;
 
     @NonNull
