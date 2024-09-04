@@ -4,19 +4,12 @@ import com.chickly.DataAccessLayer.Entities.Account;
 import com.chickly.DataAccessLayer.Entities.Address;
 import com.chickly.DataAccessLayer.Entities.Customer;
 import com.chickly.DataAccessLayer.Repository.CustomerRepository;
-import com.chickly.DataAccessLayer.Repository.ProductRepository;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.function.Executable;
 
 import java.math.BigDecimal;
-import java.time.DateTimeException;
-import java.time.Instant;
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,6 +45,40 @@ public class CustomerRepositoryTest {
         customerRepository.update(customer);
         assertNotSame(customerRepository.findBy("id",customer.getId()).getFirstName(),customer1.getFirstName());
         assertSame(customerRepository.findBy("id",customer.getId()).getFirstName(),customer.getFirstName());
+    }
+
+    @Test
+    void testCheckEmailIfFound(){
+        Customer customer = new Customer("Mandour","Waleed",
+                BigDecimal.valueOf(300000L), new Date(96, 3, 12),
+                "mandour.waleed@hotmail.com","0123456789",
+                "Softwar Engineer",new Address("Haram","Helwan","12111","YES"),new Account("ManWal","123"));
+
+        Customer customer2 = new Customer("Waleed","Mandour",
+                BigDecimal.valueOf(300000L), new Date(96, 3, 12),
+                "mandour.waled@hotmail.com","01113119989",
+                "Softwar Engineer",new Address("Haram","Helwan","12111","YES"),new Account("WalMan","123"));
+        customerRepository.create(customer);
+        customerRepository.create(customer2);
+        assertSame(true,customerRepository.checkEmailIfFound("mandour.waleed@hotmail.com"));
+        assertSame(false,customerRepository.checkEmailIfFound("waleed@hotmail.com"));
+    }
+    @Test
+    void testCheckEmailAndPasswordAreValid(){
+        Customer customer = new Customer("Mandour","Waleed",
+                BigDecimal.valueOf(300000L), new Date(96, 3, 12),
+                "mandour.waleed@hotmail.com","0123456789",
+                "Softwar Engineer",new Address("Haram","Helwan","12111","YES"),new Account("ManWal","123"));
+        Customer customer2 = new Customer("Waleed","Mandour",
+                BigDecimal.valueOf(300000L), new Date(96, 3, 12),
+                "mandour.waled@hotmail.com","01113119989",
+                "Softwar Engineer",new Address("Haram","Helwan","12111","YES"),new Account("WalMan","123"));
+
+        customerRepository.create(customer);
+        customerRepository.create(customer2);
+        assertSame(true,customerRepository.checkEmailAndPasswordAreValid("mandour.waleed@hotmail.com","123"));
+        assertSame(false,customerRepository.checkEmailAndPasswordAreValid("mandour.waleed@hotmail.com","1234"));
+        assertSame(false,customerRepository.checkEmailAndPasswordAreValid("mandour.waed@hotmail.com","123"));
     }
     @Test
     void testDeleteCustomerFromDB(){
