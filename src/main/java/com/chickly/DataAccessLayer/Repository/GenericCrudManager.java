@@ -19,7 +19,7 @@ public abstract class GenericCrudManager<T, U extends Object > {
         this.entityManager = entityManager;
         this.objectClass = objectClass;
     }
-    public void create(T entityObject){
+    public void create(T entityObject) throws RuntimeException {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             System.out.println("Inserting......");
@@ -32,7 +32,7 @@ public abstract class GenericCrudManager<T, U extends Object > {
             }
             System.err.println("Transaction failed and rolled back: " + ex.getMessage());
             LOGGER.error("Rollback failure", ex);
-            throw new RuntimeException("Something went wrong during the transaction!");
+
         }
     }
     public T findBy(String fieldName,U genericValue){
