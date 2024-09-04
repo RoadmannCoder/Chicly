@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab Exercise</title>
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            height: 100vh;
+        }
+
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        input[type="button"] {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="button"]:hover {
+            background-color: #0056b3;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        #schedule {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: left;
+        }
+    </style>
+    <script>
+        var req = null;
+        function submitForm() {
+            req = new XMLHttpRequest();
+            req.onreadystatechange = handleReq;
+            req.open("GET", "simpleResponse.txt?t=" + new Date().getTime(), true);
+            req.send(null);
+        }
+        function handleReq() {
+
+            if (req.readyState == 4)
+                if (req.status == 200)
+                    document.ajax.dyn.value = "Received:" + req.responseText;
+                else
+                    document.ajax.dyn.value = "Error code " + req.status;
+        }
+        var xmlHttp;
+        function startRequest() {
+            createXMLHttpRequest();
+            xmlHttp.onreadystatechange = handleStateChange;
+            xmlHttp.open("GET", "innerHTML.txt", true);
+            xmlHttp.send(null);
+        }
+        function createXMLHttpRequest() {
+                xmlHttp= new XMLHttpRequest();
+        }
+        function handleStateChange() {
+            if (xmlHttp.readyState== 4 && xmlHttp.status== 200)
+                document.getElementById("schedule").innerHTML=
+                    xmlHttp.responseText;
+        }
+
+        let usernameRequest = null;
+        function validateUsername() {
+            const username = document.getElementById('username').value;
+            const validationResponse = document.getElementById('validationResponse');
+
+            usernameRequest = new XMLHttpRequest();
+            usernameRequest.onreadystatechange = usernameRequestHandle;
+            usernameRequest.open('GET', `/ajax/async?username=${username}&t=${new Date().getTime()}`, true);
+            usernameRequest.send(null);
+        }
+
+        function usernameRequestHandle() {
+            const validationResponse = document.getElementById('validationResponse');
+
+            if (usernameRequest.readyState === 4) {
+                if (usernameRequest.status === 200) {
+                    const response = usernameRequest.responseText;
+                    validationResponse.textContent = `Username is ${response}`
+                } else {
+                    validationResponse.textContent = `Error: ${usernameRequest.status}`;
+                }
+            }
+        }
+
+
+
+    </script>
+</head>
+<body onload="setInterval('startRequest()',5000)">
+
+<FORM method = "POST" name = "ajax" action = "">
+    <input type = "button"  value = "Submit" onclick = "submitForm();">
+    <label for="txtField"></label>
+    <input id="txtField" type = "text" name = "dyn">
+
+</FORM>
+
+<!-- 2nd Assignment -->
+
+<fieldset>
+
+    <form id="loginForm">
+        <div>
+            <label for="username">Enter Your Name:</label><br>
+            <input type="text" id="username" name="username" onblur="validateUsername()">
+            <div id="validationResponse"></div>
+        </div>
+        <div>
+            <label for="password">Enter Your Password:</label><br>
+            <input type="password" id="password" name="password">
+        </div>
+        <div>
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+</fieldset>
+<!-- 3rd Assignment -->
+<div id="schedule">
+
+</div>
+</body>
+</html>
