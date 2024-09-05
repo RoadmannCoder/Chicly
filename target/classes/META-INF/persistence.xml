@@ -3,7 +3,7 @@
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
                 https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
-    <persistence-unit name="chickly" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="chicly" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <properties>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://chicly.cv2k2qs8cn6r.eu-north-1.rds.amazonaws.com:3306/ChiclyDB"/>
@@ -14,7 +14,7 @@
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
 
-            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
 
         </properties>
     </persistence-unit>
