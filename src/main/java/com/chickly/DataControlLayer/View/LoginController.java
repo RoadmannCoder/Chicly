@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class LoginController implements Controller {
-    private static final String LOGIN_JSP = "/jsp/login.jsp";
+    private static final String LOGIN_JSP = "/login.html";
 
     @Override
     public ViewResolver resolve(HttpServletRequest request, HttpServletResponse response) {
