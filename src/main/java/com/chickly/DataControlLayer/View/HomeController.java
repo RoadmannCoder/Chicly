@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class HomeController implements Controller {
-    private static final String HOME_JSP = "/jsp/home.jsp";
+    private static final String HOME_JSP = "/index.html";
 
     @Override
     public ViewResolver resolve(HttpServletRequest request, HttpServletResponse response) {
