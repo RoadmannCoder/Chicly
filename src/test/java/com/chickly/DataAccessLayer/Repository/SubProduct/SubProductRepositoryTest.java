@@ -22,15 +22,15 @@ public class SubProductRepositoryTest {
 
     private static SubProductRepository subProductRepository;
     private static ProductRepository productRepository;
-    private static EntityManagerFactory entityManagerFactory;
+//    private static EntityManagerFactory entityManagerFactory;
     private static Product jeanProduct;
 
     @BeforeAll
     public static void setUp() {
-        entityManagerFactory = Persistence.createEntityManagerFactory("h2Testing");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        subProductRepository = new SubProductRepository(entityManager);
-        productRepository = new ProductRepository(entityManager);
+//        entityManagerFactory = Persistence.createEntityManagerFactory("h2Testing");
+//        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        subProductRepository = new SubProductRepository();
+        productRepository = new ProductRepository();
 
         // Initialize a sample product
         jeanProduct = new Product("Blue Jeans", "Jeans", "UNISEX", "1");
@@ -98,10 +98,10 @@ public class SubProductRepositoryTest {
         assertThrows(RuntimeException.class, () -> subProductRepository.findBy("id", subProduct.getId()));
     }
 
-    @AfterAll
-    public static void tearDown() {
-        subProductRepository.entityManager.close();
-        productRepository.entityManager.close();
-        entityManagerFactory.close();
-    }
+//    @AfterAll
+//    public static void tearDown() {
+//        subProductRepository.entityManager.close();
+//        productRepository.entityManager.close();
+//        entityManagerFactory.close();
+//    }
 }

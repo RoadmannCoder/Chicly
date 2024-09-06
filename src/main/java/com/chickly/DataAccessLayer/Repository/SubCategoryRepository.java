@@ -14,7 +14,7 @@ import java.util.List;
 
 public class SubCategoryRepository extends GenericCrudManager<SubCategory, Object>{
 
-    public SubCategoryRepository(EntityManager entityManager) {
+    public SubCategoryRepository() {
 
         super( SubCategory.class);
     }

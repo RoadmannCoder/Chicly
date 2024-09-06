@@ -10,12 +10,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CategoryRepositoryTest {
     private static CategoryRepository categoryRepository;
-    private static EntityManagerFactory entityManagerFactory;
+//    private static EntityManagerFactory entityManagerFactory;
 
     @BeforeAll
     public static void setUp() {
-        entityManagerFactory = Persistence.createEntityManagerFactory("h2Testing");
-        categoryRepository = new CategoryRepository(entityManagerFactory.createEntityManager());
+//        entityManagerFactory = Persistence.createEntityManagerFactory("h2Testing");
+        categoryRepository = new CategoryRepository();
     }
 
     // Test create
@@ -63,11 +63,11 @@ public class CategoryRepositoryTest {
 
     }
 
-
-    @AfterAll
-    public static void tearDownClass(){
-        categoryRepository.entityManager.close();
-        entityManagerFactory.close();
-    }
+//
+//    @AfterAll
+//    public static void tearDownClass(){
+//        categoryRepository.entityManager.close();
+//        entityManagerFactory.close();
+//    }
 
 }
