@@ -13,8 +13,8 @@ import jakarta.persistence.criteria.Root;
 import java.util.List;
 
 public class SubProductRepository extends GenericCrudManager<SubProduct,Object> {
-    public SubProductRepository(EntityManager entityManager) {
-        super(entityManager, SubProduct.class);
+    public SubProductRepository() {
+        super( SubProduct.class);
     }
     public List<SubProduct> findSubCProductsByProductID(Product product){
         CriteriaBuilder cb = JpaUtil.getEntityManagerFactory().getCriteriaBuilder();
