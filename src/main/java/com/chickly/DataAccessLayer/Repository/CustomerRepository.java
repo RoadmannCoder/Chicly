@@ -14,8 +14,8 @@ import java.util.List;
 
 public class CustomerRepository extends GenericCrudManager<Customer, Object> {
 
-    public CustomerRepository(EntityManager entityManager) {
-        super(entityManager, Customer.class);
+    public CustomerRepository() {
+        super(Customer.class);
     }
 
 

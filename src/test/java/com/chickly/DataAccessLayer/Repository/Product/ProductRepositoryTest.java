@@ -14,12 +14,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ProductRepositoryTest {
     private static ProductRepository productRepository;
-    private static EntityManagerFactory entityManagerFactory;
+//    private static EntityManagerFactory entityManagerFactory;
 
     @BeforeAll
     public static void setUp() {
-        entityManagerFactory = Persistence.createEntityManagerFactory("h2Testing");
-        productRepository = new ProductRepository(entityManagerFactory.createEntityManager());
+//        entityManagerFactory = Persistence.createEntityManagerFactory("h2Testing");
+        productRepository = new ProductRepository();
 
     }
 
@@ -47,10 +47,10 @@ public class ProductRepositoryTest {
         assertThrows(RuntimeException.class,()->productRepository.findBy("id",1));
     }
 
-    @AfterAll
-    public static void tearDownClass(){
-        productRepository.entityManager.close();
-        entityManagerFactory.close();
-    }
+//    @AfterAll
+//    public static void tearDownClass(){
+//        productRepository.entityManager.close();
+//        entityManagerFactory.close();
+//    }
 
 }

@@ -7,8 +7,8 @@ import jakarta.persistence.PersistenceContext;
 
 public class CartRepository extends GenericCrudManager<CartItems,Object> {
 
-    public CartRepository(EntityManager entityManager) {
-        super(entityManager, CartItems.class);
+    public CartRepository() {
+        super(CartItems.class);
     }
 
 

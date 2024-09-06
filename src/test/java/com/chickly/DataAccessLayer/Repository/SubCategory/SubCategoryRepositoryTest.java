@@ -16,16 +16,16 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SubCategoryRepositoryTest {
     private static SubCategoryRepository subCategoryRepository;
     private static CategoryRepository categoryRepository;
-    private static EntityManagerFactory entityManagerFactory;
+//    private static EntityManagerFactory entityManagerFactory;
     private static Category topCategory;
     private static Category bottomCategory;
     private static Category xCategory;
 
     @BeforeAll
     public static void setUp() {
-        entityManagerFactory = Persistence.createEntityManagerFactory("h2Testing");
-        subCategoryRepository = new SubCategoryRepository(entityManagerFactory.createEntityManager());
-        categoryRepository = new CategoryRepository(entityManagerFactory.createEntityManager());
+//        entityManagerFactory = Persistence.createEntityManagerFactory("h2Testing");
+        subCategoryRepository = new SubCategoryRepository();
+        categoryRepository = new CategoryRepository();
         topCategory = new Category("Top");
         bottomCategory = new Category("Bottom");
         xCategory = new Category("xCategory");
@@ -98,11 +98,11 @@ public class SubCategoryRepositoryTest {
 
     }
 
-    @AfterAll
-    public static void tearDownClass(){
-        subCategoryRepository.entityManager.close();
-        entityManagerFactory.close();
-    }
+//    @AfterAll
+//    public static void tearDownClass(){
+//        subCategoryRepository.entityManager.close();
+//        entityManagerFactory.close();
+//    }
 
 
 }

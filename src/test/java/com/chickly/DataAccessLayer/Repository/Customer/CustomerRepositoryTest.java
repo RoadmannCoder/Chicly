@@ -16,12 +16,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CustomerRepositoryTest {
 
     private static CustomerRepository customerRepository;
-    private static EntityManagerFactory entityManagerFactory;
+
 
     @BeforeAll
     public static void setUp() {
-        entityManagerFactory = Persistence.createEntityManagerFactory("h2Testing");
-        customerRepository = new CustomerRepository(entityManagerFactory.createEntityManager());
+        customerRepository = new CustomerRepository();
     }
 
     @Test
@@ -88,11 +87,11 @@ public class CustomerRepositoryTest {
     }
 
 
-
-    @AfterAll
-    public static void tearDownClass(){
-        customerRepository.entityManager.close();
-        entityManagerFactory.close();
-    }
+//
+//    @AfterAll
+//    public static void tearDownClass(){
+//        customerRepository.entityManager.close();
+//        entityManagerFactory.close();
+//    }
 
 }
