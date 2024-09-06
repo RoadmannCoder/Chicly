@@ -18,12 +18,8 @@ public class CustomerRepository extends GenericCrudManager<Customer, Object> {
         super(entityManager, Customer.class);
     }
 
-    /**
-     * This method is used to check if the email is already in the database
-     *
-     * @param email
-     * @return true if the email is found and return false if it's not found
-     */
+
+
     public boolean checkEmailIfFound(String email){
         CriteriaBuilder cb = JpaUtil.getEntityManagerFactory().getCriteriaBuilder();
         CriteriaQuery<Customer> q = cb.createQuery(Customer.class);

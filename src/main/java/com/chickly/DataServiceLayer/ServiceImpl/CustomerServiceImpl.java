@@ -8,8 +8,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
 
-    public CustomerServiceImpl(EntityManager entityManager) {
-        this.customerRepository = new CustomerRepository(entityManager);
+    public CustomerServiceImpl() {
+        this.customerRepository = new CustomerRepository();
     }
 
     @Override

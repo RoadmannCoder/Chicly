@@ -16,7 +16,7 @@ public class SubCategoryRepository extends GenericCrudManager<SubCategory, Objec
 
     public SubCategoryRepository(EntityManager entityManager) {
 
-        super(entityManager, SubCategory.class);
+        super( SubCategory.class);
     }
 
     public List<SubCategory> findSubCategoriesByCategoryID(Category category){

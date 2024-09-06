@@ -2,10 +2,8 @@ package com.chickly.DataControlLayer.View;
 
 import com.chickly.DataServiceLayer.ServiceImpl.CustomerServiceImpl;
 import com.chickly.DataServiceLayer.ServiceInterface.CustomerService;
-import com.chickly.DataAccessLayer.DBContext.JpaUtil;
 import com.chickly.DataControlLayer.Controller.Controller;
 import com.chickly.DataControlLayer.ViewResolve.ViewResolver;
-import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -24,8 +22,7 @@ public class LoginController implements Controller {
             return resolver;
         }
 
-        EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
-        CustomerService customerService = new CustomerServiceImpl(em);
+        CustomerService customerService = new CustomerServiceImpl();
 
         boolean isValidUser = customerService.authenticateUser(email, password);
 
@@ -36,7 +33,6 @@ public class LoginController implements Controller {
             resolver.forward(LOGIN_JSP);
         }
 
-        em.close();
         return resolver;
     }
 }
