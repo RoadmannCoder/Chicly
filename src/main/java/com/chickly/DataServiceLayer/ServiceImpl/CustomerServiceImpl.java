@@ -13,7 +13,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public boolean authenticateUser(String email, String password) {
-        return customerRepository.checkEmailAndPasswordAreValid(email, password);
+    public boolean authenticateUser(String username, String password) {
+        return customerRepository.checkUsernameAndPasswordAreValid(username, password);
     }
 }

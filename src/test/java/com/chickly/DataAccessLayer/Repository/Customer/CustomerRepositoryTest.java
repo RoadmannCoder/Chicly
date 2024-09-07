@@ -75,9 +75,9 @@ public class CustomerRepositoryTest {
 
         customerRepository.create(customer);
         customerRepository.create(customer2);
-        assertSame(true,customerRepository.checkEmailAndPasswordAreValid("mandour.waleed@hotmail.com","123"));
-        assertSame(false,customerRepository.checkEmailAndPasswordAreValid("mandour.waleed@hotmail.com","1234"));
-        assertSame(false,customerRepository.checkEmailAndPasswordAreValid("mandour.waed@hotmail.com","123"));
+        assertSame(true,customerRepository.checkUsernameAndPasswordAreValid("mandour.waleed@hotmail.com","123"));
+        assertSame(false,customerRepository.checkUsernameAndPasswordAreValid("mandour.waleed@hotmail.com","1234"));
+        assertSame(false,customerRepository.checkUsernameAndPasswordAreValid("mandour.waed@hotmail.com","123"));
     }
     @Test
     void testDeleteCustomerFromDB(){

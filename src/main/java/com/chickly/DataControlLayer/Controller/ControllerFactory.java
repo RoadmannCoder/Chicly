@@ -1,7 +1,6 @@
 package com.chickly.DataControlLayer.Controller;
 
 import com.chickly.DataControlLayer.View.HomeController;
-import com.chickly.DataControlLayer.View.LoginController;
 
 public class ControllerFactory {
 

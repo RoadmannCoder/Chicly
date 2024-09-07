@@ -35,17 +35,17 @@ public class CustomerRepository extends GenericCrudManager<Customer, Object> {
     /**
      * This method is used to check if the user is the entered email and password
      * are correct so that it checks the authentication of the user
-     * @param email
+     * @param username
      * @param password
      * @return true if the email and password are correct and false if one of them or both of them are incorrect
      */
-    public boolean checkEmailAndPasswordAreValid(String email,String password){
+    public boolean checkUsernameAndPasswordAreValid(String username,String password){
         CriteriaBuilder cb = JpaUtil.getEntityManagerFactory().getCriteriaBuilder();
         CriteriaQuery<Customer> q = cb.createQuery(Customer.class);
         Root<Customer> cus = q.from(Customer.class);
         q.select(cus)
                 .where(cb.and(
-                        cb.equal(cus.get("email"), email),
+                        cb.equal(cus.get("account").get("userName"), username),
                         cb.equal(cus.get("account").get("password"), password)
                 ));
         try {
