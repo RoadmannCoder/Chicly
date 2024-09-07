@@ -1,4 +1,4 @@
-package com.chickly.DataServiceLayer.ServiceImpl;
+package com.chickly.DataServiceLayer;
 
 import com.chickly.DataAccessLayer.Repository.CustomerRepository;
 
