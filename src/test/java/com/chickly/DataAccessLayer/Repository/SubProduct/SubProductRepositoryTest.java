@@ -39,7 +39,7 @@ public class SubProductRepositoryTest {
 
     @Test
     void testInsertSubProduct() {
-        SubProduct subProduct = new SubProduct(SubProduct.Size.MEDIUM, 10, "Blue", new BigDecimal(100));
+        SubProduct subProduct = new SubProduct(SubProduct.Size.MEDIUM, 10, SubProduct.Color.RED, new BigDecimal(100));
         subProduct.setProduct(jeanProduct);
         subProductRepository.create(subProduct);
 
@@ -57,11 +57,11 @@ public class SubProductRepositoryTest {
 
     @Test
     void testFindSubProductsByProductID() {
-        SubProduct subProduct1 = new SubProduct(SubProduct.Size.MEDIUM, 10, "Blue", new BigDecimal(100));
+        SubProduct subProduct1 = new SubProduct(SubProduct.Size.MEDIUM, 10, SubProduct.Color.RED, new BigDecimal(100));
         subProduct1.setProduct(jeanProduct);
         subProductRepository.create(subProduct1);
 
-        SubProduct subProduct2 = new SubProduct(SubProduct.Size.MEDIUM, 10, "Black", new BigDecimal(100));
+        SubProduct subProduct2 = new SubProduct(SubProduct.Size.MEDIUM, 10, SubProduct.Color.RED, new BigDecimal(100));
         subProduct2.setProduct(jeanProduct);
         subProductRepository.create(subProduct2);
 
@@ -75,11 +75,11 @@ public class SubProductRepositoryTest {
 
     @Test
     void testUpdateSubProduct() {
-        SubProduct subProduct = new SubProduct(SubProduct.Size.MEDIUM, 10, "Red", new BigDecimal(100));
+        SubProduct subProduct = new SubProduct(SubProduct.Size.MEDIUM, 10, SubProduct.Color.RED, new BigDecimal(100));
         subProduct.setProduct(jeanProduct);
         subProductRepository.create(subProduct);
 
-        subProduct.setColor("Yellow");
+        subProduct.setColor(SubProduct.Color.RED);
         subProductRepository.update(subProduct);
 
         SubProduct updatedSubProduct = subProductRepository.findBy("id", subProduct.getId());
@@ -89,7 +89,7 @@ public class SubProductRepositoryTest {
 
     @Test
     void testDeleteSubProduct() {
-        SubProduct subProduct = new SubProduct(SubProduct.Size.MEDIUM, 10, "Blue", new BigDecimal(100));
+        SubProduct subProduct = new SubProduct(SubProduct.Size.MEDIUM, 10, SubProduct.Color.RED, new BigDecimal(100));
         subProduct.setProduct(jeanProduct);
         subProductRepository.create(subProduct);
 
