@@ -1,9 +1,9 @@
 package com.chickly.DataControlLayer.View;
 
-import com.chickly.DataServiceLayer.ServiceImpl.CustomerServiceImpl;
-import com.chickly.DataServiceLayer.ServiceInterface.CustomerService;
+
 import com.chickly.DataControlLayer.Controller.Controller;
 import com.chickly.DataControlLayer.ViewResolve.ViewResolver;
+import com.chickly.DataServiceLayer.CustomerService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -22,7 +22,7 @@ public class LoginController implements Controller {
             return resolver;
         }
 
-        CustomerService customerService = new CustomerServiceImpl();
+        CustomerService customerService = new CustomerService();
 
         boolean isValidUser = customerService.authenticateUser(email, password);
 
