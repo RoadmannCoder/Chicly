@@ -2,6 +2,7 @@ package com.chickly.DataAccessLayer.Repository;
 
 
 import com.chickly.DataAccessLayer.DBContext.JpaUtil;
+import com.chickly.DataAccessLayer.Entities.Admin;
 import com.chickly.DataAccessLayer.Entities.Customer;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -49,7 +50,23 @@ public class CustomerRepository extends GenericCrudManager<Customer, Object> {
                         cb.equal(cus.get("account").get("password"), password)
                 ));
         try {
-            Customer result = this.entityManager.createQuery(q).getSingleResult();
+            this.entityManager.createQuery(q).getSingleResult();
+            return true;
+        } catch (NoResultException e) {
+            return false;
+        }
+    }
+    public boolean checkUserNameAndPasswordAreValid(String userName,String password){
+        CriteriaBuilder cb = JpaUtil.getEntityManagerFactory().getCriteriaBuilder();
+        CriteriaQuery<Customer> q = cb.createQuery(Customer.class);
+        Root<Customer> customer = q.from(Customer.class);
+        q.select(customer)
+                .where(cb.and(
+                        cb.equal(customer.get("account").get("userName"), userName),
+                        cb.equal(customer.get("account").get("password"), password)
+                ));
+        try {
+            this.entityManager.createQuery(q).getSingleResult();
             return true;
         } catch (NoResultException e) {
             return false;

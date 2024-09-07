@@ -8,15 +8,15 @@ public class ControllerFactory {
 
     }
 
-    public Controller getController(final String controllerName) {
-
-        switch (controllerName) {
-            case "login":
-                return new LoginController();
-            case "home":
-                return new HomeController();
-            default:
-                return null;
-        }
-    }
+//    public Controller getController(final String controllerName) {
+//
+//        switch (controllerName) {
+//            case "login":
+//                return new LoginController();
+//            case "home":
+//                return new HomeController();
+//            default:
+//                return null;
+//        }
+//    }
 }
