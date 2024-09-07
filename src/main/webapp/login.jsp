@@ -1,32 +1,37 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<!-- Created By CodingNepal -->
+<html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <title>Login Page</title>
+    <meta charset="utf-8">
+    <!-- <title>Neumorphism Login Form UI | CodingNepal</title> -->
     <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 </head>
 <body>
-
-<div class="login-container">
-    <!-- Replace with your actual logo -->
-    <img src="img/logo.png" alt="Project Logo">
-    <h2>Welcome Back!</h2>
-    <!-- Error Message Display -->
-    <p class="error-message">
-        <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
-        <%= errorMessage != null ? errorMessage : "" %>
-    </p>
-    <form action="login" method="post">
-        <input type="text" id="username" name="username" placeholder="Enter Username" required>
-
-        <input type="password" id="password" name="password" placeholder="Enter Password" required>
-
-        <input type="submit" value="Login">
+<div class="content">
+    <div class="text">
+        Login Form
+    </div>
+    <form action="#">
+        <div class="field">
+            <input type="text" required>
+            <span class="fas fa-user"></span>
+            <label>Email or Phone</label>
+        </div>
+        <div class="field">
+            <input type="password" required>
+            <span class="fas fa-lock"></span>
+            <label>Password</label>
+        </div>
+        <div class="forgot-pass">
+            <a href="#">Forgot Password?</a>
+        </div>
+        <button>Sign in</button>
+        <div class="sign-up">
+            Not a member?
+            <a href="#">signup now</a>
+        </div>
     </form>
-    <button onclick="window.location.href='register.jsp'">Register</button>
 </div>
-
 </body>
 </html>
