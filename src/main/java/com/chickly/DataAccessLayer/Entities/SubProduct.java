@@ -27,12 +27,16 @@ public class SubProduct {
 
     @NonNull
     private Integer stock;
+
+    @Enumerated(EnumType.STRING)
     @NonNull
     @NotNull
-    private String color;
+    private Color color;
     @NonNull
     @NotNull
     private BigDecimal price;
+
+    private String imageURL;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -43,6 +47,13 @@ public class SubProduct {
         MEDIUM,
         LARGE,
         XLARGE
+    }
+    public enum Color {
+        RED,
+        BLUE,
+        GREEN,
+        YELLOW,
+        ORANGE,
     }
 
 

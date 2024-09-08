@@ -10,10 +10,10 @@ import jakarta.persistence.criteria.Root;
 
 import java.util.List;
 
-public class AdminRepository extends GenericCrudManager{
+public class AdminRepository extends GenericCrudManager<Admin,Object>{
 
     public AdminRepository() {
-        super(Customer.class);
+        super(Admin.class);
     }
 
 
