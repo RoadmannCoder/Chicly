@@ -25,6 +25,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Customer customer = (Customer) req.getAttribute("user");
+
         if(customer != null) {
             HttpSession session = req.getSession();
             session.setAttribute("user", customer);

@@ -15,16 +15,16 @@
 </head>
 
 <body>
-<c:if test="${error != null}">
-	<div class="alert alert-danger text-center" style="width: fit-content; margin: 0 auto;">
-			${error}
-	</div>
-</c:if>
+
 <div class="wrapper" style="background-image: url('img/bg-registration-form-2.jpg');">
 	<div class="inner">
 		<form action="login" method="post">
 			<h3>SIGN IN</h3>
-
+			<c:if test="${error != null}">
+				<div class="alert alert-danger text-center" style="width: fit-content; margin: 0 auto;color: red">
+						${error}
+				</div>
+			</c:if>
 				<div class="form-wrapper">
 					<label >Username</label>
 					<input id="username" name="username" type="text" class="form-control" required>
