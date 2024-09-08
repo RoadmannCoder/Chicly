@@ -1,11 +1,13 @@
 package com.chickly.DataAccessLayer.Repository;
 
 import com.chickly.DataAccessLayer.DBContext.EntityManagerUtil;
+import com.chickly.DataAccessLayer.Entities.SubProduct;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class GenericCrudManager<T, U extends Object> {
 
@@ -43,9 +45,10 @@ public abstract class GenericCrudManager<T, U extends Object> {
         }
     }
 
-    public List<T> findAll() {
+    public Optional<List<SubProduct>> findAll() {
+
         String jpql = "SELECT all FROM " + objectClass.getSimpleName() + " all";
-        return getEntityManager().createQuery(jpql, objectClass).getResultList();
+        return (Optional<List<SubProduct>>) Optional.ofNullable((T) entityManager.createQuery(jpql,objectClass).getResultList());
     }
 
     public T update(T entityObject) {

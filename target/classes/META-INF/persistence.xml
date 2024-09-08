@@ -10,7 +10,7 @@
             <property name="jakarta.persistence.jdbc.user" value="admin"/>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.jdbc.password" value="tsWcnnJ#JX#u^7ga"/>
-            <property name="jakarta.persistence.schema-generation.database.action" value="none" />
+<!--            <property name="jakarta.persistence.schema-generation.database.action" value="create" />-->
 
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
@@ -19,7 +19,7 @@
 
             <!-- Hibernate Validator properties -->
             <!-- Enable validation in the DDL generation -->
-<!--            <property name="hibernate.hbm2ddl.auto" value="create" />-->
+            <property name="hibernate.hbm2ddl.auto" value="update" />
         </properties>
     </persistence-unit>
     <persistence-unit name="h2Testing">

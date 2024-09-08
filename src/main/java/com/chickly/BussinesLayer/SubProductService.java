@@ -3,20 +3,20 @@ package com.chickly.BussinesLayer;
 import com.chickly.DataAccessLayer.Entities.SubProduct;
 import com.chickly.DataAccessLayer.Repository.SubProductRepository;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class SubProductService {
 
-    public  List<SubProduct> getAllSubProducts (){
+    public Optional<List<SubProduct>> getAllSubProducts (){
         SubProductRepository subProductRepository = new SubProductRepository();
 
-        List<SubProduct> subProducts = subProductRepository.findAll();
+        Optional<List<SubProduct>> subProducts = subProductRepository.findAll();
         return subProducts;
     }
-    public  List<SubProduct> findSubProductsByCategory (int categoryId){
+    public Optional<List<SubProduct>> findSubProductsByCategory (int categoryId){
         SubProductRepository subProductRepository = new SubProductRepository();
         List<SubProduct> subProducts = subProductRepository.findSubProductsByCategory(categoryId);
-        return subProducts;
+        return Optional.ofNullable(subProducts);
     }
 }

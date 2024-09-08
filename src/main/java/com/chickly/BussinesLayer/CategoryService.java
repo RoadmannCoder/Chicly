@@ -1,17 +1,16 @@
 package com.chickly.BussinesLayer;
 
-import com.chickly.DataAccessLayer.Entities.Category;
 import com.chickly.DataAccessLayer.Entities.SubProduct;
 import com.chickly.DataAccessLayer.Repository.CategoryRepository;
-import com.chickly.DataAccessLayer.Repository.SubProductRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class CategoryService {
 
-    public static List<Category> getAllCategories (){
+    public static Optional<List<SubProduct>> getAllCategories (){
         CategoryRepository categoryRepository = new CategoryRepository();
-        List<Category> categories = categoryRepository.findAll();
+        Optional<List<SubProduct>> categories = categoryRepository.findAll();
         return categories;
     }
 }
