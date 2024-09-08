@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Ashion Template">
-    <meta name="keywords" content="Ashion, unica, creative, html">
+    <meta name="description" content="Chicly Template">
+    <meta name="keywords" content="Chicly, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ashion | Template</title>
+    <title>Chicly | Template</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
@@ -50,7 +50,7 @@
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__auth">
             <a href="login.jsp">Login</a>
-            <a href="registeration.jsp">Register</a>
+            <a href="registration.jsp">Register</a>
         </div>
     </div>
     <!-- Offcanvas Menu End -->
@@ -88,7 +88,7 @@
                     <div class="header__right">
                         <div class="header__right__auth">
                             <a href="login.jsp">Login</a>
-                            <a href="registeration.jsp">Register</a>
+                            <a href="registration.jsp">Register</a>
                         </div>
                         <ul class="header__right__widget">
                             <li><span class="icon_search search-switch"></span></li>
