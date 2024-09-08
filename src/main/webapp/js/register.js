@@ -101,3 +101,41 @@ function checkCondition() {
         registerBtn.disabled = false;
     }
 }
+///////////////////////////////////////////////////////////////////////////////////////
+let currentStep = 1;
+
+function showStep(step) {
+    document.querySelectorAll('.form-step').forEach((element) => {
+        element.style.display = 'none';
+    });
+    document.getElementById('step-' + step).style.display = 'block';
+}
+
+function nextStep() {
+    if (validateCurrentStep()) {
+        currentStep++;
+        if (currentStep > 4) currentStep = 4;
+        showStep(currentStep);
+    }
+}
+
+function prevStep() {
+    currentStep--;
+    if (currentStep < 1) currentStep = 1;
+    showStep(currentStep);
+}
+
+function validateCurrentStep() {
+    let valid = true;
+    const stepElement = document.getElementById('step-' + currentStep);
+    stepElement.querySelectorAll('input[required]').forEach((input) => {
+        if (!input.checkValidity()) {
+            valid = false;
+            input.reportValidity();
+        }
+    });
+    return valid;
+}
+
+// Initialize
+showStep(currentStep);
