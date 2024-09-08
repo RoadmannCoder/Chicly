@@ -10,13 +10,14 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @WebServlet("/filterProducts")
 public class CategoryFilterController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String categoryId = request.getParameter("category");
-        List<SubProduct> filteredProducts;
+        Optional<List<SubProduct>> filteredProducts;
 
         SubProductService subProductService = new SubProductService();
 

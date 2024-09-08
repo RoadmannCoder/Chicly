@@ -54,7 +54,7 @@
         </div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__auth">
-            <a href="login.jsp">Login</a>
+            <a href="login">Login</a>
             <a href="registeration.jsp">Register</a>
         </div>
     </div>
@@ -92,7 +92,7 @@
                 <div class="col-lg-3">
                     <div class="header__right">
                         <div class="header__right__auth">
-                            <a href="login.jsp">Login</a>
+                            <a href="login">Login</a>
                             <a href="registeration.jsp">Register</a>
                         </div>
                         <ul class="header__right__widget">
