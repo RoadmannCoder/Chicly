@@ -28,7 +28,7 @@ public class LoginController extends HttpServlet {
         if(customer != null) {
             HttpSession session = req.getSession();
             session.setAttribute("user", customer);
-            resp.sendRedirect("/chicly/");
+            resp.sendRedirect("/chicly");
         }else{
             doGet(req,resp);
         }
