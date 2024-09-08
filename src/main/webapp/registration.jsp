@@ -1,5 +1,3 @@
-<%@ page import="java.math.BigDecimal, java.util.Date" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,13 +9,11 @@
     <title>Chicly Registration Form</title>
 </head>
 <body>
-<%--<jsp:useBean id="customerBean" class="com.chickly.DTO.CustomerBean" scope="request" />--%>
-<%--<jsp:setProperty name="customerBean" property="*" />--%>
-
 <div class="container">
     <header><img src="img/logo.png" width="98" height="31" alt=""></header>
-    <form method="POST" action="register" id="registeration-form">
-        <div class="form first">
+    <form method="POST" action="register" id="registration-form">
+        <!-- Step 1 -->
+        <div class="form-step" id="step-1">
             <div class="details personal">
                 <div class="fields">
                     <div class="input-field">
@@ -29,13 +25,27 @@
                         <input type="text" id="lastName" name="lastName" required>
                     </div>
                     <div class="input-field">
-                        <label>Credit Limit</label>
-                        <input type="number" id="creditLimit" name="creditLimit" onblur="checkCreditLimit();" required>
-                        <span class="error-message" id="crediterror"></span>
+                        <label>Username</label>
+                        <input type="text" id="userName" name="userName" onblur="checkUserName();" required>
+                        <span class="error-message" id="usernameerror"></span>
                     </div>
                     <div class="input-field">
-                        <label>Date of Birth</label>
-                        <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+                        <label>Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+
+                </div>
+            </div>
+            <button type="button" class="nextBtn" onclick="nextStep()">Next</button>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="form-step" id="step-2" style="display:none;">
+            <div class="details ID">
+                <div class="fields">
+                    <div class="input-field">
+                        <label>Job</label>
+                        <input type="text" id="job" name="job" required>
                     </div>
                     <div class="input-field">
                         <label>Email</label>
@@ -47,24 +57,27 @@
                         <input type="number" id="phoneNumber" name="phoneNumber" onblur="checkPhoneNumber();" required>
                         <span class="error-message" id="phoneerror"></span>
                     </div>
+                    <div class="input-field">
+                        <label>Credit Limit</label>
+                        <input type="number" id="creditLimit" name="creditLimit" onblur="checkCreditLimit();" required>
+                        <span class="error-message" id="crediterror"></span>
+                    </div>
+                    <div class="input-field">
+                        <label>Date of Birth</label>
+                        <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+                    </div>
+
                 </div>
             </div>
+            <button type="button" class="prevBtn" onclick="prevStep()">Previous</button>
+            <button type="button" class="nextBtn" onclick="nextStep()">Next</button>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="form-step" id="step-3" style="display:none;">
             <div class="details ID">
                 <div class="fields">
 
-                    <div class="input-field">
-                        <label>Username</label>
-                        <input type="text" id="userName" name="userName" onblur="checkUserName();"required>
-                        <span class="error-message" id="usernameerror"></span>
-                    </div>
-                    <div class="input-field">
-                        <label>Password</label>
-                        <input type="password" id="password" name="password" required>
-                    </div>
-                    <div class="input-field">
-                        <label>Job</label>
-                        <input type="text" id="job" name="job" required>
-                    </div>
                     <div class="input-field">
                         <label>Street</label>
                         <input type="text" id="street" name="street" required>
@@ -81,19 +94,18 @@
                         <label>Zip Code</label>
                         <input type="number" id="zip" name="zip" required>
                     </div>
-
-                    <button class="nextBtn" type="submit" id="registerBtn" onmouseover="checkCondition()">
-                        <span class="btnText">Register</span>
-                        <i class="uil uil-navigator"></i>
-                    </button>
-
                 </div>
             </div>
+            <button type="button" class="prevBtn" onclick="prevStep()">Previous</button>
+            <button class="nextBtn" type="submit" id="registerBtn" onmouseover="checkCondition()">
+                <span class="btnText">Register</span>
+                <i class="uil uil-navigator"></i>
+            </button>
         </div>
     </form>
-
 </div>
 
 <script src="js/register.js"></script>
+
 </body>
 </html>
