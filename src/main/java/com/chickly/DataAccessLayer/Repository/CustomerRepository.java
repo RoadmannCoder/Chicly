@@ -32,6 +32,28 @@ public class CustomerRepository extends GenericCrudManager<Customer, Object> {
         }
         return false;
     }
+    public boolean checkUsernameIfFound(String username){
+        CriteriaBuilder cb = JpaUtil.getEntityManagerFactory().getCriteriaBuilder();
+        CriteriaQuery<Customer> q = cb.createQuery(Customer.class);
+        Root<Customer> cus = q.from(Customer.class);
+        q.select(cus).where(cb.like(cus.get("account").get("userName"),username));
+        List<Customer> result3 = this.entityManager.createQuery(q).getResultList();
+        if(!result3.isEmpty()){
+            return true;
+        }
+        return false;
+    }
+    public boolean checkPhoneNumberIfFound(String phoneNumber){
+        CriteriaBuilder cb = JpaUtil.getEntityManagerFactory().getCriteriaBuilder();
+        CriteriaQuery<Customer> q = cb.createQuery(Customer.class);
+        Root<Customer> cus = q.from(Customer.class);
+        q.select(cus).where(cb.like(cus.get("phoneNumber"),phoneNumber));
+        List<Customer> result3 = this.entityManager.createQuery(q).getResultList();
+        if(!result3.isEmpty()){
+            return true;
+        }
+        return false;
+    }
 
     /**
      * This method is used to check if the user is the entered email and password
