@@ -27,7 +27,7 @@ public class CategoryFilterController extends HttpServlet {
             filteredProducts = subProductService.findSubProductsByCategory(Integer.parseInt(categoryId));
         }
 
-        request.setAttribute("subProducts", filteredProducts);
+        request.setAttribute("subProducts", filteredProducts.get());
         request.getRequestDispatcher("/chicly").forward(request, response);
     }
 }
