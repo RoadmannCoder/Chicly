@@ -23,32 +23,25 @@ public class AuthenticationFilter implements Filter {
         if("POST".equalsIgnoreCase(httpRequest.getMethod())){
             AuthenticationService authenticationService = new AuthenticationService();
             Customer customer = authenticationService.isAuthenticatedCustomer(servletRequest.getParameter("username"),servletRequest.getParameter("password"));
-//            Optional.ofNullable(customer).ifPresentOrElse(
-//                    obj -> {
-//                        servletRequest.setAttribute("user", customer);
-//                        try {
-//                            filterChain.doFilter(servletRequest, servletResponse);
-//                        } catch (IOException | ServletException e) {
-//                            throw new RuntimeException(e);
-//                        }
-//                    },
-//                    () -> {
-//                        servletRequest.setAttribute("error", "Invalid Username Or Password");
-//                        try {
-//                            servletRequest.getRequestDispatcher("login").forward(servletRequest, servletResponse);
-//                        } catch (ServletException | IOException e) {
-//                            throw new RuntimeException(e);
-//                        }
-//                    }
-//            );
-            if(customer!=null){
-                servletRequest.setAttribute("user", customer);
-                filterChain.doFilter(servletRequest, servletResponse);
-            }
-            else{
-                servletRequest.setAttribute("error", "Invalid Username Or Password");
-                servletRequest.getRequestDispatcher("/login").forward(servletRequest, servletResponse);
-            }
+            Optional.ofNullable(customer).ifPresentOrElse(
+                    obj -> {
+                        servletRequest.setAttribute("user", customer);
+                        try {
+                            filterChain.doFilter(servletRequest, servletResponse);
+                        } catch (IOException | ServletException e) {
+                            throw new RuntimeException(e);
+                        }
+                    },
+                    () -> {
+                        servletRequest.setAttribute("error", "Invalid Username Or Password");
+                        try {
+                            servletRequest.getRequestDispatcher("login").forward(servletRequest, servletResponse);
+                        } catch (ServletException | IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+            );
+
         }
         else
             filterChain.doFilter(servletRequest,servletResponse);
