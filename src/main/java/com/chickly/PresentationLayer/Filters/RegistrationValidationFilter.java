@@ -29,7 +29,7 @@ public class RegistrationValidationFilter implements Filter {
         String password = httpRequest.getParameter("password");
 
         if (isAnyParameterEmpty(firstName, lastName, creditLimit, dateOfBirth, email, phoneNumber, job, street, city, zip, description, userName, password)) {
-            return;
+            return ;
         }
         chain.doFilter(request, response);
     }
