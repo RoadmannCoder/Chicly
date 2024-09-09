@@ -40,7 +40,7 @@
 			<button>LOGIN</button>
 			<div class="sign-up">
 				Not a member?
-				<a href="registaration.jsp">signup now</a>
+				<a href="registration.jsp">signup now</a>
 			</div>
 		</form>
 	</div>

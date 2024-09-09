@@ -55,7 +55,7 @@
     <div id="mobile-menu-wrap"></div>
     <div class="offcanvas__auth">
         <a href="login">Login</a>
-        <a href="registeration.jsp">Register</a>
+        <a href="registration.jsp">Register</a>
     </div>
 </div>
 <!-- Offcanvas Menu End -->
@@ -93,7 +93,7 @@
                 <div class="header__right">
                     <div class="header__right__auth">
                         <a href="login">Login</a>
-                        <a href="registeration.jsp">Register</a>
+                        <a href="registration.jsp">Register</a>
                     </div>
                     <ul class="header__right__widget">
                         <li><span class="icon_search search-switch"></span></li>
