@@ -2,6 +2,7 @@ package com.chickly.PresentationLayer.Controller;
 
 import com.chickly.BussinesLayer.CategoryService;
 import com.chickly.BussinesLayer.SubProductService;
+import com.chickly.DTO.CategoryDTO;
 import com.chickly.DTO.SubProductDTO;
 import com.chickly.DTO.SubProductFilterDTO;
 import com.chickly.DataAccessLayer.Entities.SubProduct;
@@ -16,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,8 +26,7 @@ public class FilterProductsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SubProductService subProductService = new SubProductService();
-
-
+        CategoryService categoryService = new CategoryService();
 
         SubProductFilterDTO filterDTO = new SubProductFilterDTO();
         filterDTO.setProductName(request.getParameter("productName"));
@@ -34,11 +35,15 @@ public class FilterProductsController extends HttpServlet {
         filterDTO.setSize(parseSizeEnum(request.getParameter("size")));
         filterDTO.setColor(parseColorEnum(request.getParameter("color")));
         filterDTO.setPageNumber(parseInteger(request.getParameter("page"), 1));
+        filterDTO.setCategoryId(parseInteger(request.getParameter("category"),null));
         filterDTO.setPageSize(6);
 
         List<SubProductDTO> subProductDTOs = subProductService.filterSubProducts(filterDTO);
         long totalSubProducts = subProductService.countFilteredSubProducts(filterDTO);
 
+        List<CategoryDTO> categories = categoryService.getAllCategories();
+
+        request.setAttribute("categories", categories);
         request.setAttribute("subProducts", subProductDTOs);
         request.setAttribute("currentPage", filterDTO.getPageNumber());
         request.setAttribute("totalSubProducts", totalSubProducts);
@@ -54,7 +59,6 @@ public class FilterProductsController extends HttpServlet {
             return null;
         }
     }
-
     private Color parseColorEnum(String color) {
         try {
             return color != null && !color.isEmpty() ? Color.valueOf(color.toUpperCase()) : null;
@@ -70,9 +74,12 @@ public class FilterProductsController extends HttpServlet {
         }
     }
 
-    private Integer parseInteger(String value, int defaultValue) {
+    private Integer parseInteger(String value, Integer defaultValue) {
+        if (value == null || value.isEmpty()) {
+            return defaultValue;
+        }
         try {
-            return value != null && !value.isEmpty() ? Integer.parseInt(value) : defaultValue;
+            return Integer.parseInt(value);
         } catch (NumberFormatException e) {
             return defaultValue;
         }
