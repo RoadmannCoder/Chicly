@@ -27,6 +27,19 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    <style>
+        .pagination .page-item.active .page-link {
+            background-color: rgb(202, 21, 21);
+            border-color: rgb(202, 21, 21);
+        }
+        .pagination .page-link {
+            color: rgb(202, 21, 21);
+        }
+        .pagination .page-item.disabled .page-link {
+            color: rgb(202, 21, 21);
+            border-color: rgb(202, 21, 21);
+        }
+    </style>
 
 </head>
 
@@ -114,7 +127,7 @@
 </header>
 <!-- Header Section End -->
 
-<jsp:include page="product-display.jsp" />
+<jsp:include page="shop.jsp" />
 
 <!-- Services Section Begin -->
 <section class="services spad">

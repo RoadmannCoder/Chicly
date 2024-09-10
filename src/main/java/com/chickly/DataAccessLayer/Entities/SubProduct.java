@@ -1,5 +1,7 @@
 package com.chickly.DataAccessLayer.Entities;
 
+import com.chickly.Enums.Color;
+import com.chickly.Enums.Size;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -42,19 +44,7 @@ public class SubProduct {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    public enum Size {
-        SMALL,
-        MEDIUM,
-        LARGE,
-        XLARGE
-    }
-    public enum Color {
-        RED,
-        BLUE,
-        GREEN,
-        YELLOW,
-        ORANGE,
-    }
+
 
 
 }

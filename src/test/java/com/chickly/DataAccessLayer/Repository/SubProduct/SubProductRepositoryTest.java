@@ -4,6 +4,8 @@ import com.chickly.DataAccessLayer.Entities.Product;
 import com.chickly.DataAccessLayer.Entities.SubProduct;
 import com.chickly.DataAccessLayer.Repository.ProductRepository;
 import com.chickly.DataAccessLayer.Repository.SubProductRepository;
+import com.chickly.Enums.Color;
+import com.chickly.Enums.Size;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -39,7 +41,7 @@ public class SubProductRepositoryTest {
 
     @Test
     void testInsertSubProduct() {
-        SubProduct subProduct = new SubProduct(SubProduct.Size.MEDIUM, 10, SubProduct.Color.RED, new BigDecimal(100));
+        SubProduct subProduct = new SubProduct(Size.MEDIUM, 10, Color.RED, new BigDecimal(100));
         subProduct.setProduct(jeanProduct);
         subProductRepository.create(subProduct);
 
@@ -57,11 +59,11 @@ public class SubProductRepositoryTest {
 
     @Test
     void testFindSubProductsByProductID() {
-        SubProduct subProduct1 = new SubProduct(SubProduct.Size.MEDIUM, 10, SubProduct.Color.RED, new BigDecimal(100));
+        SubProduct subProduct1 = new SubProduct(Size.MEDIUM, 10, Color.RED, new BigDecimal(100));
         subProduct1.setProduct(jeanProduct);
         subProductRepository.create(subProduct1);
 
-        SubProduct subProduct2 = new SubProduct(SubProduct.Size.MEDIUM, 10, SubProduct.Color.RED, new BigDecimal(100));
+        SubProduct subProduct2 = new SubProduct(Size.MEDIUM, 10, Color.RED, new BigDecimal(100));
         subProduct2.setProduct(jeanProduct);
         subProductRepository.create(subProduct2);
 
@@ -75,11 +77,11 @@ public class SubProductRepositoryTest {
 
     @Test
     void testUpdateSubProduct() {
-        SubProduct subProduct = new SubProduct(SubProduct.Size.MEDIUM, 10, SubProduct.Color.RED, new BigDecimal(100));
+        SubProduct subProduct = new SubProduct(Size.MEDIUM, 10, Color.RED, new BigDecimal(100));
         subProduct.setProduct(jeanProduct);
         subProductRepository.create(subProduct);
 
-        subProduct.setColor(SubProduct.Color.RED);
+        subProduct.setColor(Color.RED);
         subProductRepository.update(subProduct);
 
         SubProduct updatedSubProduct = subProductRepository.findBy("id", subProduct.getId());
@@ -89,7 +91,7 @@ public class SubProductRepositoryTest {
 
     @Test
     void testDeleteSubProduct() {
-        SubProduct subProduct = new SubProduct(SubProduct.Size.MEDIUM, 10, SubProduct.Color.RED, new BigDecimal(100));
+        SubProduct subProduct = new SubProduct(Size.MEDIUM, 10,Color.RED, new BigDecimal(100));
         subProduct.setProduct(jeanProduct);
         subProductRepository.create(subProduct);
 
