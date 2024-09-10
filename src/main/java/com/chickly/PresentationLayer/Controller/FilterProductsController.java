@@ -34,13 +34,11 @@ public class FilterProductsController extends HttpServlet {
         filterDTO.setSize(parseSizeEnum(request.getParameter("size")));
         filterDTO.setColor(parseColorEnum(request.getParameter("color")));
         filterDTO.setPageNumber(parseInteger(request.getParameter("page"), 1));
-        filterDTO.setPageSize(6); // Set your preferred page size
+        filterDTO.setPageSize(6);
 
-        // Get the filtered products as DTOs
         List<SubProductDTO> subProductDTOs = subProductService.filterSubProducts(filterDTO);
         long totalSubProducts = subProductService.countFilteredSubProducts(filterDTO);
 
-        // Set attributes to pass to JSP
         request.setAttribute("subProducts", subProductDTOs);
         request.setAttribute("currentPage", filterDTO.getPageNumber());
         request.setAttribute("totalSubProducts", totalSubProducts);
