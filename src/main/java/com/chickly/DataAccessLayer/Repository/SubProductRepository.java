@@ -91,7 +91,7 @@ public class SubProductRepository extends GenericCrudManager<SubProduct,Object> 
 
         // Apply the same filter conditions as in the previous method
         if (categoryId != null) {
-            predicates.add(cb.equal(subProductRoot.get("category").get("id"), categoryId));
+            predicates.add(cb.equal(subProductRoot.get("product").get("subCategory").get("category").get("id"), categoryId));
         }
         if (productName != null && !productName.isEmpty()) {
             predicates.add(cb.like(cb.lower(subProductRoot.get("product").get("name")), "%" + productName.toLowerCase() + "%"));

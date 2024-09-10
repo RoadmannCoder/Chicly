@@ -20,12 +20,25 @@
                                     <div class="price-input">
                                         <p>Price:</p>
                                         <input type="text" name="minPrice" id="minamount" value="${param.minPrice != null ? param.minPrice : 20}" />
-                                        <input type="text" name="maxPrice" id="maxamount" value="${param.maxPrice != null ? param.maxPrice : 2000}" />
+                                        <input type="text" name="maxPrice" id="maxamount" value="${param.maxPrice != null ? param.maxPrice : 300}" />
                                     </div>
                                 </div>
                             </div>
                         </div>
-
+                        <!-- Category Filter -->
+                        <div class="sidebar__categories mb-4">
+                            <div class="section-title">
+                                <h4>Shop by category</h4>
+                            </div>
+                            <div class="category__list">
+                                <c:forEach var="category" items="${categories}">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="${category.id}" name="category" value="${category.id}" ${param.category == category.id ? 'checked' : ''} />
+                                        <label class="form-check-label" for="${category.id}">${category.name}</label>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                        </div>
                         <!-- Size Filter -->
                         <div class="sidebar__sizes mb-4">
                             <div class="section-title">
@@ -137,7 +150,7 @@
             <!-- Previous Page Link -->
             <c:if test="${currentPage > 1}">
                 <li class="page-item">
-                    <a class="page-link" href="filterProducts?page=${currentPage - 1}&category=${selectedCategory}&productName=${fn:escapeXml(param.productName)}&minPrice=${param.minPrice}&maxPrice=${param.maxPrice}&color=${param.color}&size=${param.size}" aria-label="Previous">
+                    <a class="page-link" href="filterProducts?page=${currentPage - 1}&category=${param.category}&productName=${fn:escapeXml(param.productName)}&minPrice=${param.minPrice}&maxPrice=${param.maxPrice}&color=${param.color}&size=${param.size}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
@@ -145,13 +158,13 @@
 
             <!-- Current Page Display -->
             <li class="page-item active">
-                <span class="page-link">Page ${currentPage}</span>
+                <span class="page-link">${currentPage}</span>
             </li>
 
             <!-- Next Page Link -->
             <c:if test="${(currentPage * pageSize) < totalSubProducts}">
                 <li class="page-item">
-                    <a class="page-link" href="filterProducts?page=${currentPage + 1}&category=${selectedCategory}&productName=${fn:escapeXml(param.productName)}&minPrice=${param.minPrice}&maxPrice=${param.maxPrice}&color=${param.color}&size=${param.size}" aria-label="Next">
+                    <a class="page-link" href="filterProducts?page=${currentPage + 1}&category=${param.category}&productName=${fn:escapeXml(param.productName)}&minPrice=${param.minPrice}&maxPrice=${param.maxPrice}&color=${param.color}&size=${param.size}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
