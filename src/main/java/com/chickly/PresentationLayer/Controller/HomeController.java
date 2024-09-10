@@ -20,13 +20,6 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        Optional<List<SubProduct>> allSubProducts = new SubProductService().getAllSubProducts();
-        List<SubProduct> requestSubProducts =(List<SubProduct>) request.getAttribute("subProducts");
-
-        if (requestSubProducts == null){
-            request.setAttribute("subProducts", allSubProducts.get());
-        }
-        request.setAttribute("categories", CategoryService.getAllCategories().get());
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        request.getRequestDispatcher("filterProducts").forward(request, response);
     }
 }
