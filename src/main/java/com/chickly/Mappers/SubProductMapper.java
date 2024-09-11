@@ -11,12 +11,14 @@ public class SubProductMapper {
         }
 
         SubProductDTO dto = new SubProductDTO();
+        dto.setId(subProduct.getId());
         dto.setProductName(subProduct.getProduct().getName());
         dto.setPrice(subProduct.getPrice());
         dto.setImageURL(subProduct.getImageURL());
         dto.setColor(subProduct.getColor().name());
         dto.setSize(subProduct.getSize().name());
         dto.setStock(subProduct.getStock());
+        dto.setDescription(subProduct.getProduct().getDescription());
 
         return dto;
     }

@@ -15,8 +15,6 @@ import java.util.Optional;
 
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
-    AuthenticationService authenticationService = new AuthenticationService();
-    HomeController controller = new HomeController();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("login.jsp").forward(req,resp);
@@ -29,7 +27,7 @@ public class LoginController extends HttpServlet {
         if(customer != null) {
             HttpSession session = req.getSession();
             session.setAttribute("user", customer);
-            resp.sendRedirect("/chicly");
+            resp.sendRedirect("/");
         }else{
             doGet(req,resp);
         }
