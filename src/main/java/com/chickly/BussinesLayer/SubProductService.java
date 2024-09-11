@@ -5,7 +5,14 @@ import com.chickly.DTO.SubProductFilterDTO;
 import com.chickly.DataAccessLayer.Entities.SubProduct;
 import com.chickly.DataAccessLayer.Repository.SubProductRepository;
 import com.chickly.Mappers.SubProductMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import jakarta.servlet.http.HttpServletRequest;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -53,6 +60,30 @@ public class SubProductService {
                 filterDTO.getMinPrice(),
                 filterDTO.getMaxPrice()
         );
+    }
+    public SubProductDTO convertJsonToSubProductDTO(HttpServletRequest req) throws IOException {
+        BufferedReader reader = req.getReader();
+        StringBuilder jsonBuilder = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            jsonBuilder.append(line);
+        }
+
+        String productJson = jsonBuilder.toString();
+        System.out.println("Received JSON: " + productJson);
+
+        // Convert JSON string back to a subProduct object using Gson
+        Gson gson = new Gson();
+        SubProductDTO subProduct = gson.fromJson(productJson, SubProductDTO.class);
+
+        return subProduct;
+    }
+    public SubProductDTO findSubProductByID(HttpServletRequest req){
+        int id = Integer.parseInt(req.getParameter("product"));
+        SubProduct subProduct = subProductRepository.findBy("id",id);
+        SubProductDTO subProductDTO = SubProductMapper.convertEntityToDTO(subProduct);
+        return subProductDTO;
+
     }
 
 }

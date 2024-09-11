@@ -11,6 +11,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 
 import java.util.List;
+import java.util.Optional;
 
 public class SubCategoryRepository extends GenericCrudManager<SubCategory, Object>{
 
@@ -26,6 +27,21 @@ public class SubCategoryRepository extends GenericCrudManager<SubCategory, Objec
         q.select(sub).where(cb.equal(sub.get("category").get("id"),category.getId()));
         return entityManager.createQuery(q).getResultList();
     }
+    public List<SubCategory> findSubCategoriesByCategoryID(Integer category){
+        CriteriaBuilder cb = JpaUtil.getEntityManagerFactory().getCriteriaBuilder();
+        CriteriaQuery<SubCategory> q = cb.createQuery(SubCategory.class);
+        Root<SubCategory> sub = q.from(SubCategory.class);
+        q.select(sub).where(cb.equal(sub.get("category").get("id"),category));
+        return entityManager.createQuery(q).getResultList();
+    }
+    public Optional<List<SubCategory>> findAllExceptAccessories() {
+
+        String jpql = "SELECT all FROM " + SubCategory.class.getSimpleName() + " all WHERE all.category.id != 3";
+        return Optional.ofNullable(entityManager.createQuery(jpql, SubCategory.class).getResultList());
+    }
+
+
+
 
 
 }
