@@ -1,77 +1,72 @@
 package com.chickly.DTO;
 
+import com.chickly.DataAccessLayer.Entities.Customer;
 import jakarta.servlet.http.HttpServletRequest;
 
 
-
-public class CustomerRegistrationDTO {
+public class CustomerViewDTO {
 
     private String firstName;
     private String lastName;
-    private String creditLimit;
-    private String dateOfBirth;
     private String email;
     private String phoneNumber;
-    private String job;
     private String street;
     private String city;
     private String zip;
     private String description;
     private String userName;
-    private String password;
 
-    public CustomerRegistrationDTO() {
+    public CustomerViewDTO() {
     }
 
 
-    public CustomerRegistrationDTO(String firstName, String lastName, String creditLimit, String dateOfBirth, String email, String phoneNumber, String job, String street, String city, String zip, String description, String userName, String password) {
+    public CustomerViewDTO(String firstName, String lastName,String email, String phoneNumber, String street, String city, String zip, String description, String userName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.creditLimit = creditLimit;
-        this.dateOfBirth = dateOfBirth;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.job = job;
         this.street = street;
         this.city = city;
         this.zip = zip;
         this.description = description;
         this.userName = userName;
-        this.password = password;
     }
 
 
 
-    public  CustomerRegistrationDTO(HttpServletRequest request) {
-        CustomerRegistrationDTO customerDTO = new CustomerRegistrationDTO();
+    public CustomerViewDTO(HttpServletRequest request) {
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
-        String creditLimit = request.getParameter("creditLimit");
-        String dateOfBirth = request.getParameter("dateOfBirth");
         String email = request.getParameter("email");
         String phoneNumber = request.getParameter("phoneNumber");
-        String job = request.getParameter("job");
         String street = request.getParameter("street");
         String city = request.getParameter("city");
         String zip = request.getParameter("zip");
         String description = request.getParameter("description");
         String userName = request.getParameter("userName");
-        String password = request.getParameter("password");
-//        CustomerRegistrationDTO customerRegistrationDTO = new CustomerRegistrationDTO( firstName,  lastName,  creditLimit,  dateOfBirth,  email,  phoneNumber,  job,  street,  city,  zip,  description,  userName,  password);
-//        return customerRegistrationDTO;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.creditLimit = creditLimit;
-        this.dateOfBirth = dateOfBirth;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.job = job;
         this.street = street;
         this.city = city;
         this.zip = zip;
         this.description = description;
         this.userName = userName;
-        this.password = password;
+    }
+    public static CustomerViewDTO fromCustomer(Customer customer) {
+        return new CustomerViewDTO(
+                customer.getFirstName(),
+                customer.getLastName(),
+                customer.getEmail(),
+                customer.getPhoneNumber(),
+                customer.getAddress().getStreet(), // Assuming Address has a getStreet() method
+                customer.getAddress().getCity(),   // Assuming Address has a getCity() method
+                customer.getAddress().getZip(),    // Assuming Address has a getZip() method
+                customer.getAddress().getDescription(),                  // Using job as description here
+                customer.getAccount().getUserName()                 // Assuming email as userName for demonstration
+        );
+
     }
     public String getFirstName() {
         return firstName;
@@ -89,21 +84,6 @@ public class CustomerRegistrationDTO {
         this.lastName = lastName;
     }
 
-    public String getCreditLimit() {
-        return creditLimit;
-    }
-
-    public void setCreditLimit(String creditLimit) {
-        this.creditLimit = creditLimit;
-    }
-
-    public String getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
 
     public String getEmail() {
         return email;
@@ -119,14 +99,6 @@ public class CustomerRegistrationDTO {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getJob() {
-        return job;
-    }
-
-    public void setJob(String job) {
-        this.job = job;
     }
 
     public String getStreet() {
@@ -169,11 +141,5 @@ public class CustomerRegistrationDTO {
         this.userName = userName;
     }
 
-    public String getPassword() {
-        return password;
-    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

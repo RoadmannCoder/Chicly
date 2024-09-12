@@ -1,42 +1,40 @@
 package com.chickly.Mappers;
 
 import com.chickly.DTO.CategoryDTO;
-import com.chickly.DTO.CustomerViewDTO;
+import com.chickly.DTO.SubCategoryDTO;
 import com.chickly.DataAccessLayer.Entities.Category;
-import com.chickly.DataAccessLayer.Entities.Customer;
+import com.chickly.DataAccessLayer.Entities.SubCategory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class CategoryMapper {
-    public static CategoryDTO convertEntityToDTO(Category category) {
-        if (category == null) {
+public class SubCategoryMapper {
+    public static SubCategoryDTO convertEntityToDTO(SubCategory subCategory) {
+        if (subCategory == null) {
             return null;
         }
-
-        CategoryDTO dto = new CategoryDTO();
-        dto.setId(category.getId());
-        dto.setName(category.getName());
-
+        SubCategoryDTO dto = new SubCategoryDTO();
+        dto.setId(subCategory.getId());
+        dto.setName(subCategory.getName());
+        dto.setId(subCategory.getCategory().getId());
         return dto;
     }
-    public static List<CategoryDTO> fromEntityToCategoryDTO(Optional<List<Category>> categoriesOptional) {
-        if (categoriesOptional.isEmpty()) {
+    public static List<SubCategoryDTO> fromEntityToSubCategoryDTO(Optional<List<SubCategory>> subCategoriesOptional) {
+        if (subCategoriesOptional.isEmpty()) {
             return null;
         }
-        List<CategoryDTO> categoriesViewDTOList = new ArrayList<>();
+        List<SubCategoryDTO> subCategoriesViewDTOList = new ArrayList<>();
 
-        if (categoriesOptional.isPresent()) {
-            List<Category> categoriesList = categoriesOptional.get();
+        if (subCategoriesOptional.isPresent()) {
+            List<SubCategory> subCategoriesList = subCategoriesOptional.get();
 
-            for (Category category : categoriesList) {
-                CategoryDTO dto = CategoryMapper.convertEntityToDTO(category);
-                categoriesViewDTOList.add(dto);
+            for (SubCategory subCategory : subCategoriesList) {
+                SubCategoryDTO dto = SubCategoryMapper.convertEntityToDTO(subCategory);
+                subCategoriesViewDTOList.add(dto);
             }
         }
-
-        return categoriesViewDTOList;
+        return subCategoriesViewDTOList;
     }
 
 }

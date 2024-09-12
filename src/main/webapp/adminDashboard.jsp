@@ -1,116 +1,89 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="../css/adminDashboard.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="admin-dashboard/css/adminDashboard.css">
 </head>
 <body>
-<header>
-    <nav>
-        <ul>
-            <li><a href="#">Products</a></li>
-            <li><a href="#">Customers</a></li>
-            <li><a href="#">Orders</a></li>
-            <li><a href="#">Logout</a></li>
-        </ul>
-    </nav>
-</header>
-<main>
-    <h1>Admin Dashboard</h1>
-    <section id="product-management">
-        <h2>Product Management</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Product ID</th>
-                <th>Product Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach items="${products}" var="product">
-                <tr>
-                    <td>${product.id}</td>
-                    <td>${product.name}</td>
-                    <td>${product.price}</td>
-                    <td>${product.quantity}</td>
-                    <td>
-                        <a href="#" class="edit-btn">Edit</a>
-                        <a href="#" class="delete-btn">Delete</a>
-                    </td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-        <button class="add-btn">Add Product</button>
-    </section>
-    <section id="customer-management">
-        <h2>Customer Management</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Customer ID</th>
-                <th>Customer Name</th>
-                <th>Email</th>
-                <th>Address</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach items="${customers}" var="customer">
-                <tr>
-                    <td>${customer.id}</td>
-                    <td>${customer.name}</td>
-                    <td>${customer.email}</td>
-                    <td>${customer.address}</td>
-                    <td>
-                        <a href="#" class="edit-btn">Edit</a>
-                        <a href="#" class="delete-btn">Delete</a>
-                    </td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-        <button class="add-btn">Add Customer</button>
-    </section>
-    <section id="order-management">
-        <h2>Order Management</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Order ID</th>
-                <th>Customer ID</th>
-                <th>Order Date</th>
-                <th>Total</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach items="${orders}" var="order">
-                <tr>
-                    <td>${order.id}</td>
-                    <td>${order.customerId}</td>
-                    <td>${order.orderDate}</td>
-                    <td>${order.total}</td>
-                    <td>${order.status}</td>
-                    <td>
-                        <a href="#" class="view-details-btn">View Details</a>
-                        <a href="#" class="update-status-btn">Update Status</a>
-                    </td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-        <button class="add-btn">Add Order</button>
-    </section>
-</main>
-<footer>
-    <p>&copy; 2023 Your Company</p>
-</footer>
+<div class="d-flex" id="wrapper">
+    <div class="bg-black border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading text-white"><img src="img/admin-logo.png" width="130" height="130" alt=""></div>
+        <div class="list-group list-group-flush">
+            <a href="addCategory" class="list-group-item list-group-item-action bg-black text-white">Add Category</a>
+            <a href="addSubCategory" class="list-group-item list-group-item-action bg-black text-white">Add SubCategory</a>
+            <a href="#" class="list-group-item list-group-item-action bg-black text-white">Manage Products</a>
+            <a href="productView" class="list-group-item list-group-item-action bg-black text-white">Manage SubProducts</a>
+            <a href="customerView" class="list-group-item list-group-item-action bg-black text-white">Customer Profiles</a>
+        </div>
+    </div>
+
+    <div id="page-content-wrapper">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+            <div class="container-fluid d-flex justify-content-between align-items-center">
+                <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+                <div class="ml-auto">
+                    <img src="img/logo.png" width="130" height="70" alt="Project Logo"> <!-- Aligned to the right -->
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid">
+            <h1 class="mt-4">Welcome, Admin</h1>
+            <p>Use the sidebar to manage the website.</p>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Product Statistics</h5>
+                            <p>Total Categories: 5</p>
+                            <p>Total Products: 120</p>
+                            <p>Low Stock Alerts: 3</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Customer Statistics</h5>
+                            <p>Total Customers: 350</p>
+                            <p>New Customers (Last 7 Days): 15</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Orders</h5>
+                            <p>Orders in Progress: 12</p>
+                            <p>Completed Orders: 200</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h4>Notifications</h4>
+            <div class="alert alert-warning" role="alert">
+                Low Stock Alert: Black Hoodie (5 units remaining).
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>
 </body>
 </html>

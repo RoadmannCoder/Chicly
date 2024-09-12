@@ -10,10 +10,7 @@ import com.chickly.Enums.Color;
 import com.chickly.Enums.Size;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -113,5 +110,14 @@ public class SubProductRepository extends GenericCrudManager<SubProduct,Object> 
         cq.where(predicates.toArray(new Predicate[0]));
 
         return entityManager.createQuery(cq).getSingleResult();
+    }
+    public void updateSubProductQuantityAndPrice(String subProductId, Integer stock, BigDecimal price) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaUpdate<SubProduct> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(SubProduct.class);
+        Root<SubProduct> root = criteriaUpdate.from(SubProduct.class);
+        criteriaUpdate.set("stock", stock);
+        criteriaUpdate.set("price", price);
+        criteriaUpdate.where(criteriaBuilder.equal(root.get("id"), subProductId));
+        entityManager.createQuery(criteriaUpdate).executeUpdate();
     }
 }
