@@ -50,7 +50,7 @@ public class FilterProductsController extends HttpServlet {
         request.setAttribute("pageSize", filterDTO.getPageSize());
         request.setAttribute("param", request.getParameterMap());
 
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
+        request.getRequestDispatcher("/shop.jsp").forward(request, response);
     }
     private BigDecimal parseBigDecimal(String value) {
         try {
