@@ -10,6 +10,7 @@ import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
 import java.nio.file.attribute.UserDefinedFileAttributeView;
@@ -92,5 +93,29 @@ public class CustomerRepository extends GenericCrudManager<Customer, Object> {
             System.out.println("No customer found for username: " + username);
         }
         return customer;
+    }
+    public Customer findUserByCriteria(String userName,String email,String Id){
+        CriteriaBuilder cb = JpaUtil.getEntityManagerFactory().getCriteriaBuilder();
+        CriteriaQuery<Customer> q = cb.createQuery(Customer.class);
+        Root<Customer> cus = q.from(Customer.class);
+        Predicate predicate = cb.conjunction();
+        if (userName != null && !userName.isEmpty()) {
+            predicate = cb.and(predicate, cb.like(cus.get("account").get("userName"), "%" + userName + "%"));
+        }
+        if (email != null && !email.isEmpty()) {
+            predicate = cb.and(predicate, cb.like(cus.get("email"), "%" + email + "%"));
+        }
+        if (Id != null && !Id.isEmpty()) {
+            predicate = cb.and(predicate, cb.equal(cus.get("id"), Id));
+        }
+        q.select(cus).where(predicate);
+        Customer customer=null;
+        try {
+            customer = this.entityManager.createQuery(q).getSingleResult();
+            return customer;
+        } catch (NoResultException e) {
+            return customer;
+        }
+
     }
 }

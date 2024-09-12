@@ -18,4 +18,16 @@ public class CategoryService {
         List<Category> categories = categoryRepository.findAll().get();
         return categories.stream().map(CategoryMapper::convertEntityToDTO).collect(Collectors.toList());
     }
+
+    public void createCategory(String categoryName){
+        CategoryRepository categoryRepository = new CategoryRepository();
+        Category category = new Category();
+        category.setName(categoryName);
+        categoryRepository.create(category);
+    }
+    public Category findCategoryById(String id){
+        CategoryRepository categoryRepository = new CategoryRepository();
+        return categoryRepository.findBy("id",id);
+    }
+
 }

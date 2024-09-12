@@ -1,0 +1,27 @@
+/* customerDetails.css */
+.header-container {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.header-font {
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+}
+
+.btn-black {
+    background-color: black;
+    color: white;
+    border: none;
+}
+
+.btn-black:hover {
+    background-color: #333;
+}
+
+.table th, .table td {
+    text-align: center;
+}
