@@ -36,30 +36,14 @@ public class SubProductService {
         return Optional.ofNullable(subProducts);
     }
     public List<SubProductDTO> filterSubProducts(SubProductFilterDTO filterDTO) {
-        List<SubProduct> subProducts = subProductRepository.findSubProductsByFilters(
-                filterDTO.getCategoryId(),
-                filterDTO.getProductName(),
-                filterDTO.getColor(),
-                filterDTO.getSize(),
-                filterDTO.getMinPrice(),
-                filterDTO.getMaxPrice(),
-                filterDTO.getPageNumber(),
-                filterDTO.getPageSize()
-        );
+        List<SubProduct> subProducts = subProductRepository.findSubProductsByFilters(filterDTO);
 
         return subProducts.stream()
                 .map(SubProductMapper::convertEntityToDTO)
                 .collect(Collectors.toList());
     }
     public long countFilteredSubProducts(SubProductFilterDTO filterDTO) {
-        return subProductRepository.countSubProductsByFilters(
-                filterDTO.getCategoryId(),
-                filterDTO.getProductName(),
-                filterDTO.getColor(),
-                filterDTO.getSize(),
-                filterDTO.getMinPrice(),
-                filterDTO.getMaxPrice()
-        );
+        return subProductRepository.countSubProductsByFilters(filterDTO);
     }
     public SubProductDTO convertJsonToSubProductDTO(HttpServletRequest req) throws IOException {
         BufferedReader reader = req.getReader();

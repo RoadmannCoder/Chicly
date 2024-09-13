@@ -1,9 +1,6 @@
 package com.chickly.DTO;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.lang.invoke.StringConcatFactory;
 import java.math.BigDecimal;
@@ -12,7 +9,7 @@ import java.math.BigDecimal;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
+@Builder
 public class SubProductDTO {
     private int id;
     private String productName;

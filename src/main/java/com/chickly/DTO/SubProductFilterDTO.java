@@ -20,5 +20,6 @@ public class SubProductFilterDTO {
     private Color color;
     private Integer categoryId;
     private Integer pageNumber;
-    private Integer pageSize;
+    private Integer pageSize = 6;
+
 }

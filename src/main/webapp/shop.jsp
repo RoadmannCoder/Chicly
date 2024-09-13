@@ -53,7 +53,7 @@
                                     <div class="price-input">
                                         <p>Price:</p>
                                         <input type="text" name="minPrice" id="minamount" value="${param.minPrice != null ? param.minPrice : 20}" />
-                                        <input type="text" name="maxPrice" id="maxamount" value="${param.maxPrice != null ? param.maxPrice : 300}" />
+                                        <input type="text" name="maxPrice" id="maxamount" value="${param.maxPrice != null ? param.maxPrice : 1500}" />
                                     </div>
                                 </div>
                             </div>
@@ -151,7 +151,7 @@
                         <div class="col-lg-4 col-md-6">
                             <div class="product__item">
                                 <div class="product__item__pic set-bg" data-setbg="${subProduct.imageURL}">
-                                    <div class="label new">New</div>
+                                    <div class="label new">${subProduct.color}</div>
                                     <ul class="product__hover">
                                         <li><a href="${subProduct.imageURL}" class="image-popup"><span class="arrow_expand"></span></a></li>
                                         <li><a href="#"><span class="icon_heart_alt"></span></a></li>
