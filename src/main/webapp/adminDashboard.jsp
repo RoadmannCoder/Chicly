@@ -15,7 +15,7 @@
         <div class="list-group list-group-flush">
             <a href="addCategory" class="list-group-item list-group-item-action bg-black text-white">Add Category</a>
             <a href="addSubCategory" class="list-group-item list-group-item-action bg-black text-white">Add SubCategory</a>
-            <a href="#" class="list-group-item list-group-item-action bg-black text-white">Manage Products</a>
+            <a href="addProduct" class="list-group-item list-group-item-action bg-black text-white">Manage Products</a>
             <a href="productView" class="list-group-item list-group-item-action bg-black text-white">Manage SubProducts</a>
             <a href="customerView" class="list-group-item list-group-item-action bg-black text-white">Customer Profiles</a>
         </div>

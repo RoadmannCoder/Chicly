@@ -5,14 +5,10 @@ import com.chickly.DTO.SubProductFilterDTO;
 import com.chickly.DTO.SubProductForAdminDTO;
 import com.chickly.DataAccessLayer.Entities.SubProduct;
 import com.chickly.DataAccessLayer.Repository.SubProductRepository;
-import com.chickly.Mappers.SubCategoryMapper;
 import com.chickly.Mappers.SubProductMapper;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.Part;
 
 import java.io.File;
@@ -23,7 +19,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -47,10 +42,29 @@ public class SubProductService {
         List<SubProductDTO> subProducts = SubProductMapper.fromSubProductEntityToSubProductViewDTO(subProductRepository.findAll());
         return subProducts;
     }
-    public List<SubProductForAdminDTO> getAllSubProductForAdminDTOs (){
+//    public List<SubProductForAdminDTO> getAllSubProductForAdminDTOs (HttpServletRequest req){
+//        SubProductRepository subProductRepository = new SubProductRepository();
+//
+//        List<SubProductForAdminDTO> subProducts = SubProductMapper.fromSubProductEntityToSubProductForAdminDTO(subProductRepository.findAll());
+//        return subProducts;
+//    }
+    public List<SubProductForAdminDTO> getAllSubProductForAdminDTOs (HttpServletRequest req){
         SubProductRepository subProductRepository = new SubProductRepository();
+        String subcategoryId = req.getParameter("subcategory");
+        System.out.println(subcategoryId);
+        String searchId = req.getParameter("searchId");
+        List<SubProductForAdminDTO> subProducts = new ArrayList<>();
+        if(subcategoryId !=null){
 
-        List<SubProductForAdminDTO> subProducts = SubProductMapper.fromSubProductEntityToSubProductForAdminDTO(subProductRepository.findAll());
+            subProducts = SubProductMapper.
+                    fromSubProductEntityToSubProductForAdminDTO(Optional.ofNullable(subProductRepository.findBySubCategoryName(subcategoryId)));
+        }else if(searchId !=null){
+            subProducts.add(SubProductMapper.convertEntityToSubProdcutAdminDTO(subProductRepository.findBy("id",searchId)));
+        }else{
+            subProducts = SubProductMapper.
+                    fromSubProductEntityToSubProductForAdminDTO(subProductRepository.findAll());
+        }
+
         return subProducts;
     }
 
@@ -137,6 +151,10 @@ public class SubProductService {
         Integer stock = Integer.parseInt(stockStr);
         BigDecimal price = new BigDecimal(priceStr);
         subProductRepository.updateSubProductQuantityAndPrice(subProductId,stock,price);
+    }
+    public void deleteSubProduct(HttpServletRequest request) {
+        String subProductId = request.getParameter("subProductId");
+        subProductRepository.deleteSubproductById(subProductId);
     }
     public SubProductDTO convertJsonToSubProductDTO(HttpServletRequest req) throws IOException {
         BufferedReader reader = req.getReader();

@@ -15,6 +15,7 @@ import jakarta.persistence.criteria.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class SubProductRepository extends GenericCrudManager<SubProduct,Object> {
     public SubProductRepository() {
@@ -119,5 +120,22 @@ public class SubProductRepository extends GenericCrudManager<SubProduct,Object> 
         criteriaUpdate.set("price", price);
         criteriaUpdate.where(criteriaBuilder.equal(root.get("id"), subProductId));
         entityManager.createQuery(criteriaUpdate).executeUpdate();
+    }
+
+    public void deleteSubproductById(String subProductId) {
+//        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+//        CriteriaUpdate<SubProduct> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(SubProduct.class);
+//        Root<SubProduct> root = criteriaUpdate.from(SubProduct.class);
+//        criteriaUpdate.set("isDeleted", "1");
+//        criteriaUpdate.where(criteriaBuilder.equal(root.get("id"), subProductId));
+//        entityManager.createQuery(criteriaUpdate).executeUpdate();
+    }
+
+    public List<SubProduct> findBySubCategoryName(String subcategoryId) {
+        CriteriaBuilder cb = JpaUtil.getEntityManagerFactory().getCriteriaBuilder();
+        CriteriaQuery<SubProduct> q = cb.createQuery(SubProduct.class);
+        Root<SubProduct> sub = q.from(SubProduct.class);
+        q.select(sub).where(cb.equal(sub.get("product").get("subCategory").get("name"),subcategoryId));
+        return entityManager.createQuery(q).getResultList();
     }
 }

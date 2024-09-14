@@ -34,7 +34,7 @@
                         </c:forEach>
                     </select>
                 </div>
-                <button type="button" class="btn btn-black btn-block" onclick="filterProducts()">Apply Filters</button>
+                <button type="button" id="filterBtn" class="btn btn-black btn-block" onclick="filterProducts()">Apply Filters</button>
                 <button type="button" class="btn btn-black btn-block" onclick="addNewProduct()">Add New Product</button>
 
             </form>
@@ -42,11 +42,17 @@
 
         <!-- Main Content -->
         <div class="col-md-9">
-            <div class="row mb-4">
-                <div class="col-md-12">
-                    <input type="text" id="searchId" class="form-control" placeholder="Search by Product ID">
-                    <button class="btn btn-teal btn-block mt-2" onclick="searchProducts()">Search</button>
+            <div class="row mb-12">
+                <div class="col-md-9">
+                    <input type="text" id="searchId" name="searchId"class="form-control" placeholder="Search by Product ID">
                 </div>
+                <div class="col-md-3">
+                    <button class="btn btn-black btn-block" onclick="resetFilters()">Reset</button>
+                </div>
+                <div class="col-md-12">
+                    <button id="searchBtn" class="btn btn-teal btn-block mt-2" onclick="searchProducts()">Search</button>
+                </div>
+
             </div>
 
             <!-- Product List -->
@@ -68,6 +74,7 @@
                                 <p class="card-text">Size: ${subProduct.size}</p>
                                 <p class="card-text">Quantity: ${subProduct.stock}</p>
                                 <a href="updateSubProduct?subproduct_Id=${subProduct.id}" class="btn btn-black">Update</a>
+                                <a href="deleteSubProduct?subproduct_Id=${subProduct.id}" class="btn btn-red">Delete</a>
                             </div>
                         </div>
                     </div>
@@ -80,21 +87,33 @@
 <script>
     function searchProducts() {
         const id = document.getElementById('searchId').value;
-        window.location.href = 'viewProducts?searchId=' + encodeURIComponent(id);
+        var searchBtn = document.getElementById("searchBtn");
+        if (id==="") {
+            searchBtn.disabled = true;
+        }else{
+            searchBtn.disabled = false;
+            window.location.href = 'productView?searchId=' + encodeURIComponent(id);
+        }
+
     }
 
     function filterProducts() {
-        const category = document.getElementById('category').value;
         const subcategory = document.getElementById('subcategory').value;
+        var searchBtn = document.getElementById("searchBtn");
+        if(subcategory ===""){
+            searchBtn.disabled = true;
+        }else{
+            window.location.href = 'productView?subcategory=' + encodeURIComponent(subcategory);
+            searchBtn.disabled = false;
+        }
 
-        let queryString = '';
-        if (category) queryString += 'category=' + encodeURIComponent(category) + '&';
-        if (subcategory) queryString += 'subcategory=' + encodeURIComponent(subcategory) + '&';
-
-        window.location.href = 'viewProducts?' + queryString;
     }
     function addNewProduct() {
-        window.location.href = 'addProduct';
+        window.location.href = 'addSubProduct';
+    }
+    function resetFilters() {
+        // Redirect to the servlet to refresh the customer list
+        window.location.href = 'productView';
     }
 
 </script>
