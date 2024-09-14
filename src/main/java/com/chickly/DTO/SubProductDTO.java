@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.metamodel.model.domain.IdentifiableDomainType;
+import lombok.*;
 
 import java.lang.invoke.StringConcatFactory;
 import java.math.BigDecimal;
@@ -14,7 +15,7 @@ import java.util.Objects;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
+@Builder
 public class SubProductDTO {
 
     private int id;
@@ -39,4 +40,6 @@ public class SubProductDTO {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+    private Boolean isNewArrival;
+    private Boolean isDeleted ;
 }

@@ -3,18 +3,18 @@ $(document).ready(function() {
     const urlParams = new URLSearchParams(window.location.search);
 
     var minPrice = parseInt(urlParams.get('minPrice') || 20, 10);
-    var maxPrice = parseInt(urlParams.get('maxPrice') || 300, 10);
+    var maxPrice = parseInt(urlParams.get('maxPrice') || 1500, 10);
 
 
     // Ensure default values if parsing fails
     if (isNaN(minPrice)) minPrice = 20;
-    if (isNaN(maxPrice)) maxPrice = 300;
+    if (isNaN(maxPrice)) maxPrice = 1500;
 
 
     $(".price-range").slider({
         range: true,
         min: 20, // minimum value
-        max: 300, // maximum value
+        max: 1500, // maximum value
         values: [minPrice, maxPrice],
         slide: function(event, ui) {
             $("#minamount").val(ui.values[0]);

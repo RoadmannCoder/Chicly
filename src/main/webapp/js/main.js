@@ -46,7 +46,7 @@ Created: Colorib
 
     $('.search-close-switch').on('click', function () {
         $('.search-model').fadeOut(400, function () {
-            $('#search-input').val('');
+            // $('#search-input').val('');
         });
     });
 

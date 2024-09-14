@@ -11,6 +11,8 @@ import com.chickly.DataAccessLayer.Repository.SubProductRepository;
 import com.chickly.Enums.Color;
 import com.chickly.Enums.Size;
 import com.google.gson.Gson;
+
+import com.chickly.Mappers.SubProductFilterMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,8 +24,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+
 import java.util.List;
-import java.util.Optional;
 
 @WebServlet("/filterProducts")
 public class FilterProductsController extends HttpServlet {
@@ -32,17 +34,10 @@ public class FilterProductsController extends HttpServlet {
         SubProductService subProductService = new SubProductService();
         CategoryService categoryService = new CategoryService();
 
-        SubProductFilterDTO filterDTO = new SubProductFilterDTO();
-        filterDTO.setProductName(request.getParameter("productName"));
-        filterDTO.setMinPrice(parseBigDecimal(request.getParameter("minPrice")));
-        filterDTO.setMaxPrice(parseBigDecimal(request.getParameter("maxPrice")));
-        filterDTO.setSize(parseSizeEnum(request.getParameter("size")));
-        filterDTO.setColor(parseColorEnum(request.getParameter("color")));
-        filterDTO.setPageNumber(parseInteger(request.getParameter("page"), 1));
-        filterDTO.setCategoryId(parseInteger(request.getParameter("category"),null));
-        filterDTO.setPageSize(6);
+        SubProductFilterDTO filterDTO = new SubProductFilterMapper().parseRequestToFitlerDTO(request);
 
         List<SubProductDTO> subProductDTOs = subProductService.filterSubProducts(filterDTO);
+
         long totalSubProducts = subProductService.countFilteredSubProducts(filterDTO);
 
         List<CategoryDTO> categories = categoryService.getAllCategories();
@@ -102,14 +97,4 @@ public class FilterProductsController extends HttpServlet {
         }
     }
 
-    private Integer parseInteger(String value, Integer defaultValue) {
-        if (value == null || value.isEmpty()) {
-            return defaultValue;
-        }
-        try {
-            return Integer.parseInt(value);
-        } catch (NumberFormatException e) {
-            return defaultValue;
-        }
-    }
 }

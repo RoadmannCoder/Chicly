@@ -1,22 +1,14 @@
 package com.chickly.DataAccessLayer.Repository;
 
+import com.chickly.DTO.SubProductFilterDTO;
 import com.chickly.DataAccessLayer.DBContext.EntityManagerUtil;
 import com.chickly.DataAccessLayer.DBContext.JpaUtil;
-import com.chickly.DataAccessLayer.Entities.Category;
 import com.chickly.DataAccessLayer.Entities.Product;
-import com.chickly.DataAccessLayer.Entities.SubCategory;
 import com.chickly.DataAccessLayer.Entities.SubProduct;
-import com.chickly.Enums.Color;
-import com.chickly.Enums.Size;
-import jakarta.persistence.EntityManager;
+import com.chickly.DataAccessLayer.Util.PredicateBuilder;
 import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
-
+import jakarta.persistence.criteria.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 public class SubProductRepository extends GenericCrudManager<SubProduct,Object> {
@@ -37,81 +29,59 @@ public class SubProductRepository extends GenericCrudManager<SubProduct,Object> 
         query.setParameter("categoryId", categoryId);
         return query.getResultList();
     }
-    public List<SubProduct> findSubProductsByFilters(
-            Integer categoryId, String productName, Color color, Size size, BigDecimal minPrice, BigDecimal maxPrice, int pageNumber, int pageSize) {
-
+    public List<SubProduct> findSubProductsByFilters(SubProductFilterDTO filterDTO) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<SubProduct> cq = cb.createQuery(SubProduct.class);
         Root<SubProduct> subProductRoot = cq.from(SubProduct.class);
 
-        List<Predicate> predicates = new ArrayList<>();
-
-        if (categoryId != null) {
-            predicates.add(cb.equal(subProductRoot.get("product").get("subCategory").get("category").get("id"), categoryId));
-        }
-
-        if (productName != null && !productName.isEmpty()) {
-            predicates.add(cb.like(cb.lower(subProductRoot.get("product").get("name")), "%" + productName.toLowerCase() + "%"));
-        }
-
-        if (color != null) {
-            predicates.add(cb.equal(subProductRoot.get("color"), color));
-        }
-        if (size != null) {
-            predicates.add(cb.equal(subProductRoot.get("size"), size));
-        }
-
-        if (minPrice != null) {
-            predicates.add(cb.greaterThanOrEqualTo(subProductRoot.get("price"), minPrice));
-        }
-
-        if (maxPrice != null) {
-            predicates.add(cb.lessThanOrEqualTo(subProductRoot.get("price"), maxPrice));
-        }
+        List<Predicate> predicates = new PredicateBuilder().buildSubProductPredicates(cb, subProductRoot, filterDTO);
 
         cq.where(predicates.toArray(new Predicate[0]));
 
-        //cq.orderBy(cb.asc(subProductRoot.get("price")));
-
         TypedQuery<SubProduct> query = entityManager.createQuery(cq);
-        query.setFirstResult((pageNumber - 1) * pageSize);
-        query.setMaxResults(pageSize);
+        query.setFirstResult((filterDTO.getPageNumber() - 1) * filterDTO.getPageSize());
+        query.setMaxResults(filterDTO.getPageSize());
 
         return query.getResultList();
     }
 
-    public long countSubProductsByFilters(Integer categoryId, String productName,Color color,Size size, BigDecimal minPrice, BigDecimal maxPrice) {
+    public long countSubProductsByFilters(SubProductFilterDTO filterDTO) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<SubProduct> subProductRoot = cq.from(SubProduct.class);
+        List<Predicate> predicates = new PredicateBuilder().buildSubProductPredicates(cb, subProductRoot, filterDTO);
 
         cq.select(cb.count(subProductRoot));
-
-        List<Predicate> predicates = new ArrayList<>();
-
-        // Apply the same filter conditions as in the previous method
-        if (categoryId != null) {
-            predicates.add(cb.equal(subProductRoot.get("product").get("subCategory").get("category").get("id"), categoryId));
-        }
-        if (productName != null && !productName.isEmpty()) {
-            predicates.add(cb.like(cb.lower(subProductRoot.get("product").get("name")), "%" + productName.toLowerCase() + "%"));
-        }
-        if (minPrice != null) {
-            predicates.add(cb.greaterThanOrEqualTo(subProductRoot.get("price"), minPrice));
-        }
-        if (maxPrice != null) {
-            predicates.add(cb.lessThanOrEqualTo(subProductRoot.get("price"), maxPrice));
-        }
-
-        if (color != null) {
-            predicates.add(cb.equal(subProductRoot.get("color"), color));
-        }
-        if (size != null) {
-            predicates.add(cb.equal(subProductRoot.get("size"), size));
-        }
-
         cq.where(predicates.toArray(new Predicate[0]));
 
         return entityManager.createQuery(cq).getSingleResult();
+    }
+
+
+    public void updateSubProductQuantityAndPrice(String subProductId, Integer stock, BigDecimal price) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaUpdate<SubProduct> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(SubProduct.class);
+        Root<SubProduct> root = criteriaUpdate.from(SubProduct.class);
+        criteriaUpdate.set("stock", stock);
+        criteriaUpdate.set("price", price);
+        criteriaUpdate.where(criteriaBuilder.equal(root.get("id"), subProductId));
+        entityManager.createQuery(criteriaUpdate).executeUpdate();
+    }
+
+    public void deleteSubproductById(String subProductId) {
+//        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+//        CriteriaUpdate<SubProduct> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(SubProduct.class);
+//        Root<SubProduct> root = criteriaUpdate.from(SubProduct.class);
+//        criteriaUpdate.set("isDeleted", "1");
+//        criteriaUpdate.where(criteriaBuilder.equal(root.get("id"), subProductId));
+//        entityManager.createQuery(criteriaUpdate).executeUpdate();
+    }
+
+    public List<SubProduct> findBySubCategoryName(String subcategoryId) {
+        CriteriaBuilder cb = JpaUtil.getEntityManagerFactory().getCriteriaBuilder();
+        CriteriaQuery<SubProduct> q = cb.createQuery(SubProduct.class);
+        Root<SubProduct> sub = q.from(SubProduct.class);
+        q.select(sub).where(cb.equal(sub.get("product").get("subCategory").get("name"),subcategoryId));
+        return entityManager.createQuery(q).getResultList();
     }
 }

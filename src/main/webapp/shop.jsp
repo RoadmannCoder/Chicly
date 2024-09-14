@@ -16,8 +16,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
           rel="stylesheet">
 
-
-
     <!-- Css Styles -->
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
@@ -27,13 +25,18 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/shop.css" type="text/css">
+
+
 </head>
+
 <body>
 <!-- Page Preloder -->
 <div id="preloder">
     <div class="loader"></div>
 </div>
 <jsp:include page="common/header.jsp" />
+
 <!-- Shop Section Begin -->
 <section class="shop spad">
     <div class="container">
@@ -53,22 +56,23 @@
                                     <div class="price-input">
                                         <p>Price:</p>
                                         <input type="text" name="minPrice" id="minamount" value="${param.minPrice != null ? param.minPrice : 20}" />
-                                        <input type="text" name="maxPrice" id="maxamount" value="${param.maxPrice != null ? param.maxPrice : 300}" />
+                                        <input type="text" name="maxPrice" id="maxamount" value="${param.maxPrice != null ? param.maxPrice : 1500}" />
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <!-- Category Filter -->
-                        <div class="sidebar__categories mb-4">
+                        <div class="sidebar__sizes mb-4">
                             <div class="section-title">
                                 <h4>Shop by category</h4>
                             </div>
-                            <div class="category__list">
+                            <div class="size__list">
                                 <c:forEach var="category" items="${categories}">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="${category.id}" name="category" value="${category.id}" ${param.category == category.id ? 'checked' : ''} />
-                                        <label class="form-check-label" for="${category.id}">${category.name}</label>
-                                    </div>
+                                    <label for="${category.id}">
+                                            ${category.name}
+                                        <input type="radio" name="category" id="${category.id}" value="${category.id}" ${param.category == category.id ? 'checked' : ''}>
+                                        <span class="checkmark"></span>
+                                    </label>
                                 </c:forEach>
                             </div>
                         </div>
@@ -78,22 +82,26 @@
                                 <h4>Shop by size</h4>
                             </div>
                             <div class="size__list">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="small" name="size" value="small" ${param.size == 'small' ? 'checked' : ''} />
-                                    <label class="form-check-label" for="small">Small</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="medium" name="size" value="medium" ${param.size == 'medium' ? 'checked' : ''} />
-                                    <label class="form-check-label" for="medium">Medium</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="large" name="size" value="large" ${param.size == 'large' ? 'checked' : ''} />
-                                    <label class="form-check-label" for="large">Large</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="xlarge" name="size" value="xlarge" ${param.size == 'xlarge' ? 'checked' : ''} />
-                                    <label class="form-check-label" for="xlarge">XLarge</label>
-                                </div>
+                                <label for="small">
+                                    Small
+                                    <input type="radio" name="size" id="small" value="small" ${param.size == 'small' ? 'checked' : ''}>
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label for="medium">
+                                    Medium
+                                    <input type="radio" name="size" id="medium" value="medium" ${param.size == 'medium' ? 'checked' : ''}>
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label for="large">
+                                    Large
+                                    <input type="radio" name="size" id="large" value="large" ${param.size == 'large' ? 'checked' : ''}>
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label for="xlarge">
+                                    XLarge
+                                    <input type="radio" name="size" id="xlarge" value="xlarge" ${param.size == 'xlarge' ? 'checked' : ''}>
+                                    <span class="checkmark"></span>
+                                </label>
                             </div>
                         </div>
 
@@ -102,44 +110,44 @@
                             <div class="section-title">
                                 <h4>Shop by color</h4>
                             </div>
-                            <div class="color__list">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="black" name="color" value="black" ${param.color == 'black' ? 'checked' : ''} />
-                                    <label class="form-check-label" for="black">Black</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="white" name="color" value="white" ${param.color == 'white' ? 'checked' : ''} />
-                                    <label class="form-check-label" for="white">White</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="blue" name="color" value="blue" ${param.color == 'blue' ? 'checked' : ''} />
-                                    <label class="form-check-label" for="blue">Blue</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="red" name="color" value="red" ${param.color == 'red' ? 'checked' : ''} />
-                                    <label class="form-check-label" for="red">Red</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="green" name="color" value="green" ${param.color == 'green' ? 'checked' : ''} />
-                                    <label class="form-check-label" for="green">Green</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="violet" name="color" value="violet" ${param.color == 'violet' ? 'checked' : ''} />
-                                    <label class="form-check-label" for="violet">Violet</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="yellow" name="color" value="yellow" ${param.color == 'yellow' ? 'checked' : ''} />
-                                    <label class="form-check-label" for="yellow">Yellow</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="brown" name="color" value="brown" ${param.color == 'brown' ? 'checked' : ''} />
-                                    <label class="form-check-label" for="brown">Brown</label>
-                                </div>
+                            <div class="color__checkbox">
+                                <label for="red">
+                                    <input type="radio" name="color" id="red" value="red" ${param.color == 'red' ? 'checked' : ''} />
+                                    <span class="checkmark red-bg"></span>
+                                </label>
+                                <label for="black">
+                                    <input type="radio" name="color" id="black" value="black" ${param.color == 'black' ? 'checked' : ''} />
+                                    <span class="checkmark black-bg"></span>
+                                </label>
+                                <label for="white">
+                                    <input type="radio" name="color" id="white" value="white" ${param.color == 'white' ? 'checked' : ''} />
+                                    <span class="checkmark white-bg"></span>
+                                </label>
+                                <label for="blue">
+                                    <input type="radio" name="color" id="blue" value="blue" ${param.color == 'blue' ? 'checked' : ''} />
+                                    <span class="checkmark blue-bg"></span>
+                                </label>
+                                <label for="green">
+                                    <input type="radio" name="color" id="green" value="green" ${param.color == 'green' ? 'checked' : ''} />
+                                    <span class="checkmark green-bg"></span>
+                                </label>
+                                <label for="violet">
+                                    <input type="radio" name="color" id="violet" value="violet" ${param.color == 'violet' ? 'checked' : ''} />
+                                    <span class="checkmark violet-bg"></span>
+                                </label>
+                                <label for="yellow">
+                                    <input type="radio" name="color" id="yellow" value="yellow" ${param.color == 'yellow' ? 'checked' : ''} />
+                                    <span class="checkmark yellow-bg"></span>
+                                </label>
+                                <label for="brown">
+                                    <input type="radio" name="color" id="brown" value="brown" ${param.color == 'brown' ? 'checked' : ''} />
+                                    <span class="checkmark brown-bg"></span>
+                                </label>
                             </div>
                         </div>
 
                         <!-- Submit Button -->
-                        <button type="submit" class="btn btn-outline-danger w-100">Apply Filters</button>
+                        <button type="submit" class="btn btn-outline-danger w-auto filter-btn">Apply Filters</button>
                     </form>
                 </div>
             </div>
@@ -191,36 +199,75 @@
                     </a>
                 </li>
             </c:if>
+                <div class="product-list-wrapper">
+                    <div class="row" id="product-list">
+                        <!-- Products will be updated here -->
+                        <c:forEach var="subProduct" items="${subProducts}">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="product__item">
+                                    <div class="product__item__pic set-bg" data-setbg="${subProduct.imageURL}">
+<%--                                        <div class="label new">New</div>--%>
+                                            <c:if test="${subProduct.isNewArrival}">
+                                                <div class="label new">New</div>
+                                            </c:if>
+                                        <ul class="product__hover">
+                                            <li><a href="${subProduct.imageURL}" class="image-popup"><span class="arrow_expand"></span></a></li>
+                                            <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+                                            <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="product__item__text">
+                                        <h6><a href="/product-details?product=${subProduct.id}" class="product-detail-button">${subProduct.productName}</a></h6>
+<%--                                        <div class="rating">--%>
+<%--                                            <c:forEach var="i" begin="1" end="5">--%>
+<%--                                                <i class="fa fa-star"></i>--%>
+<%--                                            </c:forEach>--%>
+<%--                                        </div>--%>
+                                        <div class="product__price">${subProduct.price}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
+                    <!-- Pagination -->
+                    <div class="pagination-wrapper">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                                <!-- Previous Page Link -->
+                                <c:if test="${currentPage > 1}">
+                                    <li class="page-item">
+                                        <a class="page-link" href="filterProducts?page=${currentPage - 1}&category=${param.category}&productName=${fn:escapeXml(param.productName)}&minPrice=${param.minPrice}&maxPrice=${param.maxPrice}&color=${param.color}&size=${param.size}" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                </c:if>
 
-            <!-- Current Page Display -->
-            <li class="page-item active">
-                <span class="page-link">${currentPage}</span>
-            </li>
+                                <!-- Current Page Display -->
+                                <li class="page-item active">
+                                    <span class="page-link">${currentPage}</span>
+                                </li>
 
-            <!-- Next Page Link -->
-            <c:if test="${(currentPage * pageSize) < totalSubProducts}">
-                <li class="page-item">
-                    <a class="page-link" href="filterProducts?page=${currentPage + 1}&category=${param.category}&productName=${fn:escapeXml(param.productName)}&minPrice=${param.minPrice}&maxPrice=${param.maxPrice}&color=${param.color}&size=${param.size}" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </c:if>
-        </ul>
-    </nav>
-</div>
+                                <!-- Next Page Link -->
+                                <c:if test="${(currentPage * pageSize) < totalSubProducts}">
+                                    <li class="page-item">
+                                        <a class="page-link" href="filterProducts?page=${currentPage + 1}&category=${param.category}&productName=${fn:escapeXml(param.productName)}&minPrice=${param.minPrice}&maxPrice=${param.maxPrice}&color=${param.color}&size=${param.size}" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </c:if>
+                            </ul>
+                        </nav>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <jsp:include page="common/footer.jsp"/>
 
-<!-- Search Begin -->
-<div class="search-model">
-    <div class="h-100 d-flex align-items-center justify-content-center">
-        <div class="search-close-switch">+</div>
-        <form class="search-model-form">
-            <input type="text" id="search-input" placeholder="Search here.....">
-        </form>
-    </div>
-</div>
-<!-- Search End -->
+
 
 <!-- Js Plugins -->
 <script src="js/jquery-3.3.1.min.js"></script>
