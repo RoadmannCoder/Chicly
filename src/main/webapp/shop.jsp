@@ -76,6 +76,30 @@
                                 </c:forEach>
                             </div>
                         </div>
+                        <!-- Gender Filter -->
+                        <div class="sidebar__sizes mb-4">
+                            <div class="section-title">
+                                <h4>Shop by Gender</h4>
+                            </div>
+                            <div class="size__list">
+                                <label for="male">
+                                    Male
+                                    <input type="radio" name="gender" id="male" value="male" ${param.gender == 'male' ? 'checked' : ''}>
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label for="female">
+                                    Female
+                                    <input type="radio" name="gender" id="female" value="female" ${param.gender == 'female' ? 'checked' : ''}>
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label for="unisex">
+                                    Unisex
+                                    <input type="radio" name="gender" id="unisex" value="unisex" ${param.gender == 'unisex' ? 'checked' : ''}>
+                                    <span class="checkmark"></span>
+                                </label>
+
+                            </div>
+                        </div>
                         <!-- Size Filter -->
                         <div class="sidebar__sizes mb-4">
                             <div class="section-title">
@@ -189,7 +213,7 @@
                                 <!-- Previous Page Link -->
                                 <c:if test="${currentPage > 1}">
                                     <li class="page-item">
-                                        <a class="page-link" href="filterProducts?page=${currentPage - 1}&category=${param.category}&productName=${fn:escapeXml(param.productName)}&minPrice=${param.minPrice}&maxPrice=${param.maxPrice}&color=${param.color}&size=${param.size}" aria-label="Previous">
+                                        <a class="page-link" href="filterProducts?page=${currentPage - 1}&gender=${param.gender}&category=${param.category}&productName=${fn:escapeXml(param.productName)}&minPrice=${param.minPrice}&maxPrice=${param.maxPrice}&color=${param.color}&size=${param.size}" aria-label="Previous">
                                             <span aria-hidden="true">&laquo;</span>
                                         </a>
                                     </li>
@@ -203,7 +227,7 @@
                                 <!-- Next Page Link -->
                                 <c:if test="${(currentPage * pageSize) < totalSubProducts}">
                                     <li class="page-item">
-                                        <a class="page-link" href="filterProducts?page=${currentPage + 1}&category=${param.category}&productName=${fn:escapeXml(param.productName)}&minPrice=${param.minPrice}&maxPrice=${param.maxPrice}&color=${param.color}&size=${param.size}" aria-label="Next">
+                                        <a class="page-link" href="filterProducts?page=${currentPage + 1}&category=${param.category}&gender=${param.gender}&productName=${fn:escapeXml(param.productName)}&minPrice=${param.minPrice}&maxPrice=${param.maxPrice}&color=${param.color}&size=${param.size}" aria-label="Next">
                                             <span aria-hidden="true">&raquo;</span>
                                         </a>
                                     </li>

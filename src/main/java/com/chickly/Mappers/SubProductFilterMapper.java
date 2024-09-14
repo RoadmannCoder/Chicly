@@ -3,6 +3,7 @@ package com.chickly.Mappers;
 import com.chickly.DTO.SubProductDTO;
 import com.chickly.DTO.SubProductFilterDTO;
 import com.chickly.Enums.Color;
+import com.chickly.Enums.Gender;
 import com.chickly.Enums.Size;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -17,6 +18,7 @@ public class SubProductFilterMapper {
         filterDTO.setMaxPrice(parseBigDecimal(request.getParameter("maxPrice")));
         filterDTO.setSize(parseSizeEnum(request.getParameter("size")));
         filterDTO.setColor(parseColorEnum(request.getParameter("color")));
+        filterDTO.setGender(parseGenderEnum(request.getParameter("gender")));
         filterDTO.setPageNumber(parseInteger(request.getParameter("page"), 1));
         filterDTO.setCategoryName(request.getParameter("category"));
 
@@ -33,6 +35,13 @@ public class SubProductFilterMapper {
     private Color parseColorEnum(String color) {
         try {
             return color != null && !color.isEmpty() ? Color.valueOf(color.toUpperCase()) : null;
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
+    private Gender parseGenderEnum(String gender) {
+        try {
+            return gender != null && !gender.isEmpty() ? Gender.valueOf(gender.toUpperCase()) : null;
         } catch (IllegalArgumentException e) {
             return null;
         }
