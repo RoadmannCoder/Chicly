@@ -23,7 +23,7 @@
         <div class="form-group">
             <label for="category">Main Category</label>
             <select class="form-control" id="category" name="category" required>
-                <option value="">Select Main Product</option>
+                <option value="">Select Main Category</option>
                 <c:forEach var="category" items="${categories}">
                     <option value="${category.id}">${category.name}</option>
                 </c:forEach>

@@ -26,7 +26,7 @@ import java.util.Enumeration;
 import java.util.List;
 
 
-@WebServlet(name = "addProduct",urlPatterns = "/addProduct")
+@WebServlet(name = "addSubProduct",urlPatterns = "/addSubProduct")
 @MultipartConfig
 public class AddSubProductController extends HttpServlet {
     private ProductService productService;
@@ -41,7 +41,7 @@ public class AddSubProductController extends HttpServlet {
         req.setAttribute("colors", Color.values());
         req.setAttribute("sizes", Size.values());
 
-        req.getRequestDispatcher("/addProduct.jsp").forward(req, resp);
+        req.getRequestDispatcher("/addSubProduct.jsp").forward(req, resp);
     }
 
     @Override

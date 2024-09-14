@@ -9,6 +9,11 @@ body {
     color: #fff;
 }
 
+.btn-red {
+    background-color: #ff0000;
+    color: #fff;
+}
+
 .btn-teal {
     background-color: #20c997;
     color: #fff;
