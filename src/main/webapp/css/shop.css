@@ -50,11 +50,11 @@
 }
 
 .color__checkbox label .checkmark.red-bg {
-    background: #ca1515;
+    background: #D9304F;
 }
 
 .color__checkbox label .checkmark.black-bg {
-    background: #111111;
+    background: #1D1926;
 }
 
 .color__checkbox label .checkmark.white-bg {
@@ -63,23 +63,26 @@
 }
 
 .color__checkbox label .checkmark.blue-bg {
-    background: #1010d1;
+    background: #171695;
 }
 
 .color__checkbox label .checkmark.green-bg {
-    background: #008000;
+    background: #07F26D;
 }
 
 .color__checkbox label .checkmark.violet-bg {
-    background: #8f00ff;
+    background: #B562D9;
 }
 
 .color__checkbox label .checkmark.yellow-bg {
-    background: #ffff00;
+    background: #F2CB05;
 }
 
+.color__checkbox label .checkmark.orange-bg {
+    background: #F2622E;
+}
 .color__checkbox label .checkmark.brown-bg {
-    background: #964b00;
+    background: #8C6645;
 }
 .filter-btn {
      padding: 5px 10px; /* Smaller padding */
@@ -116,7 +119,7 @@
 .pagination .page-item .page-link:hover {
     background-color: #f8f9fa; /* Slightly lighter background on hover */
     color: #111111; /* Change color to blue on hover */
-    border-color: #ca1515; /* Blue border on hover */
+    border-color: #111111; /* Blue border on hover */
 }
 
 .pagination .page-item.active .page-link {
