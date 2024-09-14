@@ -5,6 +5,7 @@ import com.chickly.DataAccessLayer.Entities.SubProduct;
 import com.chickly.DataAccessLayer.Repository.ProductRepository;
 import com.chickly.DataAccessLayer.Repository.SubProductRepository;
 import com.chickly.Enums.Color;
+import com.chickly.Enums.Gender;
 import com.chickly.Enums.Size;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -35,7 +36,7 @@ public class SubProductRepositoryTest {
         productRepository = new ProductRepository();
 
         // Initialize a sample product
-        jeanProduct = new Product("Blue Jeans", "Jeans", "UNISEX", "1");
+        jeanProduct = new Product("Blue Jeans", "Jeans", Gender.valueOf("UNISEX"), "1");
         productRepository.create(jeanProduct);
     }
 

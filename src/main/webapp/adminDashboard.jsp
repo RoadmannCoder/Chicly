@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,17 +8,32 @@
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="admin-dashboard/css/adminDashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 </head>
 <body>
 <div class="d-flex" id="wrapper">
     <div class="bg-black border-right" id="sidebar-wrapper">
         <div class="sidebar-heading text-white"><img src="img/admin-logo.png" width="130" height="130" alt=""></div>
         <div class="list-group list-group-flush">
-            <a href="addCategory" class="list-group-item list-group-item-action bg-black text-white">Add Category</a>
-            <a href="addSubCategory" class="list-group-item list-group-item-action bg-black text-white">Add SubCategory</a>
-            <a href="addProduct" class="list-group-item list-group-item-action bg-black text-white">Manage Products</a>
-            <a href="productView" class="list-group-item list-group-item-action bg-black text-white">Manage SubProducts</a>
-            <a href="customerView" class="list-group-item list-group-item-action bg-black text-white">Customer Profiles</a>
+            <a href="addCategory" class="list-group-item list-group-item-action bg-black text-white">
+                <i class="fas fa-list"></i> Add Category
+            </a>
+            <a href="addSubCategory" class="list-group-item list-group-item-action bg-black text-white">
+                <i class="fas fa-tags"></i> Add SubCategory
+            </a>
+            <a href="addProduct" class="list-group-item list-group-item-action bg-black text-white">
+                <i class="fas fa-boxes"></i> Manage Products
+            </a>
+            <a href="productView" class="list-group-item list-group-item-action bg-black text-white">
+                <i class="fas fa-cubes"></i> Manage SubProducts
+            </a>
+            <a href="customerView" class="list-group-item list-group-item-action bg-black text-white">
+                <i class="fas fa-users"></i> Customer Profiles
+            </a>
+            <a href="adminlogout" class="list-group-item list-group-item-action bg-black text-white">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
         </div>
     </div>
 
@@ -26,8 +42,10 @@
             <div class="container-fluid d-flex justify-content-between align-items-center">
                 <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
                 <div class="ml-auto">
-                    <img src="img/logo.png" width="130" height="70" alt="Project Logo"> <!-- Aligned to the right -->
+                    <img src="img/logo.png" width="100" height="50" alt="Project Logo">
+                    <p >Admin ${sessionScope.admineName}</p>
                 </div>
+
             </div>
         </nav>
 

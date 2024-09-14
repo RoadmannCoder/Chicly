@@ -2,6 +2,8 @@ package com.chickly.DataAccessLayer.Entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import com.chickly.Enums.Gender;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.Set;
@@ -25,9 +27,10 @@ public class Product {
     @NotEmpty
     private String name;
 
+    @Enumerated(EnumType.STRING)
     @NonNull
-    @NotEmpty
-    private String gender;
+    @NotNull
+    private Gender gender;
 
     @NonNull
     private String isDeleted;

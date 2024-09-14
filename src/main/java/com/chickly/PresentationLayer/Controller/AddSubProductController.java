@@ -26,7 +26,7 @@ import java.util.Enumeration;
 import java.util.List;
 
 
-@WebServlet(name = "addSubProduct",urlPatterns = "/addSubProduct")
+@WebServlet(name = "addsubProduct",urlPatterns = "/addsubProduct")
 @MultipartConfig
 public class AddSubProductController extends HttpServlet {
     private ProductService productService;

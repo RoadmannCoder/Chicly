@@ -8,20 +8,20 @@
     <meta charset="UTF-8">
     <title>View Products - Chicly Admin</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="admin-dashboard/css/viewProducts.css">
 </head>
 <body>
 <div class="container mt-5">
-    <!-- Back Button -->
     <div class="mb-4">
-        <a href="adminDashboard.jsp" class="btn btn-black">Back to Dashboard</a>
+        <a href="adminDashboard.jsp" class="btn btn-black">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard</a>
     </div>
     <div class="header-container">
         <h2 class="header-font">Manage Products</h2>
     </div>
 
     <div class="row">
-        <!-- Sidebar for Filters -->
         <div class="col-md-3">
             <h4>Filter Products</h4>
             <form id="filterForm">
@@ -34,28 +34,30 @@
                         </c:forEach>
                     </select>
                 </div>
-                <button type="button" id="filterBtn" class="btn btn-black btn-block" onclick="filterProducts()">Apply Filters</button>
-                <button type="button" class="btn btn-black btn-block" onclick="addNewProduct()">Add New Product</button>
+                <button type="button" id="filterBtn" class="btn btn-black btn-block" onclick="filterProducts()">
+                    <i class="fas fa-filter"></i> Apply Filters</button>
+                <button type="button" class="btn btn-teal btn-block mt-2" onclick="addNewProduct()">
+                    <i class="fas fa-plus"></i> Add New Product</button>
 
             </form>
         </div>
 
-        <!-- Main Content -->
         <div class="col-md-9">
             <div class="row mb-12">
                 <div class="col-md-9">
                     <input type="text" id="searchId" name="searchId"class="form-control" placeholder="Search by Product ID">
                 </div>
                 <div class="col-md-3">
-                    <button class="btn btn-black btn-block" onclick="resetFilters()">Reset</button>
+                    <button class="btn btn-black btn-block" onclick="resetFilters()">
+                        <i class="fas fa-redo"></i> Reset</button>
                 </div>
                 <div class="col-md-12">
-                    <button id="searchBtn" class="btn btn-teal btn-block mt-2" onclick="searchProducts()">Search</button>
+                    <button id="searchBtn" class="btn btn-teal btn-block mt-2" onclick="searchProducts()">
+                        <i class="fas fa-search"></i> Search</button>
                 </div>
 
             </div>
 
-            <!-- Product List -->
             <div class="row">
                 <c:if test="${empty subProducts}">
                     <div class="col-md-12">
@@ -73,8 +75,12 @@
                                 <p class="card-text">Colour: ${subProduct.color}</p>
                                 <p class="card-text">Size: ${subProduct.size}</p>
                                 <p class="card-text">Quantity: ${subProduct.stock}</p>
-                                <a href="updateSubProduct?subproduct_Id=${subProduct.id}" class="btn btn-black">Update</a>
-                                <a href="deleteSubProduct?subproduct_Id=${subProduct.id}" class="btn btn-red">Delete</a>
+                                <a href="updateSubProduct?subproduct_Id=${subProduct.id}" class="btn btn-black">
+                                    <i class="fas fa-edit"></i> Update
+                                </a>
+                                <a href="deleteSubProduct?subproduct_Id=${subProduct.id}" class="btn btn-red">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -109,10 +115,9 @@
 
     }
     function addNewProduct() {
-        window.location.href = 'addSubProduct';
+        window.location.href = 'addsubProduct';
     }
     function resetFilters() {
-        // Redirect to the servlet to refresh the customer list
         window.location.href = 'productView';
     }
 

@@ -19,16 +19,13 @@ public class SubCategoriesViewFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
-
         List<SubCategoryDTO> subCategoriesDTOList = (List<SubCategoryDTO>) httpRequest.getSession().getAttribute("subcategories");
         if (subCategoriesDTOList == null) {
-            System.out.println("Inside SubCategory Filter");
             subCategoryService = new SubCategoryService();
             subCategoriesDTOList = subCategoryService.getAllSubCategories();
             httpRequest.getSession().setAttribute("subcategories", subCategoriesDTOList);
         }
         filterChain.doFilter(servletRequest, servletResponse);
-
     }
 
     @Override

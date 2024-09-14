@@ -7,11 +7,14 @@
     <title>Update Product</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="admin-dashboard/css/updateProduct.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 </head>
 <body>
 <div class="container mt-5">
     <div class="mt-4">
-        <a href="productView" class="btn btn-black">Back to Products</a>
+        <a href="productView" class="btn btn-black">
+            <i class="fas fa-arrow-left"></i> Back to Products</a>
     </div>
     <div class="container mt-5">
         <div class="header-container">
@@ -60,7 +63,9 @@
                     </div>
 
                     <!-- Button and spacing -->
-                    <button id="updateBtn" type="submit" class="btn btn-teal btn-block mt-2" onmouseover="checkErrors()">Update Product</button>
+                    <button id="updateBtn" type="submit" class="btn btn-teal btn-block mt-2" onmouseover="checkErrors()">
+                        <i class="fas fa-edit"></i> Update
+                    </button>
                 </div>
             </div>
         </form>

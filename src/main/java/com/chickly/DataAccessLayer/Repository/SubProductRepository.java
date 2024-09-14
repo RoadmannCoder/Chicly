@@ -10,6 +10,7 @@ import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 public class SubProductRepository extends GenericCrudManager<SubProduct,Object> {
     public SubProductRepository() {
@@ -69,19 +70,45 @@ public class SubProductRepository extends GenericCrudManager<SubProduct,Object> 
     }
 
     public void deleteSubproductById(String subProductId) {
-//        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-//        CriteriaUpdate<SubProduct> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(SubProduct.class);
-//        Root<SubProduct> root = criteriaUpdate.from(SubProduct.class);
-//        criteriaUpdate.set("isDeleted", "1");
-//        criteriaUpdate.where(criteriaBuilder.equal(root.get("id"), subProductId));
-//        entityManager.createQuery(criteriaUpdate).executeUpdate();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaUpdate<SubProduct> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(SubProduct.class);
+        Root<SubProduct> root = criteriaUpdate.from(SubProduct.class);
+        criteriaUpdate.set("isDeleted", true);
+        criteriaUpdate.where(criteriaBuilder.equal(root.get("id"), subProductId));
+        entityManager.createQuery(criteriaUpdate).executeUpdate();
     }
 
     public List<SubProduct> findBySubCategoryName(String subcategoryId) {
         CriteriaBuilder cb = JpaUtil.getEntityManagerFactory().getCriteriaBuilder();
         CriteriaQuery<SubProduct> q = cb.createQuery(SubProduct.class);
         Root<SubProduct> sub = q.from(SubProduct.class);
-        q.select(sub).where(cb.equal(sub.get("product").get("subCategory").get("name"),subcategoryId));
+        q.select(sub).where(
+                cb.and(
+                        cb.equal(sub.get("product").get("subCategory").get("name"), subcategoryId),
+                        cb.equal(sub.get("isDeleted"), false)
+                )
+        );
+        return entityManager.createQuery(q).getResultList();
+    }
+
+    public SubProduct findSubCategoryById(String searchId) {
+        CriteriaBuilder cb = JpaUtil.getEntityManagerFactory().getCriteriaBuilder();
+        CriteriaQuery<SubProduct> q = cb.createQuery(SubProduct.class);
+        Root<SubProduct> sub = q.from(SubProduct.class);
+        q.select(sub).where(
+                cb.and(
+                        cb.equal(sub.get("id"), searchId),
+                        cb.equal(sub.get("isDeleted"), false)
+                )
+        );
+        return entityManager.createQuery(q).getSingleResult();
+    }
+
+    public List<SubProduct> findAllSubCategories() {
+        CriteriaBuilder cb = JpaUtil.getEntityManagerFactory().getCriteriaBuilder();
+        CriteriaQuery<SubProduct> q = cb.createQuery(SubProduct.class);
+        Root<SubProduct> sub = q.from(SubProduct.class);
+        q.select(sub).where(cb.equal(sub.get("isDeleted"), false));
         return entityManager.createQuery(q).getResultList();
     }
 }

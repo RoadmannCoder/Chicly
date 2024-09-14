@@ -42,12 +42,6 @@ public class SubProductService {
         List<SubProductDTO> subProducts = SubProductMapper.fromSubProductEntityToSubProductViewDTO(subProductRepository.findAll());
         return subProducts;
     }
-//    public List<SubProductForAdminDTO> getAllSubProductForAdminDTOs (HttpServletRequest req){
-//        SubProductRepository subProductRepository = new SubProductRepository();
-//
-//        List<SubProductForAdminDTO> subProducts = SubProductMapper.fromSubProductEntityToSubProductForAdminDTO(subProductRepository.findAll());
-//        return subProducts;
-//    }
     public List<SubProductForAdminDTO> getAllSubProductForAdminDTOs (HttpServletRequest req){
         SubProductRepository subProductRepository = new SubProductRepository();
         String subcategoryId = req.getParameter("subcategory");
@@ -59,10 +53,10 @@ public class SubProductService {
             subProducts = SubProductMapper.
                     fromSubProductEntityToSubProductForAdminDTO(Optional.ofNullable(subProductRepository.findBySubCategoryName(subcategoryId)));
         }else if(searchId !=null){
-            subProducts.add(SubProductMapper.convertEntityToSubProdcutAdminDTO(subProductRepository.findBy("id",searchId)));
+            subProducts.add(SubProductMapper.convertEntityToSubProdcutAdminDTO(subProductRepository.findSubCategoryById(searchId)));
         }else{
             subProducts = SubProductMapper.
-                    fromSubProductEntityToSubProductForAdminDTO(subProductRepository.findAll());
+                    fromSubProductEntityToSubProductForAdminDTO(Optional.ofNullable(subProductRepository.findAllSubCategories()));
         }
 
         return subProducts;
@@ -91,10 +85,14 @@ public class SubProductService {
 
     public SubProductDTO createSubProductDTO(HttpServletRequest request) throws ServletException, IOException {
         String colorParam = request.getParameter("color");
+        System.out.println(colorParam);
         String mainProductId = request.getParameter("mainProduct");
+        System.out.println(mainProductId);
         String size = request.getParameter("size");
-//        String productName = request.getParameter("productName");
-        int stock = Integer.parseInt(request.getParameter("stock"));
+        System.out.println(size);
+        System.out.println(request.getParameter("quantity"));
+        System.out.println(request.getParameter("price"));
+        int stock = Integer.parseInt(request.getParameter("quantity"));
         BigDecimal price = new BigDecimal(request.getParameter("price"));
 
         SubProductDTO subProduct = new SubProductDTO();
@@ -103,6 +101,7 @@ public class SubProductService {
         subProduct.setPrice(price);
         subProduct.setColor(colorParam);
         subProduct.setSize(size);
+        subProduct.setIsDeleted(false);
 
         Part imagePart = request.getPart("image");
         if (imagePart != null && imagePart.getSize() > 0) {
@@ -137,7 +136,7 @@ public class SubProductService {
         subProductRepository.updateSubProductQuantityAndPrice(subProductId,stock,price);
     }
     public void deleteSubProduct(HttpServletRequest request) {
-        String subProductId = request.getParameter("subProductId");
+        String subProductId = request.getParameter("subproduct_Id");
         subProductRepository.deleteSubproductById(subProductId);
     }
     public SubProductDTO convertJsonToSubProductDTO(HttpServletRequest req) throws IOException {

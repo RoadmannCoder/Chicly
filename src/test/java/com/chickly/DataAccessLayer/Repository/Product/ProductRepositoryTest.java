@@ -3,6 +3,7 @@ package com.chickly.DataAccessLayer.Repository.Product;
 import com.chickly.DataAccessLayer.Entities.Customer;
 import com.chickly.DataAccessLayer.Entities.Product;
 import com.chickly.DataAccessLayer.Repository.ProductRepository;
+import com.chickly.Enums.Gender;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.AfterAll;
@@ -25,7 +26,7 @@ public class ProductRepositoryTest {
 
     @Test
     void testInsertProductToDB(){
-        Product product = new Product("Socks","Long Socks","UNISEX","1");
+        Product product = new Product("Socks","Long Socks", Gender.valueOf("UNISEX"),"1");
         productRepository.create(product);
         assertNotNull(product.getId());
         assertSame(productRepository.findBy("id",product.getId()).getId(),product.getId());

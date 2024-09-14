@@ -7,12 +7,16 @@
     <title>Add New Product - Chicly Admin</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="admin-dashboard/css/addSubCategory.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 </head>
 <body>
 <div class="container mt-5">
     <!-- Back Button -->
     <div class="mb-4">
-        <a href="adminDashboard.jsp" class="btn btn-black">Back to Dashboard</a>
+        <a href="adminDashboard.jsp" class="btn btn-black">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+
     </div>
     <div class="header-container">
         <h2 class="header-font">Add New SubCategory</h2>
@@ -36,7 +40,9 @@
         </div>
 
 
-        <button id="addBtn" type="submit" class="btn btn-teal btn-block mt-2">Add SubCategory</button>
+        <button id="addBtn" type="submit" class="btn btn-teal btn-block mt-2">
+            <i class="fas fa-plus"></i> Add SubCategory
+        </button>
     </form>
 </div>
 

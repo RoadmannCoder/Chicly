@@ -7,12 +7,14 @@
     <title>Customer Profiles - Chicly Admin</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="admin-dashboard/css/customerProfiles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
 <div class="container mt-5">
     <!-- Back Button -->
     <div class="mb-4">
-        <a href="adminDashboard.jsp" class="btn btn-black">Back to Dashboard</a>
+        <a href="adminDashboard.jsp" class="btn btn-black">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard</a>
     </div>
     <!-- Header Container -->
     <div class="header-container">
@@ -31,12 +33,16 @@
             <input type="text" id="searchId" class="form-control mb-2" placeholder="Search by ID">
         </div>
         <div class="col-md-3">
-            <button class="btn btn-black btn-block" onclick="resetFilters()">Reset</button>
+            <button class="btn btn-black btn-block" onclick="resetFilters()">
+                <i class="fas fa-redo"></i> Reset
+            </button>
         </div>
     </div>
     <div class="row mb-4">
         <div class="col-md-12">
-            <button class="btn btn-teal btn-block" onclick="searchCustomers()">Search</button>
+            <button class="btn btn-teal btn-block" onclick="searchCustomers()">
+                <i class="fas fa-search"></i> Search
+            </button>
         </div>
     </div>
 
@@ -56,7 +62,8 @@
                         <p class="card-text">Username: ${customer.userName}</p>
                         <p class="card-text">Email: ${customer.email}</p>
                         <p class="card-text">Phone: ${customer.phoneNumber}</p>
-                        <a href="customerDetails?userName=${customer.userName}" class="btn btn-black">View Details</a>
+                        <a href="customerDetails?userName=${customer.userName}" class="btn btn-black">
+                            <i class="fas fa-eye"></i> View Details</a>
                     </div>
                 </div>
             </div>

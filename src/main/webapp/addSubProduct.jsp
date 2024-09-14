@@ -7,18 +7,21 @@
     <title>Add New Product - Chicly Admin</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="admin-dashboard/css/addProduct.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 </head>
 <body>
 <div class="container mt-5">
     <!-- Back Button -->
     <div class="mb-4">
-        <a href="productView" class="btn btn-black">Back to Products</a>
+        <a href="productView" class="btn btn-black">
+            <i class="fas fa-arrow-left"></i> Back to Products</a>
     </div>
     <div class="header-container">
         <h2 class="header-font">Add New Product</h2>
     </div>
 
-    <form action="addProduct" method="post" enctype="multipart/form-data">
+    <form action="addsubProduct" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="mainProduct">Main Product</label>
             <select class="form-control" id="mainProduct" name="mainProduct" required>
@@ -69,7 +72,9 @@
             <img id="imagePreview" src="" alt="Image Preview" style="display:none; margin-top:10px; max-width: 200px;">
         </div>
 
-        <button id="addBtn" type="submit" class="btn btn-teal btn-block mt-2">Add Product</button>
+        <button id="addBtn" type="submit" class="btn btn-teal btn-block mt-2">
+            <i class="fas fa-plus"></i> Add New Product
+        </button>
     </form>
 </div>
 <script src="admin-dashboard/js/addProduct.js"></script>

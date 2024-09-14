@@ -1,4 +1,4 @@
-package com.chickly.PresentationLayer;
+package com.chickly.PresentationLayer.Controller;
 
 import com.chickly.BussinesLayer.SubProductService;
 import jakarta.servlet.ServletException;
@@ -16,7 +16,7 @@ public class DeleteSubProductController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+        doPost(req,resp);
     }
 
     @Override

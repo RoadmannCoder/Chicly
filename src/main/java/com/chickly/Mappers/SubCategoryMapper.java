@@ -17,7 +17,7 @@ public class SubCategoryMapper {
         SubCategoryDTO dto = new SubCategoryDTO();
         dto.setId(subCategory.getId());
         dto.setName(subCategory.getName());
-        dto.setId(subCategory.getCategory().getId());
+        dto.setCategoryID(subCategory.getCategory().getId());
         return dto;
     }
     public static List<SubCategoryDTO> fromEntityToSubCategoryDTO(Optional<List<SubCategory>> subCategoriesOptional) {
