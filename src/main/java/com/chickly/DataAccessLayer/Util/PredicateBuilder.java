@@ -16,8 +16,8 @@ public class PredicateBuilder {
 
         List<Predicate> predicates = new ArrayList<>();
 
-        if (filter.getCategoryId()!= null) {
-            predicates.add(cb.equal(subProductRoot.get("product").get("subCategory").get("category").get("id"), filter.getCategoryId()));
+        if (filter.getCategoryName()!= null && !filter.getCategoryName().isEmpty()) {
+            predicates.add(cb.equal(subProductRoot.get("product").get("subCategory").get("category").get("name"), filter.getCategoryName()));
         }
 
         if (filter.getProductName() != null && !filter.getProductName().isEmpty()) {
@@ -46,7 +46,13 @@ public class PredicateBuilder {
             predicates.add(cb.equal(subProductRoot.get("isDeleted"), filter.getIsDeleted()));
         }
 
+        if (filter.getInStock() != null && filter.getInStock() == Boolean.TRUE) {
+            predicates.add(cb.notEqual(subProductRoot.get("stock"), 0));
+        }
 
+        if (filter.getInStock() != null && filter.getInStock() == Boolean.FALSE) {
+            predicates.add(cb.equal(subProductRoot.get("stock"), 0));
+        }
         return predicates;
     }
 }

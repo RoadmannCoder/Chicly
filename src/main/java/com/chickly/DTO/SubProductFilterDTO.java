@@ -19,8 +19,10 @@ public class SubProductFilterDTO {
     private Size size;
     private Color color;
     private Integer categoryId;
+    private String categoryName;
     private Integer pageNumber;
     private Integer pageSize = 6;
     private Boolean isDeleted = Boolean.FALSE;
     private Boolean isNewArrival;
+    private Boolean inStock = Boolean.TRUE;
 }

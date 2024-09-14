@@ -68,9 +68,9 @@
                             </div>
                             <div class="size__list">
                                 <c:forEach var="category" items="${categories}">
-                                    <label for="${category.id}">
+                                    <label for="${category.name}">
                                             ${category.name}
-                                        <input type="radio" name="category" id="${category.id}" value="${category.id}" ${param.category == category.id ? 'checked' : ''}>
+                                        <input type="radio" name="category" id="${category.name}" value="${category.name}" ${param.category == category.name ? 'checked' : ''}>
                                         <span class="checkmark"></span>
                                     </label>
                                 </c:forEach>

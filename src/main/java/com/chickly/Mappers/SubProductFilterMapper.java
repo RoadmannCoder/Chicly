@@ -18,7 +18,7 @@ public class SubProductFilterMapper {
         filterDTO.setSize(parseSizeEnum(request.getParameter("size")));
         filterDTO.setColor(parseColorEnum(request.getParameter("color")));
         filterDTO.setPageNumber(parseInteger(request.getParameter("page"), 1));
-        filterDTO.setCategoryId(parseInteger(request.getParameter("category"),null));
+        filterDTO.setCategoryName(request.getParameter("category"));
 
         return filterDTO;
     }
