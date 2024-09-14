@@ -11,17 +11,13 @@
 </head>
 <body>
 <div class="container mt-5">
-    <!-- Back Button -->
     <div class="mb-4">
         <a href="adminDashboard.jsp" class="btn btn-black">
             <i class="fas fa-arrow-left"></i> Back to Dashboard</a>
     </div>
-    <!-- Header Container -->
     <div class="header-container">
         <h2 class="header-font">Customer Profiles</h2>
     </div>
-
-    <!-- Search and Filter Form -->
     <div class="row mb-4">
         <div class="col-md-3">
             <input type="text" id="searchUsername" class="form-control mb-2" placeholder="Search by Username">
@@ -46,7 +42,6 @@
         </div>
     </div>
 
-    <!-- Customer List -->
     <div class="row">
         <c:if test="${empty customers}">
             <div class="col-md-12">
@@ -84,7 +79,6 @@
 
         window.location.href = 'customerView?userName='+username+'&email='+email+'&Id='+id;
     }
-
     function resetFilters() {
         // Redirect to the servlet to refresh the customer list
         window.location.href = 'customerView';

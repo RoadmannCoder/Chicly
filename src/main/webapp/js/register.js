@@ -1,3 +1,43 @@
+document.addEventListener("DOMContentLoaded", function() {
+    // List of Egyptian governorates
+    const governorates = [
+        "Cairo",
+        "Alexandria",
+        "Giza",
+        "Port Said",
+        "Suez",
+        "Mansoura",
+        "Tanta",
+        "Aswan",
+        "Asyut",
+        "Ismailia",
+        "Fayoum",
+        "Minya",
+        "Daqahliya",
+        "Kafr El Sheikh",
+        "Beni Suef",
+        "Zagazig",
+        "Qena",
+        "Luxor",
+        "Matruh",
+        "New Valley (Wadi El Nile)",
+        "Red Sea",
+        "North Sinai",
+        "South Sinai",
+        "Sohag",
+        "Qalyubia",
+        "Sharqia"
+    ];
+    // Populate the city dropdown
+    const citySelect = document.getElementById("city");
+    cities.forEach(city => {
+        const option = document.createElement("option");
+        option.value = city;
+        option.text = city;
+        citySelect.add(option);
+    });
+});
+
 ///////////////////////////////Handling Credit Limit Validation//////////////////////////////////////////////////////////
 function checkCreditLimit() {
     var creditValue = document.getElementById("creditLimit").value;
@@ -10,79 +50,91 @@ function checkCreditLimit() {
 }
 // ////////////////////////////Handling Phone Number Validation//////////////////////////////////////////////////////////
 var phoneNumReq;
+
 function checkPhoneNumber() {
     var phoneNumber = document.getElementById("phoneNumber").value;
-
     const phoneRegex = /^01[0125][0-9]{8}$/;
-
-    if (!phoneRegex.test(phoneNumber)){
+    if (!phoneRegex.test(phoneNumber)) {
         document.getElementById("phoneerror").innerText = "Phone number is not valid";
         return;
-    }else{
+    } else {
         document.getElementById("phoneerror").innerText = "";
     }
+
+    // Create and send AJAX request
     phoneNumReq = new XMLHttpRequest();
     phoneNumReq.onreadystatechange = handlePhoneNumReq;
-
-    phoneNumReq.open("POST", "register", true);
+    phoneNumReq.open("POST", "phoneValidator", true);
     phoneNumReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    phoneNumReq.send("phoneNo="+phoneNumber+"&checkType=phoneCheck");
+    phoneNumReq.send("phoneNo=" + encodeURIComponent(phoneNumber));
 }
 function handlePhoneNumReq() {
-    if (phoneNumReq.readyState === 4 && phoneNumReq.status === 200) {
-        document.getElementById("phoneerror").innerText = phoneNumReq.responseText;
-    } else if (phoneNumReq.readyState === 4) {
-        document.getElementById("phoneerror").innerText = "Error code: " + phoneNumReq.responseText;
+    if (phoneNumReq.readyState === 4) {
+        if (phoneNumReq.status === 200) {
+            document.getElementById("phoneerror").innerText = phoneNumReq.responseText;
+        } else {
+            document.getElementById("phoneerror").innerText = "Error code: " + phoneNumReq.status;
+        }
     }
 }
+
 // ////////////////////////////Handling Email Validation//////////////////////////////////////////////////////////
 var emailReq;
 
 function checkEmail() {
     var email = document.getElementById("email").value;
 
+    // Regular expression for validating an Email
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    // Test the phone number against the regex
-    if (!emailRegex.test(email)){
+    // Test the email against the regex
+    if (!emailRegex.test(email)) {
         document.getElementById("emailerror").innerText = "Email is not valid";
         return;
-    }else{
+    } else {
         document.getElementById("emailerror").innerText = "";
     }
+
+    // Create and send AJAX request
     emailReq = new XMLHttpRequest();
     emailReq.onreadystatechange = handleEmailReq;
-    emailReq.open("POST", "register", true);
+    emailReq.open("POST", "emailValidator", true);
     emailReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    emailReq.send("email="+email+"&checkType=emailcheck");
+    emailReq.send("email=" + encodeURIComponent(email));
 }
 function handleEmailReq() {
-    if (emailReq.readyState === 4 && emailReq.status === 200) {
-        document.getElementById("emailerror").innerText = emailReq.responseText;
-    } else if (emailReq.readyState === 4) {
-        document.getElementById("emailerror").innerText = "Error code: " + emailReq.responseText;
+    if (emailReq.readyState === 4) {
+        if (emailReq.status === 200) {
+            document.getElementById("emailerror").innerText = emailReq.responseText;
+        } else {
+            document.getElementById("emailerror").innerText = "Error code: " + emailReq.status;
+        }
     }
 }
-// ////////////////////////////Handling Username Validation//////////////////////////////////////////////////////////
 
+// ////////////////////////////Handling Username Validation//////////////////////////////////////////////////////////
 var usernameReq;
-function checkUserName(){
+
+function checkUserName() {
     usernameReq = new XMLHttpRequest();
     usernameReq.onreadystatechange = handleUserReq;
-    yourvalue = document.getElementById("userName").value;
-    console.log("value"+yourvalue);
-    usernameReq.open("POST", "register", true);
+    var yourvalue = document.getElementById("userName").value;
+    console.log("value: " + yourvalue);
+    usernameReq.open("POST", "usernameValidator", true);
     usernameReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    usernameReq.send("uName="+yourvalue+"&checkType=usernamecheck");
+    usernameReq.send("uName=" + encodeURIComponent(yourvalue));
 }
 function handleUserReq() {
-    if (usernameReq.readyState === 4 && usernameReq.status === 200) {
-        document.getElementById("usernameerror").innerHTML = usernameReq.responseText;
-    }
-    else if (usernameReq.readyState === 4) {
-        document.getElementById("usernameerror").innerHTML = "Error code: " + emailReq.responseText;
+    if (usernameReq.readyState === 4) {
+        if (usernameReq.status === 200) {
+            document.getElementById("usernameerror").innerHTML = usernameReq.responseText;
+        } else {
+            document.getElementById("usernameerror").innerHTML = "Error code: " + usernameReq.status;
+        }
     }
 }
+
+
 // ////////////////////////////Check Form Validation//////////////////////////////////////////////////////////
 function checkCondition() {
     var registerBtn = document.getElementById("registerBtn");

@@ -86,7 +86,9 @@
                     </div>
                     <div class="input-field">
                         <label>City</label>
-                        <input type="text" id="city" name="city" required>
+                        <select id="city" name="city" required>
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
                     </div>
                     <div class="input-field">
                         <label>Description</label>
