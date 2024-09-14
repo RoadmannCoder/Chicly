@@ -3,22 +3,16 @@ package com.chickly.DataAccessLayer.Repository;
 import com.chickly.DTO.SubProductFilterDTO;
 import com.chickly.DataAccessLayer.DBContext.EntityManagerUtil;
 import com.chickly.DataAccessLayer.DBContext.JpaUtil;
-import com.chickly.DataAccessLayer.Entities.Category;
 import com.chickly.DataAccessLayer.Entities.Product;
-import com.chickly.DataAccessLayer.Entities.SubCategory;
 import com.chickly.DataAccessLayer.Entities.SubProduct;
 import com.chickly.DataAccessLayer.Util.PredicateBuilder;
-import com.chickly.Enums.Color;
-import com.chickly.Enums.Size;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class SubProductRepository extends GenericCrudManager<SubProduct,Object> {
@@ -49,6 +43,8 @@ public class SubProductRepository extends GenericCrudManager<SubProduct,Object> 
         cq.where(predicates.toArray(new Predicate[0]));
 
         TypedQuery<SubProduct> query = entityManager.createQuery(cq);
+
+
         query.setFirstResult((filterDTO.getPageNumber() - 1) * filterDTO.getPageSize());
         query.setMaxResults(filterDTO.getPageSize());
 
