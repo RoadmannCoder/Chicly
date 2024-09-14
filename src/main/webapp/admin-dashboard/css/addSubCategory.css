@@ -1,0 +1,67 @@
+/* General container styles */
+.container {
+    max-width: 800px; /* Adjust the max-width to decrease the width of the form */
+}
+
+/* Header styling */
+.header-container {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+.btn-teal {
+    background-color: #20c997;
+    color: #fff;
+}
+.btn-teal:hover {
+    background-color: #1aa89c;
+    color: #fff;
+}
+.header-font {
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+}
+
+/* Button styling */
+.btn-black {
+    background-color: black;
+    color: white;
+    border: none;
+}
+
+.btn-black:hover {
+    background-color: #333;
+}
+
+/* Form styling */
+.form-group label {
+    font-size: 18px; /* Larger font for labels */
+    font-weight: bold; /* Make labels bold */
+}
+
+.form-group input,
+.form-group select {
+    font-size: 16px; /* Larger font for inputs and selects */
+    border: 2px solid #ccc; /* Border for input fields */
+    border-radius: 5px; /* Rounded corners */
+    padding: 8px; /* Padding inside the input fields */
+}
+
+/* Highlight input fields */
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #333; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+}
+
+/* Underline for labels */
+.form-group label {
+    text-decoration: underline; /* Underline the labels */
+}
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}

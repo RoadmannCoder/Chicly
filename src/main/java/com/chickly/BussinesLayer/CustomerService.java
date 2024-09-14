@@ -4,8 +4,11 @@ import com.chickly.DTO.CustomerRegistrationDTO;
 import com.chickly.DataAccessLayer.Entities.Customer;
 import com.chickly.DataAccessLayer.Repository.CustomerRepository;
 import com.chickly.Mappers.CustomerMapper;
+import com.chickly.DTO.CustomerViewDTO;
 
 import java.text.ParseException;
+import java.util.List;
+import java.util.Optional;
 
 public class CustomerService {
 
@@ -31,5 +34,26 @@ public class CustomerService {
     public void createCustomer(CustomerRegistrationDTO customerDTO) throws ParseException {
         Customer customer= CustomerMapper.fromCustomerRegistrationDTOToEntity(customerDTO);
         customerRepository.create(customer);
+    }
+    public List<CustomerViewDTO> getAllCustomers(){
+        Optional<List<Customer>> customerEntity = customerRepository.findAll();
+        List<CustomerViewDTO> customers = CustomerMapper.fromEntityToCustomerViewDTO(customerEntity);
+        return customers;
+    }
+
+    public CustomerViewDTO getCustomerByUserName(String userName) {
+        Customer customer= customerRepository.findyByUser(userName);
+        CustomerViewDTO customerViewDTO = CustomerViewDTO.fromCustomer(customer);
+        return customerViewDTO;
+    }
+    public CustomerViewDTO getCustomerByUserNameEmailID(String userName, String email, String Id) {
+        Customer customer = customerRepository.findUserByCriteria(userName, email, Id);
+        if (customer == null) {
+            return null;
+        }
+
+        CustomerViewDTO customerViewDTO = CustomerViewDTO.fromCustomer(customer);
+
+        return customerViewDTO;
     }
 }

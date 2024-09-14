@@ -1,0 +1,67 @@
+/* Container for the product image and form */
+.d-flex {
+    display: flex;
+    align-items: flex-start;
+}
+
+/* Style the product image section */
+.product-image-container {
+    width: 200px;
+}
+
+/* Style the product image */
+.product-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+/* Add some spacing between the image and the form */
+.ml-5 {
+    margin-left: 2rem; /* Or adjust to your desired spacing */
+}
+
+/* General styling for form elements */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.header-container {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.header-font {
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+}
+
+/* Button styling */
+.btn-black {
+    background-color: black;
+    color: white;
+    border: none;
+}
+
+.btn-teal {
+    background-color: #20c997;
+    color: #fff;
+}
+
+.btn-teal:hover {
+    background-color: #1aa89c;
+    color: #fff;
+}
+
+/* Add margin to the bottom of the button */
+.btn-block.mt-2 {
+    margin-bottom: 20px; /* Adjust to your desired space */
+}
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
