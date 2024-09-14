@@ -151,54 +151,7 @@
                     </form>
                 </div>
             </div>
-
             <div class="col-lg-9 col-md-9">
-                <div class="row" id="product-list">
-                    <!-- Products will be updated here -->
-                    <c:forEach var="subProduct" items="${subProducts}">
-                        <div class="col-lg-4 col-md-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="${subProduct.imageURL}">
-                                    <div class="label new">New</div>
-                                    <ul class="product__hover">
-                                        <li><a href="${subProduct.imageURL}" class="image-popup"><span class="arrow_expand"></span></a></li>
-                                        <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                        <li><a class="buttonAddToCart" data-id="${subProduct.id}" data-name="${subProduct.productName}" data-price="${subProduct.price}" data-image="${subProduct.imageURL}" data-stock="${subProduct.stock}"><span class="icon_bag_alt"></span></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6><a href="/product-details?product=${subProduct.id}" class="product-detail-button"
-                                           >${subProduct.productName}</a></h6>
-                                    <div class="rating">
-                                        <c:forEach var="i" begin="1" end="5">
-                                            <i class="fa fa-star"></i>
-                                        </c:forEach>
-                                    </div>
-                                    <div class="product__price">${subProduct.price}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </c:forEach>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Notification Area -->
-<div id="notification" class="alert" style="display: none;"></div>
-
-<div class="container mt-4">
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-            <!-- Previous Page Link -->
-            <c:if test="${currentPage > 1}">
-                <li class="page-item">
-                    <a class="page-link" href="filterProducts?page=${currentPage - 1}&category=${param.category}&productName=${fn:escapeXml(param.productName)}&minPrice=${param.minPrice}&maxPrice=${param.maxPrice}&color=${param.color}&size=${param.size}" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-            </c:if>
                 <div class="product-list-wrapper">
                     <div class="row" id="product-list">
                         <!-- Products will be updated here -->
@@ -206,23 +159,23 @@
                             <div class="col-lg-4 col-md-6">
                                 <div class="product__item">
                                     <div class="product__item__pic set-bg" data-setbg="${subProduct.imageURL}">
-<%--                                        <div class="label new">New</div>--%>
-                                            <c:if test="${subProduct.isNewArrival}">
-                                                <div class="label new">New</div>
-                                            </c:if>
+                                            <%--                                        <div class="label new">New</div>--%>
+                                        <c:if test="${subProduct.isNewArrival}">
+                                            <div class="label new">New</div>
+                                        </c:if>
                                         <ul class="product__hover">
                                             <li><a href="${subProduct.imageURL}" class="image-popup"><span class="arrow_expand"></span></a></li>
                                             <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                            <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                                            <li><a class="buttonAddToCart" data-id="${subProduct.id}" data-name="${subProduct.productName}" data-price="${subProduct.price}" data-image="${subProduct.imageURL}" data-stock="${subProduct.stock}"><span class="icon_bag_alt"></span></a></li>
                                         </ul>
                                     </div>
                                     <div class="product__item__text">
                                         <h6><a href="/product-details?product=${subProduct.id}" class="product-detail-button">${subProduct.productName}</a></h6>
-<%--                                        <div class="rating">--%>
-<%--                                            <c:forEach var="i" begin="1" end="5">--%>
-<%--                                                <i class="fa fa-star"></i>--%>
-<%--                                            </c:forEach>--%>
-<%--                                        </div>--%>
+                                            <%--                                        <div class="rating">--%>
+                                            <%--                                            <c:forEach var="i" begin="1" end="5">--%>
+                                            <%--                                                <i class="fa fa-star"></i>--%>
+                                            <%--                                            </c:forEach>--%>
+                                            <%--                                        </div>--%>
                                         <div class="product__price">${subProduct.price}</div>
                                     </div>
                                 </div>
@@ -264,6 +217,7 @@
         </div>
     </div>
 </section>
+
 
 <jsp:include page="common/footer.jsp"/>
 
