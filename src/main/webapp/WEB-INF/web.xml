@@ -6,32 +6,6 @@ https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          metadata-complete= "false">
 
 
-    <filter>
-        <filter-name>EmailValidationFilter</filter-name>
-        <filter-class>com.chickly.PresentationLayer.Filters.EmailValidationFilter</filter-class>
-    </filter>
-
-    <filter>
-        <filter-name>PhoneValidationFilter</filter-name>
-        <filter-class>com.chickly.PresentationLayer.Filters.PhoneValidationFilter</filter-class>
-    </filter>
-
-    <filter>
-        <filter-name>UsernameValidationFilter</filter-name>
-        <filter-class>com.chickly.PresentationLayer.Filters.UsernameValidationFilter</filter-class>
-    </filter>
-
-
-    <filter-mapping>
-        <filter-name>EmailValidationFilter</filter-name>
-        <url-pattern>/register</url-pattern>
-    </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>PhoneValidationFilter</filter-name>
-        <url-pattern>/register</url-pattern>
-    </filter-mapping>
-
 
 
 
