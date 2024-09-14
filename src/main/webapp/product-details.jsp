@@ -26,6 +26,59 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    <style>
+        .pro-qtyy {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 120px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            overflow: hidden;
+            background-color: #f9f9f9;
+        }
+
+        .pro-qtyy input {
+            width: 50px;
+            text-align: center;
+            border: none;
+            font-size: 16px;
+            background-color: transparent;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .qtybtn {
+            background-color: #fff;
+            border: none;
+            cursor: pointer;
+            padding: 8px 15px;
+            font-size: 18px;
+            font-weight: bold;
+            user-select: none;
+            transition: all 0.3s ease;
+            color: #666;
+        }
+
+        .qtybtn:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .qtybtn:active {
+            transform: scale(0.95);
+        }
+
+        .qtybtn.dec {
+            border-radius: 50px 0 0 50px;
+        }
+
+        .qtybtn.inc {
+            border-radius: 0 50px 50px 0;
+        }
+
+
+    </style>
 </head>
 <body>
     <!-- Page Preloder -->
@@ -42,8 +95,6 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb__links">
                         <a href="/"><i class="fa fa-home"></i> Home</a>
-                        <a href="#">Women’s </a>
-                        <span>Essential structured blazer</span>
                     </div>
                 </div>
             </div>
@@ -73,24 +124,18 @@
                 <div class="col-lg-6">
                     <div class="product__details__text">
                         <h3>${product.productName}</h3>
-                        <div class="rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <span>( 138 reviews )</span>
-                        </div>
-                        <div class="product__details__price">$ ${product.price} <span>$ 83.0</span></div>
+                        <div class="product__details__price">$ ${product.price} </div>
                         <p>${product.description}</p>
                         <div class="product__details__button">
                             <div class="quantity">
                                 <span>Quantity:</span>
-                                <div class="pro-qty">
-                                    <input type="text" value="1">
+                                <div class="pro-qtyy">
+                                    <button type="button" class="qtybtn dec">-</button>
+                                    <input type="text" id="quantity" value="1" min="1" max="${product.stock}" readonly>
+                                    <button type="button" class="qtybtn inc">+</button>
                                 </div>
                             </div>
-                            <a href="#" class="cart-btn"><span class="icon_bag_alt"></span> Add to cart</a>
+                            <a class="cart-btn" onclick="addToCart(${product.id}, '${product.productName}', '${product.imageURL}', ${product.price}, ${product.stock})"><span class="icon_bag_alt"></span> Add to cart</a>
                             <ul>
                                 <li><a href="#"><span class="icon_heart_alt"></span></a></li>
                                 <li><a href="#"><span class="icon_adjust-horiz"></span></a></li>
@@ -171,7 +216,7 @@
                             <ul class="product__hover">
                                 <li><a href="img/product/related/rp-1.jpg" class="image-popup"><span class="arrow_expand"></span></a></li>
                                 <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                                <li><a href="/cart"><span class="icon_bag_alt"></span></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">
@@ -193,7 +238,7 @@
                             <ul class="product__hover">
                                 <li><a href="img/product/related/rp-2.jpg" class="image-popup"><span class="arrow_expand"></span></a></li>
                                 <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                                <li><a href="/cart"><span class="icon_bag_alt"></span></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">
@@ -216,7 +261,7 @@
                             <ul class="product__hover">
                                 <li><a href="img/product/related/rp-3.jpg" class="image-popup"><span class="arrow_expand"></span></a></li>
                                 <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                                <li><a href="/cart"><span class="icon_bag_alt"></span></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">
@@ -238,7 +283,7 @@
                             <ul class="product__hover">
                                 <li><a href="img/product/related/rp-4.jpg" class="image-popup"><span class="arrow_expand"></span></a></li>
                                 <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                                <li><a href="/cart"><span class="icon_bag_alt"></span></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">
@@ -340,6 +385,67 @@
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/jquery.nicescroll.min.js"></script>
     <script src="js/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const stock = ${product.stock};  // Available stock from your product object
+            let quantity = 1;  // Initial quantity
+
+            // Update quantity when +/- buttons are clicked
+            document.querySelector(".inc").addEventListener("click", function() {
+                if (quantity < stock) {
+                    quantity++;
+                    document.getElementById("quantity").value = quantity;
+                }
+            });
+
+            document.querySelector(".dec").addEventListener("click", function() {
+                if (quantity > 1) {
+                    quantity--;
+                    document.getElementById("quantity").value = quantity;
+                }
+            });
+        });
+
+        function addToCart(productId, productName, productImage, productPrice, maxStock) {
+            const quantity = document.getElementById('quantity').value;
+
+            if (quantity > maxStock) {
+                alert('Quantity exceeds available stock.');
+                return;
+            }
+
+            // Create data to send to servlet
+            const data = {
+                id: productId,
+                productName: productName,
+                imageURL: productImage,
+                price: productPrice,
+                stock:maxStock,
+                quantity: quantity
+            };
+
+
+            $.ajax({
+                type: 'POST',
+                url: '/product-details',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                success: function(response) {
+                    if (response.status === "success") {
+                        $('.icon_bag_alt').siblings('.tip').text(response.cartItemCount);
+                        alert('Product added to cart!');
+                    } else if (response.status === "fail") {
+                        alert(response.message);
+                    }
+
+                },
+                error: function() {
+                    alert('Error adding product to cart.');
+                }
+            });
+        }
+    </script>
+
 </body>
 
 </html>

@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-//@WebFilter("/register")
+@WebFilter("/register")
 public class UsernameValidationFilter implements Filter {
 
     private CustomerService customerService;

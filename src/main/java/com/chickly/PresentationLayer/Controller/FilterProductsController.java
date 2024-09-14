@@ -1,5 +1,6 @@
 package com.chickly.PresentationLayer.Controller;
 
+import com.chickly.BussinesLayer.CartService;
 import com.chickly.BussinesLayer.CategoryService;
 import com.chickly.BussinesLayer.SubProductService;
 import com.chickly.DTO.CategoryDTO;
@@ -9,13 +10,16 @@ import com.chickly.DataAccessLayer.Entities.SubProduct;
 import com.chickly.DataAccessLayer.Repository.SubProductRepository;
 import com.chickly.Enums.Color;
 import com.chickly.Enums.Size;
+import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +56,30 @@ public class FilterProductsController extends HttpServlet {
 
         request.getRequestDispatcher("/shop.jsp").forward(request, response);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        CartService cartService = (CartService) req.getSession().getAttribute("cart");
+        if(cartService == null) {
+            cartService = new CartService();
+        }
+        BufferedReader reader = req.getReader();
+        StringBuilder jsonData = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            jsonData.append(line);
+        }
+
+        Gson gson = new Gson();
+        SubProductDTO product = gson.fromJson(jsonData.toString(), SubProductDTO.class);
+        cartService.addCartItem(product);
+        req.getSession().setAttribute("cart",cartService);
+        resp.setContentType("application/json");
+        PrintWriter out = resp.getWriter();
+        out.print("{ \"message\": \"Product added to cart\", \"cartItemCount\": " + cartService.getTotalCartItems() + " }");
+        out.flush();
+    }
+
     private BigDecimal parseBigDecimal(String value) {
         try {
             return value != null && !value.isEmpty() ? new BigDecimal(value) : null;

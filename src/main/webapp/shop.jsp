@@ -155,7 +155,7 @@
                                     <ul class="product__hover">
                                         <li><a href="${subProduct.imageURL}" class="image-popup"><span class="arrow_expand"></span></a></li>
                                         <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                        <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                                        <li><a class="buttonAddToCart" data-id="${subProduct.id}" data-name="${subProduct.productName}" data-price="${subProduct.price}" data-image="${subProduct.imageURL}" data-stock="${subProduct.stock}"><span class="icon_bag_alt"></span></a></li>
                                     </ul>
                                 </div>
                                 <div class="product__item__text">
@@ -177,6 +177,8 @@
     </div>
 </section>
 
+<!-- Notification Area -->
+<div id="notification" class="alert" style="display: none;"></div>
 
 <div class="container mt-4">
     <nav aria-label="Page navigation">
@@ -232,5 +234,61 @@
 <script src="js/jquery.nicescroll.min.js"></script>
 <script src="js/main.js"></script>
 <script src="js/product-display.js"></script>
+<script>
+    $(document).ready(function () {
+        // Event listener for all Add to Cart buttons
+        $(".buttonAddToCart").click(function (e) {
+            e.preventDefault(); // Prevent the default action of the anchor tag
+
+            // Get product details from data attributes
+            const productId = $(this).data("id");
+            const productName = $(this).data("name");
+            const productPrice = $(this).data("price");
+            const productImage = $(this).data("image");
+            const productStock = $(this).data("stock");
+
+            // Create an object to send to the server
+            const productData = {
+                id: productId,
+                name: productName,
+                price: productPrice,
+                imageURL: productImage,
+                stock: productStock,
+                quantity: 1 // Default to 1, or you can let the user input the quantity
+            };
+
+            // Send product details via Ajax to the backend (Servlet)
+            $.ajax({
+                url: '/filterProducts', // URL of the servlet that handles adding to cart
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(productData),
+                success: function (response) {
+                    $('#notification')
+                        .removeClass('alert-danger')
+                        .addClass('alert-success')
+                        .text('Product added to cart successfully!')
+                        .fadeIn().delay(3000).fadeOut();
+
+                    // Optionally, update the cart UI with the updated cart count
+                    $('.icon_bag_alt').siblings('.tip').text(response.cartItemCount);
+                    alert("Product added to cart successfully!");
+
+                    // Optionally, update the cart UI or display cart details
+                    // Example: $('#cart-count').text(response.cartItemCount);
+                },
+                error: function (xhr, status, error) {
+                    $('#notification')
+                        .removeClass('alert-success')
+                        .addClass('alert-danger')
+                        .text('Error adding product to cart. Please try again.')
+                        .fadeIn().delay(3000).fadeOut();
+                    alert("Error adding product to cart. Please try again.");
+                }
+            });
+        });
+    });
+
+</script>
 </body>
 </html>
