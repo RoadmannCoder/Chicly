@@ -27,6 +27,9 @@ public class PredicateBuilder {
         if (filter.getColor() != null) {
             predicates.add(cb.equal(subProductRoot.get("color"), filter.getColor()));
         }
+        if (filter.getGender() != null) {
+            predicates.add(cb.equal(subProductRoot.get("product").get("gender"), filter.getGender()));
+        }
         if (filter.getSize() != null) {
             predicates.add(cb.equal(subProductRoot.get("size"), filter.getSize()));
         }

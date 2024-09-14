@@ -2,6 +2,7 @@ package com.chickly.DTO;
 
 import java.math.BigDecimal;
 import com.chickly.Enums.Color;
+import com.chickly.Enums.Gender;
 import com.chickly.Enums.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +19,7 @@ public class SubProductFilterDTO {
     private BigDecimal maxPrice;
     private Size size;
     private Color color;
+    private Gender gender;
     private Integer categoryId;
     private String categoryName;
     private Integer pageNumber;

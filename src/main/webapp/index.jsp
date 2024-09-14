@@ -44,7 +44,7 @@
                         <h1>Women’s fashion</h1>
                         <p>Sitamet, consectetur adipiscing elit, sed do eiusmod tempor incidid-unt labore
                             edolore magna aliquapendisse ultrices gravida.</p>
-                        <a href="#">Shop now</a>
+                        <a href="filterProducts?gender=female">Shop now</a>
                     </div>
                 </div>
             </div>
@@ -102,7 +102,7 @@
             <c:forEach var="subProduct" items="${subProducts}">
             <div class="col-lg-3 col-md-4 col-sm-6 mix women">
                 <div class="product__item">
-                    <div class="product__item__pic set-bg" data-setbg="data-setbg="${subProduct.imageURL}">
+                    <div class="product__item__pic set-bg" data-setbg="${subProduct.imageURL}">
                     <c:if test="${subProduct.isNewArrival}">
                         <div class="label new">New</div>
                     </c:if>
@@ -133,21 +133,21 @@
                         <div class="banner__text">
                             <span>The Chloe Collection</span>
                             <h1>The Project Jacket</h1>
-                            <a href="#">Shop now</a>
+                            <a href="filterProducts">Shop now</a>
                         </div>
                     </div>
                     <div class="banner__item">
                         <div class="banner__text">
                             <span>The Chloe Collection</span>
                             <h1>The Project Jacket</h1>
-                            <a href="#">Shop now</a>
+                            <a href="filterProducts">Shop now</a>
                         </div>
                     </div>
                     <div class="banner__item">
                         <div class="banner__text">
                             <span>The Chloe Collection</span>
                             <h1>The Project Jacket</h1>
-                            <a href="#">Shop now</a>
+                            <a href="filterProducts">Shop now</a>
                         </div>
                     </div>
                 </div>
@@ -162,16 +162,6 @@
 
 <jsp:include page="common/footer.jsp"/>
 
-<!-- Search Begin -->
-<div class="search-model">
-    <div class="h-100 d-flex align-items-center justify-content-center">
-        <div class="search-close-switch">+</div>
-        <form class="search-model-form">
-            <input type="text" id="search-input" placeholder="Search here.....">
-        </form>
-    </div>
-</div>
-<!-- Search End -->
 
 <!-- Js Plugins -->
 <script src="js/jquery-3.3.1.min.js"></script>
