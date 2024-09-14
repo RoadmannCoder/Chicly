@@ -73,6 +73,7 @@
 
 </style>
 <c:set var="cart" value="${sessionScope.cart}" />
+<c:set var="currentPage" value="${pageContext.request.servletPath}" />
 <!-- Offcanvas Menu Begin -->
 <div class="offcanvas-menu-overlay"></div>
 <div class="offcanvas-menu-wrapper">
@@ -115,10 +116,10 @@
             <div class="col-xl-6 col-lg-7">
                 <nav class="header__menu">
                     <ul>
-                        <li class="active"><a href="/">Home</a></li>
+                        <li class="${currentPage eq '/index.jsp' ? 'active' :''}"><a href="/">Home</a></li>
                         <li><a href="#">Women’s</a></li>
                         <li><a href="#">Men’s</a></li>
-                        <li><a href="filterProducts">Shop</a></li>
+                        <li class="${currentPage eq '/shop.jsp' ? 'active' :''}"><a href="filterProducts">Shop</a></li>
                         <li><a href="./contact.html">Contact</a></li>
                     </ul>
                 </nav>

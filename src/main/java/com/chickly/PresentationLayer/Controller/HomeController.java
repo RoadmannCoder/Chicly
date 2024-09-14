@@ -17,7 +17,7 @@ public class HomeController implements Filter {
         SubProductFilterDTO newArrivalsDTO = new SubProductFilterDTO();
         newArrivalsDTO.setIsNewArrival(true);
         newArrivalsDTO.setPageNumber(1);
-        newArrivalsDTO.setPageSize(20);
+        newArrivalsDTO.setPageSize(8);
 
         SubProductService subProductService = new SubProductService();
 
