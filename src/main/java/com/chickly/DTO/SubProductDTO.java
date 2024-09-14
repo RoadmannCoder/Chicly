@@ -19,4 +19,6 @@ public class SubProductDTO {
     private String size;
     private String description;
     private int stock;
+    private Boolean isNewArrival;
+    private Boolean isDeleted ;
 }

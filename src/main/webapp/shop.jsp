@@ -160,7 +160,10 @@
                             <div class="col-lg-4 col-md-6">
                                 <div class="product__item">
                                     <div class="product__item__pic set-bg" data-setbg="${subProduct.imageURL}">
-<%--                                        <div class="label new">${subProduct.size}</div>--%>
+<%--                                        <div class="label new">New</div>--%>
+                                            <c:if test="${subProduct.isNewArrival}">
+                                                <div class="label new">New</div>
+                                            </c:if>
                                         <ul class="product__hover">
                                             <li><a href="${subProduct.imageURL}" class="image-popup"><span class="arrow_expand"></span></a></li>
                                             <li><a href="#"><span class="icon_heart_alt"></span></a></li>

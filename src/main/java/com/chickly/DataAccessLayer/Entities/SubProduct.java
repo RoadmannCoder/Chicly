@@ -40,6 +40,10 @@ public class SubProduct {
 
     private String imageURL;
 
+    private Boolean isDeleted = false;
+
+    private Boolean isNewArrival = false;
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;

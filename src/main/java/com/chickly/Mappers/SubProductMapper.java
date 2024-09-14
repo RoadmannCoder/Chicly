@@ -19,6 +19,8 @@ public class SubProductMapper {
         dto.setSize(subProduct.getSize().name());
         dto.setStock(subProduct.getStock());
         dto.setDescription(subProduct.getProduct().getDescription());
+        dto.setIsDeleted(subProduct.getIsDeleted());
+        dto.setIsNewArrival(subProduct.getIsNewArrival());
 
         return dto;
     }

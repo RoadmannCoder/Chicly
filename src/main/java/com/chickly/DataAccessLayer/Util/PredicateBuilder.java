@@ -39,6 +39,13 @@ public class PredicateBuilder {
             predicates.add(cb.lessThanOrEqualTo(subProductRoot.get("price"), filter.getMaxPrice()));
         }
 
+        if (filter.getIsNewArrival() != null) {
+            predicates.add(cb.equal(subProductRoot.get("isNewArrival"), filter.getIsNewArrival()));
+        }
+        if (filter.getIsDeleted() != null) {
+            predicates.add(cb.equal(subProductRoot.get("isDeleted"), filter.getIsDeleted()));
+        }
+
 
         return predicates;
     }

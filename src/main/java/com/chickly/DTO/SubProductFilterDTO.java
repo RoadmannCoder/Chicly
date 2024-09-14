@@ -21,5 +21,6 @@ public class SubProductFilterDTO {
     private Integer categoryId;
     private Integer pageNumber;
     private Integer pageSize = 6;
-
+    private Boolean isDeleted = Boolean.FALSE;
+    private Boolean isNewArrival;
 }
