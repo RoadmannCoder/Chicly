@@ -1,5 +1,6 @@
 package com.chickly.Mappers;
 import com.chickly.DTO.CustomerRegistrationDTO;
+import com.chickly.DTO.CustomerViewDTO;
 import com.chickly.DataAccessLayer.Entities.Account;
 import com.chickly.DataAccessLayer.Entities.Address;
 import com.chickly.DataAccessLayer.Entities.Customer;
@@ -9,7 +10,10 @@ import jakarta.servlet.ServletException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 public class CustomerMapper {
 
@@ -62,4 +66,22 @@ public class CustomerMapper {
 
         return customer;
     }
+    public static List<CustomerViewDTO> fromEntityToCustomerViewDTO(Optional<List<Customer>> customersOptional) {
+        if (customersOptional.isEmpty()) {
+            return null;
+        }
+        List<CustomerViewDTO> customerViewDTOList = new ArrayList<>();
+
+        if (customersOptional.isPresent()) {
+            List<Customer> customersList = customersOptional.get();
+
+            for (Customer customer : customersList) {
+                CustomerViewDTO dto = CustomerViewDTO.fromCustomer(customer);
+                customerViewDTOList.add(dto);
+            }
+        }
+
+        return customerViewDTOList;
+    }
+
 }

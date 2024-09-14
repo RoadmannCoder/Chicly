@@ -7,12 +7,8 @@ import com.chickly.DataAccessLayer.Entities.Product;
 import com.chickly.DataAccessLayer.Entities.SubProduct;
 import com.chickly.DataAccessLayer.Util.PredicateBuilder;
 import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
-
-
+import jakarta.persistence.criteria.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class SubProductRepository extends GenericCrudManager<SubProduct,Object> {
@@ -43,8 +39,6 @@ public class SubProductRepository extends GenericCrudManager<SubProduct,Object> 
         cq.where(predicates.toArray(new Predicate[0]));
 
         TypedQuery<SubProduct> query = entityManager.createQuery(cq);
-
-
         query.setFirstResult((filterDTO.getPageNumber() - 1) * filterDTO.getPageSize());
         query.setMaxResults(filterDTO.getPageSize());
 
@@ -64,4 +58,30 @@ public class SubProductRepository extends GenericCrudManager<SubProduct,Object> 
     }
 
 
+    public void updateSubProductQuantityAndPrice(String subProductId, Integer stock, BigDecimal price) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaUpdate<SubProduct> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(SubProduct.class);
+        Root<SubProduct> root = criteriaUpdate.from(SubProduct.class);
+        criteriaUpdate.set("stock", stock);
+        criteriaUpdate.set("price", price);
+        criteriaUpdate.where(criteriaBuilder.equal(root.get("id"), subProductId));
+        entityManager.createQuery(criteriaUpdate).executeUpdate();
+    }
+
+    public void deleteSubproductById(String subProductId) {
+//        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+//        CriteriaUpdate<SubProduct> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(SubProduct.class);
+//        Root<SubProduct> root = criteriaUpdate.from(SubProduct.class);
+//        criteriaUpdate.set("isDeleted", "1");
+//        criteriaUpdate.where(criteriaBuilder.equal(root.get("id"), subProductId));
+//        entityManager.createQuery(criteriaUpdate).executeUpdate();
+    }
+
+    public List<SubProduct> findBySubCategoryName(String subcategoryId) {
+        CriteriaBuilder cb = JpaUtil.getEntityManagerFactory().getCriteriaBuilder();
+        CriteriaQuery<SubProduct> q = cb.createQuery(SubProduct.class);
+        Root<SubProduct> sub = q.from(SubProduct.class);
+        q.select(sub).where(cb.equal(sub.get("product").get("subCategory").get("name"),subcategoryId));
+        return entityManager.createQuery(q).getResultList();
+    }
 }

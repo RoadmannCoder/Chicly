@@ -1,0 +1,77 @@
+/* Sidebar styles */
+#wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+#sidebar-wrapper {
+    min-height: 100vh;
+    margin-left: -250px;
+    width: 250px;
+    background-color: #000; /* Black sidebar */
+    transition: margin 0.25s ease-out;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    margin-left: 0;
+}
+
+.sidebar-heading {
+    padding: 1rem 1.5rem;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+    background-color: #000;
+    color: #fff;
+    border-bottom: 1px solid #444;
+}
+
+.list-group-item {
+    background-color: #000; /* Black background */
+    color: #fff; /* White text */
+    border: none;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.list-group-item-action:hover {
+    background-color: #444; /* Darker hover effect */
+    color: #fff;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    padding-top: 20px;
+}
+
+.navbar {
+    padding: 0.75rem 1.5rem;
+}
+
+.navbar .navbar-brand {
+    font-weight: bold;
+    color: #000;
+}
+
+.container-fluid h1 {
+    color: #000; /* Black heading */
+    font-weight: 700;
+}
+
+.container-fluid p {
+    color: #555;
+}
+
+button#menu-toggle {
+    background-color: #000;
+    color: #fff;
+    border: none;
+}
+
+button#menu-toggle:hover {
+    background-color: #444;
+    color: #fff;
+}

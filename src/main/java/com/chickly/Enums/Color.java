@@ -9,5 +9,14 @@ public enum Color {
     BROWN,
     VIOLET,
     BLACK,
-    WHITE
+    WHITE,
+    OFF_WHITE,
+    PURPLE,
+    PINK,
+    GREY,
+    FADED_BLUE,
+    SAND,
+    NAVY,
+    MINT,
+    CHOCOLATE
 }
