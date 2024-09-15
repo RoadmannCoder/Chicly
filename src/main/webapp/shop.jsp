@@ -200,7 +200,7 @@
                                             <%--                                                <i class="fa fa-star"></i>--%>
                                             <%--                                            </c:forEach>--%>
                                             <%--                                        </div>--%>
-                                        <div class="product__price">${subProduct.price}</div>
+                                        <div class="product__price">$ ${subProduct.price}</div>
                                     </div>
                                 </div>
                             </div>

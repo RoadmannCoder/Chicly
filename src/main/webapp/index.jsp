@@ -62,7 +62,7 @@
                         <div class="categories__item set-bg" data-setbg="img/categories/male.jpg">
                             <div class="categories__text">
                                 <h4>Men 's fashion</h4>
-                                <a href="filterProducts?gender=female">Shop now</a>
+                                <a href="filterProducts?gender=male ">Shop now</a>
                             </div>
                         </div>
                     </div>

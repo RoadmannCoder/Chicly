@@ -33,6 +33,7 @@ public class SubProductMapper {
         dto.setDescription(subProduct.getProduct().getDescription());
         dto.setIsDeleted(subProduct.getIsDeleted());
         dto.setIsNewArrival(subProduct.getIsNewArrival());
+        dto.setSubCategoryName(subProduct.getProduct().getSubCategory().getName());
 
         return dto;
     }
