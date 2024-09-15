@@ -23,20 +23,20 @@ public class AdminDashboardController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        productService = new ProductService();
-        subProductService = new SubProductService();
-        customerService = new CustomerService();
-
-
-        Long totalProducts = productService.getTotalProducts();
-        Long totalSubProducts = subProductService.getTotalSubProducts();
-        Long totalCustomers = customerService.getTotalCustomers();
-
-        req.setAttribute("totalProducts", totalProducts);
-        req.setAttribute("totalSubProducts", totalSubProducts);
-        req.setAttribute("totalCustomers", totalCustomers);
-
-        // Forward to JSP page
+//        productService = new ProductService();
+//        subProductService = new SubProductService();
+//        customerService = new CustomerService();
+//
+//
+//        Long totalProducts = productService.getTotalProducts();
+//        Long totalSubProducts = subProductService.getTotalSubProducts();
+//        Long totalCustomers = customerService.getTotalCustomers();
+//
+//        req.setAttribute("totalProducts", totalProducts);
+//        req.setAttribute("totalSubProducts", totalSubProducts);
+//        req.setAttribute("totalCustomers", totalCustomers);
+//
+//        // Forward to JSP page
         RequestDispatcher dispatcher = req.getRequestDispatcher("adminDashboard.jsp");
         dispatcher.forward(req, resp);
     }

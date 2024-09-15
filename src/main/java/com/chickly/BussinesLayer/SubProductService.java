@@ -101,17 +101,18 @@ public class SubProductService {
         Part imagePart = request.getPart("image");
         if (imagePart != null && imagePart.getSize() > 0) {
             String fileName = Paths.get(imagePart.getSubmittedFileName()).getFileName().toString();
+            String uniqueFileName = System.currentTimeMillis() + "_" + fileName;
             String uploadDir = "uploads/"; // Define the directory to store uploaded images
             File uploads = new File(request.getServletContext().getRealPath("") + File.separator + uploadDir);
             if (!uploads.exists()) {
                 uploads.mkdirs(); // Create the directory if it doesn't exist
             }
-            File file = new File(uploads, fileName);
+            File file = new File(uploads, uniqueFileName);
             try (InputStream input = imagePart.getInputStream()) {
                 Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
             }
 
-            subProduct.setImageURL(uploadDir + fileName);
+            subProduct.setImageURL(uploadDir + uniqueFileName);
         }
         return subProduct;
     }

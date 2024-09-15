@@ -14,7 +14,7 @@
 <body>
 <div class="container mt-5">
     <div class="mb-4">
-        <a href="adminDashboard.jsp" class="btn btn-black">
+        <a href="AdminDashBoardController" class="btn btn-black">
             <i class="fas fa-arrow-left"></i> Back to Dashboard</a>
     </div>
     <div class="header-container">
