@@ -59,12 +59,19 @@ public class SubProductRepository extends GenericCrudManager<SubProduct,Object> 
     }
 
 
-    public void updateSubProductQuantityAndPrice(String subProductId, Integer stock, BigDecimal price) {
+    public void updateSubProduct(String subProductId, Integer stock, BigDecimal price,String imageUrl) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaUpdate<SubProduct> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(SubProduct.class);
         Root<SubProduct> root = criteriaUpdate.from(SubProduct.class);
-        criteriaUpdate.set("stock", stock);
-        criteriaUpdate.set("price", price);
+        if (stock != null) {
+            criteriaUpdate.set("stock", stock);
+        }
+        if (price != null) {
+            criteriaUpdate.set("price", price);
+        }
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            criteriaUpdate.set("imageURL", imageUrl);
+        }
         criteriaUpdate.where(criteriaBuilder.equal(root.get("id"), subProductId));
         entityManager.createQuery(criteriaUpdate).executeUpdate();
     }

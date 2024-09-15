@@ -29,7 +29,7 @@
                 <!-- Show existing product image -->
                 <div class="product-image-container">
                     <label for="imagePreview">Current Product Image</label><br>
-                    <img id="imagePreview" src="${subproduct.imageURL}" alt="Product Image" class="product-image" onchange="previewNewImage(event)">
+                    <img id="imagePreview" src="${subproduct.imageURL}" alt="Product Image" class="product-image">
                 </div>
 
                 <!-- Product details -->
@@ -62,7 +62,12 @@
                         <span class="error-message" id="quantityerror"></span>
                     </div>
 
-                    <!-- Button and spacing -->
+                    <div class="form-group">
+                        <label for="newImage">Upload New Image (Optional)</label>
+                        <input type="file" class="form-control-file" id="newImage" name="newImage" accept="image/*" onchange="previewNewImage(event)">
+                        <img id="newImagePreview" src="" alt="New Image Preview" style="display:none; margin-top:10px; max-width: 200px;">
+                    </div>
+
                     <button id="updateBtn" type="submit" class="btn btn-teal btn-block mt-2" onmouseover="checkErrors()">
                         <i class="fas fa-edit"></i> Update
                     </button>

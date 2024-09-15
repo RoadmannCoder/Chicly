@@ -85,13 +85,8 @@ public class SubProductService {
 
     public SubProductDTO createSubProductDTO(HttpServletRequest request) throws ServletException, IOException {
         String colorParam = request.getParameter("color");
-        System.out.println(colorParam);
         String mainProductId = request.getParameter("mainProduct");
-        System.out.println(mainProductId);
         String size = request.getParameter("size");
-        System.out.println(size);
-        System.out.println(request.getParameter("quantity"));
-        System.out.println(request.getParameter("price"));
         int stock = Integer.parseInt(request.getParameter("quantity"));
         BigDecimal price = new BigDecimal(request.getParameter("price"));
 
@@ -126,14 +121,31 @@ public class SubProductService {
                 (subProductRepository.findBy("id",subproductId)));
     }
 
-    public void updateSubProduct(HttpServletRequest request) {
+    public void updateSubProduct(HttpServletRequest request)  throws ServletException, IOException {
         String subProductId = request.getParameter("subProductId");
         String stockStr = request.getParameter("quantity");
         String priceStr = request.getParameter("price");
 
         Integer stock = Integer.parseInt(stockStr);
         BigDecimal price = new BigDecimal(priceStr);
-        subProductRepository.updateSubProductQuantityAndPrice(subProductId,stock,price);
+        String imageUrl ="";
+        Part imagePart = request.getPart("newImage");
+        if (imagePart != null && imagePart.getSize() > 0) {
+            String fileName = Paths.get(imagePart.getSubmittedFileName()).getFileName().toString();
+            String uniqueFileName = System.currentTimeMillis() + "_" + fileName;
+            String uploadDir = "uploads/";
+            File uploads = new File(request.getServletContext().getRealPath("") + File.separator + uploadDir);
+            if (!uploads.exists()) {
+                uploads.mkdirs(); // Create the directory if it doesn't exist
+            }
+            File file = new File(uploads, uniqueFileName);
+            try (InputStream input = imagePart.getInputStream()) {
+                Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            }
+
+            imageUrl=uploadDir+uniqueFileName;
+        }
+        subProductRepository.updateSubProduct(subProductId,stock,price,imageUrl);
     }
     public void deleteSubProduct(HttpServletRequest request) {
         String subProductId = request.getParameter("subproduct_Id");
