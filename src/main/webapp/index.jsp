@@ -175,5 +175,60 @@
 <script src="js/jquery.nicescroll.min.js"></script>
 <script src="js/main.js"></script>
 <script src="js/product-display.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+    // Function to load CartService from localStorage
+    function loadCart() {
+        const cart = localStorage.getItem("cartService");
+
+        if (cart) {
+            const cartData = JSON.parse(cart);
+            console.log("Restoring CartService from localStorage:", cartData);
+
+            // Send the cart data to the server to restore in the session
+            $.ajax({
+                url: "/cartlocal",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(cartData),
+                success: function (response) {
+                    console.log("CartService successfully restored on the server.");
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error restoring CartService:", error);
+                }
+            });
+        }
+    }
+
+    // Function to save CartService to localStorage
+    function saveCart() {
+        // Send an AJAX request to get the CartService from the session
+        $.ajax({
+            url: "/cartlocal",
+            type: "GET",
+            success: function (response) {
+                // Save the entire CartService object to localStorage
+                localStorage.setItem("cartService", JSON.stringify(response.cart));
+                console.log("CartService successfully saved to localStorage.");
+            },
+            error: function (xhr, status, error) {
+                console.error("Error saving CartService:", error);
+            }
+        });
+    }
+
+    // Load CartService from localStorage when the page loads
+    $(document).ready(function () {
+        loadCart();
+    });
+
+    // Save CartService to localStorage before the page is unloaded
+    window.addEventListener("beforeunload", function (event) {
+        saveCart();
+    });
+</script>
+
 </body>
 </html>

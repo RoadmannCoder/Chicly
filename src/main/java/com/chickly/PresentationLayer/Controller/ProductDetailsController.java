@@ -40,20 +40,29 @@ public class ProductDetailsController extends HttpServlet {
 
         Gson gson = new Gson();
         SubProductDTO product = gson.fromJson(jsonData, SubProductDTO.class);
-        int Quantity = cartService.getQuantityOfSubProduct(product);
-        if(product.getQuantity()+Quantity<=product.getStock()) {
-            cartService.addCartItem(product, product.getQuantity()+Quantity);
+        if(cartService.getTotalCartItems()==0){
+            cartService.addCartItem(product, product.getQuantity());
             req.getSession().setAttribute("cart", cartService);
             resp.setContentType("application/json");
             PrintWriter out = resp.getWriter();
             out.print("{ \"status\": \"success\", \"cartItemCount\": " + cartService.getTotalCartItems() + " }");
             out.flush();
-        } else {
-            // Send failure response if quantity exceeds stock
-            resp.setContentType("application/json");
-            PrintWriter out = resp.getWriter();
-            out.print("{ \"status\": \"fail\", \"message\": \"Quantity exceeds available stock.\" }");
-            out.flush();
+        }else {
+            int Quantity = cartService.getQuantityOfSubProduct(product)==null?0:cartService.getQuantityOfSubProduct(product);
+            if (product.getQuantity() + Quantity <= product.getStock()) {
+                cartService.addCartItem(product, product.getQuantity() + Quantity);
+                req.getSession().setAttribute("cart", cartService);
+                resp.setContentType("application/json");
+                PrintWriter out = resp.getWriter();
+                out.print("{ \"status\": \"success\", \"cartItemCount\": " + cartService.getTotalCartItems() + " }");
+                out.flush();
+            } else {
+                // Send failure response if quantity exceeds stock
+                resp.setContentType("application/json");
+                PrintWriter out = resp.getWriter();
+                out.print("{ \"status\": \"fail\", \"message\": \"Quantity exceeds available stock.\" }");
+                out.flush();
+            }
         }
 
     }

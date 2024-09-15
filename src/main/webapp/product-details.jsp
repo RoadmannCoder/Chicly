@@ -433,6 +433,7 @@
                 success: function(response) {
                     if (response.status === "success") {
                         $('.icon_bag_alt').siblings('.tip').text(response.cartItemCount);
+                        saveCart();
                         alert('Product added to cart!');
                     } else if (response.status === "fail") {
                         alert(response.message);
@@ -441,6 +442,21 @@
                 },
                 error: function() {
                     alert('Error adding product to cart.');
+                }
+            });
+        }
+        function saveCart() {
+            // Send an AJAX request to get the CartService from the session
+            $.ajax({
+                url: "/cartlocal",
+                type: "GET",
+                success: function (response) {
+                    // Save the entire CartService object to localStorage
+                    localStorage.setItem("cartService", JSON.stringify(response.cart));
+                    console.log("CartService successfully saved to localStorage.");
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error saving CartService:", error);
                 }
             });
         }

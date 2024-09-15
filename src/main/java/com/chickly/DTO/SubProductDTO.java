@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.metamodel.model.domain.IdentifiableDomainType;
 import lombok.*;
 
+import java.io.Serializable;
 import java.lang.invoke.StringConcatFactory;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -16,7 +17,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SubProductDTO {
+public class SubProductDTO implements Serializable {
 
     private int id;
     private String productName;
