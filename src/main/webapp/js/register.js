@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // List of Egyptian governorates
     const governorates = [
         "Cairo",
         "Alexandria",
@@ -30,13 +29,14 @@ document.addEventListener("DOMContentLoaded", function() {
     ];
     // Populate the city dropdown
     const citySelect = document.getElementById("city");
-    cities.forEach(city => {
+    governorates.forEach(city => {
         const option = document.createElement("option");
         option.value = city;
         option.text = city;
         citySelect.add(option);
     });
 });
+
 
 ///////////////////////////////Handling Credit Limit Validation//////////////////////////////////////////////////////////
 function checkCreditLimit() {
