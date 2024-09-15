@@ -38,7 +38,9 @@
 
                 </div>
             </div>
-            <button type="button" class="nextBtn" onclick="nextStep()">Next</button>
+            <button type="button" class="nextBtn" onclick="nextStep()">
+                Next <i class="uil uil-arrow-right"></i>
+            </button>
         </div>
 
         <!-- Step 2 -->
@@ -71,8 +73,14 @@
 
                 </div>
             </div>
-            <button type="button" class="prevBtn" onclick="prevStep()">Previous</button>
-            <button type="button" class="nextBtn" onclick="nextStep()">Next</button>
+            <div class="buttons">
+                <button type="button" class="prevBtn" onclick="prevStep()">
+                    <i class="uil uil-arrow-left"></i> Previous</button>
+                <button type="button" class="nextBtn" onclick="nextStep()">
+                    Next <i class="uil uil-arrow-right"></i>
+                </button>
+            </div>
+
         </div>
 
         <!-- Step 3 -->
