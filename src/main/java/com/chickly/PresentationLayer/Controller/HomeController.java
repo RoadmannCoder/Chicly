@@ -15,6 +15,7 @@ public class HomeController implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         SubProductFilterDTO newArrivalsDTO = new SubProductFilterDTO();
+
         newArrivalsDTO.setIsNewArrival(true);
         newArrivalsDTO.setPageNumber(1);
         newArrivalsDTO.setPageSize(8);
@@ -27,6 +28,8 @@ public class HomeController implements Filter {
         request.setAttribute("subProducts", subProductDTOList);
         request.setAttribute("totalSubProducts", totalSubProducts);
         request.setAttribute("pageSize", newArrivalsDTO.getPageSize());
+
+
         chain.doFilter(request, response);
     }
 }
