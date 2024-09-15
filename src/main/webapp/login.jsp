@@ -49,6 +49,8 @@
 
 <%--</body>--%>
 <%--</html>--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,8 +68,13 @@
 		<img src="img/logo.png" alt="Chicly Logo">
 	</div>
 	<div class="login-form">
-		<h2>Sign-in</h2>
-		<form method="POST" action="loginServlet">
+		<form action="login" method="post">
+			<h3>SIGN IN</h3>
+			<c:if test="${error != null}">
+				<div class="alert alert-danger text-center" style="width: fit-content; margin: 0 auto;color: red">
+						${error}
+				</div>
+			</c:if>
 			<div class="form-group">
 				<label for="username">Username</label>
 				<input type="text" class="form-control" id="username" name="username" required>

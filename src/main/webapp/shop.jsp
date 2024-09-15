@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="shortcut icon" href="favicon.ico">
     <title>CHCILY</title>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
@@ -47,8 +47,7 @@
                     <form id="filter-form" method="GET" action="/filterProducts">
                         <!-- Price Filter -->
                         <div class="sidebar__filter">
-                            <div class="section-title">
-                                <h4>Shop by price</h4>
+                            <div class="section-title"><h4>Shop by price</h4>
                             </div>
                             <div class="filter-range-wrap">
                                 <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"></div>
@@ -171,7 +170,8 @@
                         </div>
 
                         <!-- Submit Button -->
-                        <button type="submit" class="btn btn-outline-danger w-auto filter-btn">Apply Filters</button>
+                        <button type="submit" class="btn btn-outline-danger w-auto filter-btn">
+                            <i class="fas fa-filter"></i>Apply Filters</button>
                     </form>
                 </div>
             </div>

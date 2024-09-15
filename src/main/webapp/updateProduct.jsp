@@ -29,7 +29,7 @@
                 <!-- Show existing product image -->
                 <div class="product-image-container">
                     <label for="imagePreview">Current Product Image</label><br>
-                    <img id="imagePreview" src="${subproduct.imageURL}" alt="Product Image" class="product-image">
+                    <img id="imagePreview" src="${subproduct.imageURL}" alt="Product Image" class="product-image" onchange="previewNewImage(event)">
                 </div>
 
                 <!-- Product details -->
