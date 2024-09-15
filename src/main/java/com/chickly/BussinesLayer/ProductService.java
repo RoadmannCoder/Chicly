@@ -36,4 +36,9 @@ public class ProductService {
         product.setSubCategory(sub);
         productRepository.create(product);
     }
+
+    public Long getTotalProducts() {
+        ProductRepository productRepository = new ProductRepository();
+        return productRepository.countAllProducts();
+    }
 }

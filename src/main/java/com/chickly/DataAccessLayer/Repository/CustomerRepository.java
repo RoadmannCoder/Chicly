@@ -4,15 +4,11 @@ package com.chickly.DataAccessLayer.Repository;
 import com.chickly.DataAccessLayer.DBContext.JpaUtil;
 import com.chickly.DataAccessLayer.Entities.Admin;
 import com.chickly.DataAccessLayer.Entities.Customer;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.Query;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import com.chickly.DataAccessLayer.Entities.SubProduct;
+import jakarta.persistence.*;
+import jakarta.persistence.criteria.*;
 
+import java.math.BigDecimal;
 import java.nio.file.attribute.UserDefinedFileAttributeView;
 import java.util.List;
 import java.util.Optional;
@@ -117,5 +113,33 @@ public class CustomerRepository extends GenericCrudManager<Customer, Object> {
             return customer;
         }
 
+    }
+
+    public Long countAllCustomers() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+        Root<Customer> root = criteriaQuery.from(Customer.class);
+        criteriaQuery.select(criteriaBuilder.count(root));
+        TypedQuery<Long> query = entityManager.createQuery(criteriaQuery);
+        return query.getSingleResult();
+    }
+
+    public void updateCustomer(Customer customer) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaUpdate<Customer> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(Customer.class);
+        Root<Customer> root = criteriaUpdate.from(Customer.class);
+        criteriaUpdate.set("firstName", customer.getFirstName());
+        criteriaUpdate.set("lastName", customer.getLastName());
+        criteriaUpdate.set("email", customer.getEmail());
+        criteriaUpdate.set("creditLimit", customer.getCreditLimit());
+        criteriaUpdate.set("phoneNumber", customer.getPhoneNumber());
+        criteriaUpdate.set("job", customer.getJob());
+        criteriaUpdate.set(root.get("address").get("city"), customer.getAddress().getCity());
+        criteriaUpdate.set(root.get("address").get("street"), customer.getAddress().getStreet());
+        criteriaUpdate.set(root.get("address").get("zip"), customer.getAddress().getZip());
+        criteriaUpdate.set(root.get("address").get("description"), customer.getAddress().getDescription());
+        criteriaUpdate.set(root.get("account").get("userName"), customer.getAccount().getUserName());
+        criteriaUpdate.where(criteriaBuilder.equal(root.get("id"), customer.getId()));
+        entityManager.createQuery(criteriaUpdate).executeUpdate();
     }
 }

@@ -4,6 +4,7 @@ import com.chickly.DataAccessLayer.DBContext.JpaUtil;
 import com.chickly.DataAccessLayer.Entities.Product;
 import com.chickly.DataAccessLayer.Entities.SubProduct;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -24,4 +25,12 @@ public class ProductRepository extends GenericCrudManager<Product,Object> {
         return entityManager.createQuery(jpql,SubProduct.class).getResultList();
     }
 
+    public Long countAllProducts() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+        Root<Product> root = criteriaQuery.from(Product.class);
+        criteriaQuery.select(criteriaBuilder.count(root));
+        TypedQuery<Long> query = entityManager.createQuery(criteriaQuery);
+        return query.getSingleResult();
+    }
 }

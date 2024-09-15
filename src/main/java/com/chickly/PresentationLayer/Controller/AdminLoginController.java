@@ -16,10 +16,10 @@ import java.io.PrintWriter;
 @MultipartConfig
 public class AdminLoginController extends HttpServlet {
     private AdminService adminService ;
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
-    }
+//    @Override
+//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//
+//    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -27,12 +27,13 @@ public class AdminLoginController extends HttpServlet {
         if (adminService.isAdminAuthenticated(req)) {
             HttpSession session = req.getSession();
             session.setAttribute("role", "admin");
-            session.setAttribute("admineName", req.getParameter("username"));
-            req.getRequestDispatcher("adminDashboard.jsp").forward(req,resp);
+            session.setAttribute("adminName", req.getParameter("username"));
+            resp.sendRedirect(req.getContextPath() + "/AdminDashBoardController");
         } else {
             req.setAttribute("error", "Username or password is incorrect");
             req.getRequestDispatcher("adminLogin.jsp").forward(req, resp);
         }
     }
+
 
 }

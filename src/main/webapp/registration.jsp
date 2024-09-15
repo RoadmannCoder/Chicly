@@ -70,7 +70,6 @@
                         <label>Date of Birth</label>
                         <input type="date" id="dateOfBirth" name="dateOfBirth" required>
                     </div>
-
                 </div>
             </div>
             <div class="buttons">
@@ -93,7 +92,7 @@
                         <input type="text" id="street" name="street" required>
                     </div>
                     <div class="input-field">
-                        <label>City</label>
+                        <label for="city">City</label>
                         <select id="city" name="city" required>
                             <!-- Options will be populated by JavaScript -->
                         </select>

@@ -139,7 +139,7 @@
                                         <span class="arrow-down"></span>
                                     </a>
                                     <ul class="user-submenu">
-                                        <li><a href="/profile">Profile</a></li>
+                                        <li><a href="userProfile.jsp">Profile</a></li>
                                         <li><a href="/orders">My Orders</a></li>
                                         <li><a href="/wishlist">Wishlist</a></li>
                                         <li><a href="/logout">Logout</a></li>

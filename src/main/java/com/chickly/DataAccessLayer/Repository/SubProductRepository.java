@@ -118,4 +118,13 @@ public class SubProductRepository extends GenericCrudManager<SubProduct,Object> 
         q.select(sub).where(cb.equal(sub.get("isDeleted"), false));
         return entityManager.createQuery(q).getResultList();
     }
+
+    public Long countAllSubproducts() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+        Root<SubProduct> root = criteriaQuery.from(SubProduct.class);
+        criteriaQuery.select(criteriaBuilder.count(root));
+        TypedQuery<Long> query = entityManager.createQuery(criteriaQuery);
+        return query.getSingleResult();
+    }
 }

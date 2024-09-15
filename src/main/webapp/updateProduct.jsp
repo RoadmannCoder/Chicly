@@ -43,7 +43,6 @@
                         <label for="price">Price</label>
                         <input type="number" class="form-control" id="price" name="price" step="0.01" value="${subproduct.price}" onblur="checkPrice();" required>
                         <span class="error-message" id="priceerror"></span>
-
                     </div>
 
                     <div class="form-group">
@@ -67,6 +66,7 @@
                         <input type="file" class="form-control-file" id="newImage" name="newImage" accept="image/*" onchange="previewNewImage(event)">
                         <img id="newImagePreview" src="" alt="New Image Preview" style="display:none; margin-top:10px; max-width: 200px;">
                     </div>
+
 
                     <button id="updateBtn" type="submit" class="btn btn-teal btn-block mt-2" onmouseover="checkErrors()">
                         <i class="fas fa-edit"></i> Update

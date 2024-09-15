@@ -176,4 +176,8 @@ public class SubProductService {
 
     }
 
+    public Long getTotalSubProducts() {
+        SubProductRepository subProductRepository1 = new SubProductRepository();
+        return subProductRepository1.countAllSubproducts();
+    }
 }
