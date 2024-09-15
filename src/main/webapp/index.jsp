@@ -39,7 +39,7 @@
         <div class="row">
             <div class="col-lg-6 p-0">
                 <div class="categories__item categories__large__item set-bg"
-                     data-setbg="img/categories/category-1.jpg">
+                     data-setbg="img/categories/female.jpg">
                     <div class="categories__text">
                         <h1>Women’s fashion</h1>
                         <p>Sitamet, consectetur adipiscing elit, sed do eiusmod tempor incidid-unt labore
@@ -51,7 +51,7 @@
             <div class="col-lg-6">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6 p-0">
-                        <div class="categories__item set-bg" data-setbg="img/categories/category-2.jpg">
+                        <div class="categories__item set-bg" data-setbg="img/categories/clothes.jpg">
                             <div class="categories__text">
                                 <h4>Clothing</h4>
                                 <a href="filterProducts?category=Clothing">Shop now</a>
@@ -59,15 +59,15 @@
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 p-0">
-                        <div class="categories__item set-bg" data-setbg="img/categories/category-3.jpg">
+                        <div class="categories__item set-bg" data-setbg="img/categories/male.jpg">
                             <div class="categories__text">
-                                <h4>Kid’s fashion</h4>
-                                <a href="#">Shop now</a>
+                                <h4>Men 's fashion</h4>
+                                <a href="filterProducts?gender=female">Shop now</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 p-0">
-                        <div class="categories__item set-bg" data-setbg="img/categories/category-4.jpg">
+                        <div class="categories__item set-bg" data-setbg="img/categories/footwear.jpg">
                             <div class="categories__text">
                                 <h4>Footwear</h4>
                                 <a href="filterProducts?category=Footwear">Shop now</a>
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 p-0">
-                        <div class="categories__item set-bg" data-setbg="img/categories/category-5.jpg">
+                        <div class="categories__item set-bg" data-setbg="img/categories/accessories.jpg">
                             <div class="categories__text">
                                 <h4>Accessories</h4>
                                 <a href="filterProducts?category=Accessories">Shop now</a>
@@ -120,6 +120,7 @@
         </div>
         </c:forEach>
         </div>
+    </div>
 </section>
 <!-- Product Section End -->
 
@@ -175,5 +176,60 @@
 <script src="js/jquery.nicescroll.min.js"></script>
 <script src="js/main.js"></script>
 <script src="js/product-display.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+    // Function to load CartService from localStorage
+    function loadCart() {
+        const cart = localStorage.getItem("cartService");
+
+        if (cart) {
+            const cartData = JSON.parse(cart);
+            console.log("Restoring CartService from localStorage:", cartData);
+
+            // Send the cart data to the server to restore in the session
+            $.ajax({
+                url: "/cartlocal",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(cartData),
+                success: function (response) {
+                    console.log("CartService successfully restored on the server.");
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error restoring CartService:", error);
+                }
+            });
+        }
+    }
+
+    // Function to save CartService to localStorage
+    function saveCart() {
+        // Send an AJAX request to get the CartService from the session
+        $.ajax({
+            url: "/cartlocal",
+            type: "GET",
+            success: function (response) {
+                // Save the entire CartService object to localStorage
+                localStorage.setItem("cartService", JSON.stringify(response.cart));
+                console.log("CartService successfully saved to localStorage.");
+            },
+            error: function (xhr, status, error) {
+                console.error("Error saving CartService:", error);
+            }
+        });
+    }
+
+    // Load CartService from localStorage when the page loads
+    $(document).ready(function () {
+        loadCart();
+    });
+
+    // Save CartService to localStorage before the page is unloaded
+    window.addEventListener("beforeunload", function (event) {
+        saveCart();
+    });
+</script>
+
 </body>
 </html>

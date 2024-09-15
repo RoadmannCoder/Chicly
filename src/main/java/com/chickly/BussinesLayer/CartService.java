@@ -3,12 +3,13 @@ package com.chickly.BussinesLayer;
 import com.chickly.DTO.SubProductDTO;
 import com.chickly.DataAccessLayer.Entities.SubProduct;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class CartService {
+public class CartService implements Serializable {
     private Map<SubProductDTO, Integer> cart = new HashMap<>();
 
     public void addCartItem(SubProductDTO subProductDTO){

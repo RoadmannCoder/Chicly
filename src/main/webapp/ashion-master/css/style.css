@@ -451,7 +451,7 @@ ol {
 	position: absolute;
 	right: -8px;
 	top: -2px;
-	content: "/";
+	content: " ";
 	font-size: 13px;
 }
 
@@ -3250,6 +3250,9 @@ ol {
 		width: 100%;
 		background: rgba(0, 0, 0, 0.7);
 		content: "";
+
+
+
 		z-index: 98;
 		-webkit-transition: all, 0.5s;
 		-o-transition: all, 0.5s;
