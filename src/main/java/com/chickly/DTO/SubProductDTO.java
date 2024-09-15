@@ -28,6 +28,7 @@ public class SubProductDTO implements Serializable {
     private String description;
     private int stock;
     private int quantity;
+    private String subCategoryName;
 
     @Override
     public boolean equals(Object o) {

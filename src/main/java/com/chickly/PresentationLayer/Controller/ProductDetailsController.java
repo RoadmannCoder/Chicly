@@ -3,6 +3,7 @@ package com.chickly.PresentationLayer.Controller;
 import com.chickly.BussinesLayer.CartService;
 import com.chickly.BussinesLayer.SubProductService;
 import com.chickly.DTO.SubProductDTO;
+import com.chickly.DTO.SubProductFilterDTO;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,13 +14,26 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 @WebServlet("/product-details")
 public class ProductDetailsController extends HttpServlet {
-    SubProductService subProductService = new SubProductService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("product", subProductService.findSubProductByID(req));
+
+        SubProductService subProductService = new SubProductService();
+
+        SubProductDTO subProductDTO = subProductService.findSubProductByID(req);
+
+        SubProductFilterDTO relatedFilterDTO = new SubProductFilterDTO();
+        relatedFilterDTO.setPageSize(4);
+        relatedFilterDTO.setPageNumber(1);
+        relatedFilterDTO.setSubCategoryName(subProductDTO.getSubCategoryName());
+
+        List<SubProductDTO> relatedProducts =  subProductService.filterSubProducts(relatedFilterDTO);
+
+        req.setAttribute("relatedProducts", relatedProducts);
+        req.setAttribute("product",subProductDTO);
         req.getRequestDispatcher("/product-details.jsp").forward(req, resp);
 
     }

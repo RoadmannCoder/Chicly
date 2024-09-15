@@ -1,6 +1,8 @@
 package com.chickly.DTO;
 
 import java.math.BigDecimal;
+
+import com.chickly.DataAccessLayer.Entities.SubCategory;
 import com.chickly.Enums.Color;
 import com.chickly.Enums.Gender;
 import com.chickly.Enums.Size;
@@ -27,4 +29,5 @@ public class SubProductFilterDTO {
     private Boolean isDeleted = Boolean.FALSE;
     private Boolean isNewArrival;
     private Boolean inStock = Boolean.TRUE;
+    private String subCategoryName;
 }

@@ -19,6 +19,9 @@ public class PredicateBuilder {
         if (filter.getCategoryName()!= null && !filter.getCategoryName().isEmpty()) {
             predicates.add(cb.equal(subProductRoot.get("product").get("subCategory").get("category").get("name"), filter.getCategoryName()));
         }
+        if (filter.getSubCategoryName()!= null && !filter.getSubCategoryName().isEmpty()) {
+            predicates.add(cb.equal(subProductRoot.get("product").get("subCategory").get("name"), filter.getSubCategoryName()));
+        }
 
         if (filter.getProductName() != null && !filter.getProductName().isEmpty()) {
             predicates.add(cb.like(cb.lower(subProductRoot.get("product").get("name")), "%" + filter.getProductName().toLowerCase() + "%"));
@@ -48,6 +51,7 @@ public class PredicateBuilder {
         if (filter.getIsDeleted() != null) {
             predicates.add(cb.equal(subProductRoot.get("isDeleted"), filter.getIsDeleted()));
         }
+
 
         if (filter.getInStock() != null && filter.getInStock() == Boolean.TRUE) {
             predicates.add(cb.notEqual(subProductRoot.get("stock"), 0));
