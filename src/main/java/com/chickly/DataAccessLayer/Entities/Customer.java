@@ -70,9 +70,21 @@ public class Customer{
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CartItems> shoppingCart = new HashSet<>();
 
+
+    @ManyToMany
+    @JoinTable(
+            name = "customer_interest",
+            joinColumns = @JoinColumn(name = "customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "interest_id")
+    )
+    private Set<Interest> interests = new HashSet<>();
+
     public void addOrder(Order order){
         order.setCustomer(this);
         orders.add(order);
+    }
+    public void addInterest(Interest interest) {
+        interests.add(interest);
     }
 
 
