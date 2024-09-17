@@ -12,8 +12,11 @@ import java.math.BigDecimal;
 public class SubProductFilterMapper {
     public SubProductFilterDTO parseRequestToFitlerDTO(HttpServletRequest request) {
         SubProductFilterDTO filterDTO = new SubProductFilterDTO();
-
-        filterDTO.setProductName(request.getParameter("productName"));
+        String searchkeyword = request.getParameter("searchkeyword");
+        if (searchkeyword != null) {
+            searchkeyword = searchkeyword.replaceAll("\\s+", "%");
+        }
+        filterDTO.setSearchKeyword(searchkeyword);
         filterDTO.setMinPrice(parseBigDecimal(request.getParameter("minPrice")));
         filterDTO.setMaxPrice(parseBigDecimal(request.getParameter("maxPrice")));
         filterDTO.setSize(parseSizeEnum(request.getParameter("size")));

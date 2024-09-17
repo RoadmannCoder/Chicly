@@ -4,7 +4,9 @@ import com.chickly.DTO.CustomerRegistrationDTO;
 import com.chickly.DataAccessLayer.Entities.Account;
 import com.chickly.DataAccessLayer.Entities.Address;
 import com.chickly.DataAccessLayer.Entities.Customer;
+import com.chickly.DataAccessLayer.Entities.Interest;
 import com.chickly.DataAccessLayer.Repository.CustomerRepository;
+import com.chickly.DataAccessLayer.Repository.InterestRepository;
 import com.chickly.Mappers.CustomerMapper;
 import com.chickly.DTO.CustomerViewDTO;
 import jakarta.persistence.*;
@@ -16,9 +18,7 @@ import lombok.NonNull;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class CustomerService {
 
@@ -85,6 +85,8 @@ public class CustomerService {
         String zip= req.getParameter("zip");
         String description= req.getParameter("description");
         String userName = req.getParameter("userName");
+        String[] selectedInterestIds = req.getParameterValues("interests");
+
 
         if(city==null || city.isEmpty()){
             city = oldCustomer.getAddress().getCity();
@@ -97,6 +99,16 @@ public class CustomerService {
         updatedCustomer.setDateOfBirth(oldCustomer.getDateOfBirth());updatedCustomer.setFirstName(firstName);
         updatedCustomer.setLastName(lastName);updatedCustomer.setPhoneNumber(phoneNumber);updatedCustomer.setAddress(address);
         updatedCustomer.setAccount(account);updatedCustomer.setId(oldCustomer.getId());
+        Set<Interest> interests = new HashSet<>();
+        if (selectedInterestIds != null) {
+            for (String interestId : selectedInterestIds) {
+                Interest interest = new InterestRepository().findBy("id",Integer.parseInt(interestId));  // Fetch from the database
+                if (interest != null) {
+                    interests.add(interest);
+                }
+            }
+        }
+        updatedCustomer.setInterests(interests);
 
         customerRepository1.updateCustomer(updatedCustomer);
 

@@ -73,7 +73,8 @@ public class Customer{
     private Set<CartItems> shoppingCart = new HashSet<>();
 
 
-    @ManyToMany
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "customer_interest",
             joinColumns = @JoinColumn(name = "customer_id"),

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,6 +25,26 @@
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="stylesheet" href="css/shop.css" type="text/css">
+    <style>
+        .dropdown-checkbox {
+            position: relative;
+        }
+        .dropdown-menu-checkbox {
+            display: none;
+            position: absolute;
+            z-index: 1000;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .dropdown-checkbox.open .dropdown-menu-checkbox {
+            display: block;
+        }
+    </style>
+
     <style>
         body {
             background-color: #f9f9f9;
@@ -72,6 +94,27 @@
                     <label for="lastName">Last Name:</label>
                     <input type="text" class="form-control" id="lastName" name="lastName" value="${sessionScope.user.lastName}">
                 </div>
+                <div class="form-group dropdown-checkbox">
+                    <label for="interests">Interests:</label>
+                    <button class="form-control" id="interestsDropdown" type="button" onclick="toggleDropdown()">Select Interests</button>
+                    <div class="dropdown-menu-checkbox" id="dropdownMenuCheckbox">
+                        <c:forEach var="interest" items="${availableInterests}">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="interest${interest.id}" name="interests" value="${interest.id}"
+                                <c:forEach var="interestItem" items="${sessionScope.user.interests}">
+                                <c:if test="${interestItem.id == interest.id}">
+                                       checked
+                                </c:if>
+                                </c:forEach>>
+                                <label class="form-check-label" for="interest${interest.id}">
+                                        ${interest.name}
+                                </label>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </div>
+
+
                 <div class="card-text">
                     <label for="creditLimit">Credit Limit:</label>
                     <input type="number" class="form-control" id="creditLimit" name="creditLimit" step="0.01" value="${sessionScope.user.creditLimit}" onblur="checkCreditLimit();">
@@ -122,6 +165,19 @@
 
 </div>
 <script src="js/updateProfile.js"></script>
+<script>
+    function toggleDropdown() {
+        document.querySelector('.dropdown-checkbox').classList.toggle('open');
+    }
+
+    // Close the dropdown if clicked outside of it
+    document.addEventListener('click', function(event) {
+        var isClickInside = document.querySelector('.dropdown-checkbox').contains(event.target);
+        if (!isClickInside) {
+            document.querySelector('.dropdown-checkbox').classList.remove('open');
+        }
+    });
+</script>
 
 </body>
 <jsp:include page="common/footer.jsp"/>

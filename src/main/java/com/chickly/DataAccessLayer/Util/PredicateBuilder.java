@@ -23,8 +23,27 @@ public class PredicateBuilder {
             predicates.add(cb.equal(subProductRoot.get("product").get("subCategory").get("name"), filter.getSubCategoryName()));
         }
 
-        if (filter.getProductName() != null && !filter.getProductName().isEmpty()) {
-            predicates.add(cb.like(cb.lower(subProductRoot.get("product").get("name")), "%" + filter.getProductName().toLowerCase() + "%"));
+        if (filter.getSearchKeyword() != null && !filter.getSearchKeyword().isEmpty()) {
+            String searchKeyword = "%" + filter.getSearchKeyword().toLowerCase() + "%";
+
+            Predicate productNamePredicate = cb.like(cb.lower(subProductRoot.get("product").get("name")), searchKeyword);
+            Predicate productDescriptionPredicate = cb.like(cb.lower(subProductRoot.get("product").get("description")), searchKeyword);
+            Predicate subProductColorPredicate = cb.equal(cb.lower(subProductRoot.get("color").as(String.class)), filter.getSearchKeyword());
+            Predicate subProductSizePredicate = cb.equal(cb.lower(subProductRoot.get("size").as(String.class)), filter.getSearchKeyword());
+            Predicate subProductGenderPredicate = cb.equal(
+                    cb.lower(subProductRoot.get("product").get("gender").as(String.class)),
+                    filter.getSearchKeyword()
+            );
+
+            predicates.add(
+                    cb.or(
+                            productNamePredicate,
+                            productDescriptionPredicate,
+                            subProductColorPredicate,
+                            subProductSizePredicate,
+                            subProductGenderPredicate
+                    )
+            );
         }
 
         if (filter.getColor() != null) {

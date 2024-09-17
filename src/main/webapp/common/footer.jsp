@@ -3,7 +3,7 @@
     <div class="h-100 d-flex align-items-center justify-content-center">
         <div class="search-close-switch">+</div>
         <form class="search-model-form" action="filterProducts" method="GET">
-            <input type="text" id="search-input" name="productName" placeholder="Search here....." value="${param.productName}">
+            <input type="text" id="search-input" name="searchkeyword" placeholder="Search here....." value="${param.searchkeyword}">
 
         </form>
     </div>

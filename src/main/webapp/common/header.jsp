@@ -136,10 +136,10 @@
                 <nav class="header__menu">
                     <ul>
                         <li class="${currentPage eq '/index.jsp' ? 'active' :''}"><a href="/">Home</a></li>
-                        <li><a href="#">Women’s</a></li>
-                        <li><a href="#">Men’s</a></li>
+<%--                        <li><a href="#">Women’s</a></li>--%>
+<%--                        <li><a href="#">Men’s</a></li>--%>
                         <li class="${currentPage eq '/shop.jsp' ? 'active' :''}"><a href="filterProducts">Shop</a></li>
-                        <li><a href="./contact.html">Contact</a></li>
+<%--                        <li><a href="./contact.html">Contact</a></li>--%>
                     </ul>
                 </nav>
             </div>
@@ -186,7 +186,7 @@
                         <li>
                             <c:choose>
                                 <c:when test="${empty sessionScope.user}">
-                                    <span>$ 0.00</span>
+<%--                                    <span>$ 0.00</span>--%>
                                 </c:when>
                                 <c:otherwise>
                                     <span>$ ${sessionScope.user.creditLimit}</span>

@@ -2,6 +2,13 @@ package com.chickly.DataAccessLayer.Entities;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Setter
+@Getter
+@NoArgsConstructor
 
 @Entity
 public class Interest {

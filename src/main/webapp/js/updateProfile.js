@@ -202,3 +202,5 @@ function validateCurrentStep() {
 
 // Initialize
 showStep(currentStep);
+
+

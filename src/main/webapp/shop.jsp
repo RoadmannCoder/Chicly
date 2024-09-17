@@ -45,6 +45,14 @@
                 <div class="shop__sidebar">
                     <!-- Filter Form -->
                     <form id="filter-form" method="GET" action="/filterProducts">
+                        <!-- Displaying Searched Product Name -->
+                        <c:if test="${not empty param.searchkeyword}">
+                            <div class="section-title">
+                                <h5>You searched for: ${param.searchkeyword} <span class="icon_search search-switch"></span></h5>
+                            </div>
+                        <!-- Hidden input field for searchkeyword if it exists -->
+                            <input type="hidden" name="searchkeyword" value="${fn:escapeXml(param.searchkeyword)}" />
+                        </c:if>
                         <!-- Price Filter -->
                         <div class="sidebar__filter">
                             <div class="section-title"><h4>Shop by price</h4>
@@ -170,8 +178,14 @@
                         </div>
 
                         <!-- Submit Button -->
-                        <button type="submit" class="btn btn-outline-danger w-auto filter-btn">
-                            <i class="fas fa-filter"></i>Apply Filters</button>
+<%--                        <button type="submit" class="btn btn-outline-danger w-auto filter-btn">--%>
+<%--                            <i class="fas fa-filter"></i>Apply Filters</button>--%>
+                        <div class="reset-btn-container">
+                            <button type="submit" class="btn btn-outline-danger w-auto filter-btn">
+                                <i class="fas fa-filter"></i> Apply Filters
+                            </button>
+                            <a href="/filterProducts" class="btn btn-outline-danger w-auto filter-btn"><i class="fas fa-redo"></i></a> <!-- Reset button -->
+                        </div>
                     </form>
                 </div>
             </div>
@@ -213,7 +227,7 @@
                                 <!-- Previous Page Link -->
                                 <c:if test="${currentPage > 1}">
                                     <li class="page-item">
-                                        <a class="page-link" href="filterProducts?page=${currentPage - 1}&gender=${param.gender}&category=${param.category}&productName=${fn:escapeXml(param.productName)}&minPrice=${param.minPrice}&maxPrice=${param.maxPrice}&color=${param.color}&size=${param.size}" aria-label="Previous">
+                                        <a class="page-link" href="filterProducts?page=${currentPage - 1}&gender=${param.gender}&category=${param.category}&searchkeyword=${fn:escapeXml(param.searchkeyword)}&minPrice=${param.minPrice}&maxPrice=${param.maxPrice}&color=${param.color}&size=${param.size}" aria-label="Previous">
                                             <span aria-hidden="true">&laquo;</span>
                                         </a>
                                     </li>
@@ -227,7 +241,7 @@
                                 <!-- Next Page Link -->
                                 <c:if test="${(currentPage * pageSize) < totalSubProducts}">
                                     <li class="page-item">
-                                        <a class="page-link" href="filterProducts?page=${currentPage + 1}&category=${param.category}&gender=${param.gender}&productName=${fn:escapeXml(param.productName)}&minPrice=${param.minPrice}&maxPrice=${param.maxPrice}&color=${param.color}&size=${param.size}" aria-label="Next">
+                                        <a class="page-link" href="filterProducts?page=${currentPage + 1}&category=${param.category}&gender=${param.gender}&searchkeyword=${fn:escapeXml(param.searchkeyword)}&minPrice=${param.minPrice}&maxPrice=${param.maxPrice}&color=${param.color}&size=${param.size}" aria-label="Next">
                                             <span aria-hidden="true">&raquo;</span>
                                         </a>
                                     </li>

@@ -16,7 +16,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class SubProductFilterDTO {
-    private String productName;
+    private String searchKeyword;
     private BigDecimal minPrice;
     private BigDecimal maxPrice;
     private Size size;

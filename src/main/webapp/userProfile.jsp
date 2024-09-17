@@ -63,7 +63,7 @@
 
     <!-- Update Button -->
     <div class="mt-4">
-        <a href="updateProfile.jsp" class="btn btn-primary">
+        <a href="updatecustomer" class="btn btn-primary">
             <i class="fas fa-edit"></i>Update Profile</a>
     </div>
 </div>
