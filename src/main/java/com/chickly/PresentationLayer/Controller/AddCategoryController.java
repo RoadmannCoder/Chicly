@@ -17,6 +17,7 @@ public class AddCategoryController extends HttpServlet {
     private CategoryService categoryService;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         resp.sendRedirect("/addCategory.jsp");
     }
 
@@ -25,6 +26,8 @@ public class AddCategoryController extends HttpServlet {
         categoryService = new CategoryService();
         String catergoryName = req.getParameter("categoryname");
         categoryService.createCategory(catergoryName);
+//        req.setAttribute("errorMessage","Added successfully");
+//        req.getRequestDispatcher("adminDashboard.jsp").forward(req,resp);
         resp.sendRedirect("/adminDashboard.jsp");
 
     }

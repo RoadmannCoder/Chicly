@@ -43,9 +43,13 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
             <div class="container-fluid d-flex justify-content-between align-items-center">
                 <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+<%--                <div id="notification" class="notification hidden">--%>
+<%--                    <span id="notification-message"></span>--%>
+<%--                    <button id="close-notification" class="close-btn">&times;</button>--%>
+<%--                </div>--%>
                 <div class="ml-auto">
                     <img src="img/logo.png" width="100" height="50" alt="Project Logo">
-                    <p >Admin ${sessionScope.admineName}</p>
+                    <p >Admin ${sessionScope.adminName}</p>
                 </div>
 
             </div>
@@ -103,6 +107,21 @@
         e.preventDefault();
         document.getElementById("wrapper").classList.toggle("toggled");
     });
+    <%--var errorMessage = '<c:out value="${requestScope.errorMessage}" escapeXml="true" />';--%>
+    <%--function showNotification(message) {--%>
+    <%--    const notification = document.getElementById('notification');--%>
+    <%--    const notificationMessage = document.getElementById('notification-message');--%>
+
+    <%--    // Set the message and show the notification--%>
+    <%--    notificationMessage.textContent = message;--%>
+    <%--    notification.classList.remove('hidden');--%>
+
+    <%--    // Automatically hide after 3 seconds--%>
+    <%--    setTimeout(() => {--%>
+    <%--        notification.classList.add('hidden');--%>
+    <%--    }, 5000);--%>
+    <%--}--%>
+
 </script>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

@@ -1,5 +1,6 @@
 package com.chickly.BussinesLayer;
 
+import com.chickly.DTO.OrderViewDTO;
 import com.chickly.DTO.SubProductDTO;
 import com.chickly.DataAccessLayer.Entities.*;
 import com.chickly.DataAccessLayer.Repository.CartRepository;
@@ -7,6 +8,7 @@ import com.chickly.DataAccessLayer.Repository.CustomerRepository;
 import com.chickly.DataAccessLayer.Repository.OrderRepository;
 import com.chickly.DataAccessLayer.Repository.SubProductRepository;
 import com.chickly.Enums.Status;
+import com.chickly.Mappers.OrderMapper;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -72,6 +74,16 @@ public class OrderService {
 
         }
         return orderProcessError;
+    }
+
+    public List<OrderViewDTO> getAllOrdersOfSpecificCustomer(String id) {
+        OrderRepository orderRepository1 = new OrderRepository();
+        return OrderMapper.convertEntityListToDTOList(orderRepository1.findOrdersByCustomerId(id));
+    }
+
+    public void updateOrderStatus(int id, Status status) {
+        OrderRepository orderRepository1 = new OrderRepository();
+        orderRepository1.updateOrderStatus(id, status);
     }
 }
 
