@@ -99,8 +99,27 @@
     </div>
     <div id="mobile-menu-wrap"></div>
     <div class="offcanvas__auth">
-        <a href="/login">Login</a>
-        <a href="registration.jsp">Register</a>
+        <c:choose>
+            <c:when test="${sessionScope.user==null}">
+                <a href="login">Login</a>
+                <a href="registration.jsp">Register</a>
+            </c:when>
+            <c:otherwise>
+                <div class="user-dropdown">
+                    <a href="#" class="user-menu">
+                        <i class="fa fa-user fa-2x"></i> <!-- User Icon -->
+                        <span class="arrow-down"></span>
+                    </a>
+                    <ul class="user-submenu">
+                        <li><a href="userProfile.jsp">Profile</a></li>
+                        <li><a href="/orders">My Orders</a></li>
+                        <li><a href="/wishlist">Wishlist</a></li>
+                        <li><a href="/logout">Logout</a></li>
+                    </ul>
+                </div>
+
+            </c:otherwise>
+        </c:choose>
     </div>
 </div>
 
