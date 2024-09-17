@@ -25,3 +25,43 @@
 .table th, .table td {
     text-align: center;
 }
+.order-items-container {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.order-items-container h5 {
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #333;
+}
+
+.items-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.items-list li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+}
+
+.items-list li:last-child {
+    border-bottom: none;
+}
+
+.total-price-container {
+    margin-top: 15px;
+    font-size: 18px;
+    text-align: right;
+    color: #333;
+}
+
+.total-price-container strong {
+    font-weight: bold;
+}

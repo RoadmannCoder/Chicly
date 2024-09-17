@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public class CustomerViewDTO {
 
+    private String id;
     private String firstName;
     private String lastName;
     private String email;
@@ -20,7 +21,8 @@ public class CustomerViewDTO {
     }
 
 
-    public CustomerViewDTO(String firstName, String lastName,String email, String phoneNumber, String street, String city, String zip, String description, String userName) {
+    public CustomerViewDTO(String Id,String firstName, String lastName,String email, String phoneNumber, String street, String city, String zip, String description, String userName) {
+        this.id = Id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -56,15 +58,16 @@ public class CustomerViewDTO {
     }
     public static CustomerViewDTO fromCustomer(Customer customer) {
         return new CustomerViewDTO(
+                customer.getId().toString(),
                 customer.getFirstName(),
                 customer.getLastName(),
                 customer.getEmail(),
                 customer.getPhoneNumber(),
-                customer.getAddress().getStreet(), // Assuming Address has a getStreet() method
-                customer.getAddress().getCity(),   // Assuming Address has a getCity() method
-                customer.getAddress().getZip(),    // Assuming Address has a getZip() method
-                customer.getAddress().getDescription(),                  // Using job as description here
-                customer.getAccount().getUserName()                 // Assuming email as userName for demonstration
+                customer.getAddress().getStreet(),
+                customer.getAddress().getCity(),
+                customer.getAddress().getZip(),
+                customer.getAddress().getDescription(),
+                customer.getAccount().getUserName()
         );
 
     }
@@ -142,4 +145,11 @@ public class CustomerViewDTO {
     }
 
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

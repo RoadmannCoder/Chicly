@@ -3,6 +3,7 @@ package com.chickly.PresentationLayer.Controller;
 import com.chickly.BussinesLayer.CustomerService;
 import com.chickly.BussinesLayer.OrderService;
 import com.chickly.DTO.CustomerViewDTO;
+import com.chickly.DTO.OrderViewDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name="customerDetails",urlPatterns = "/customerDetails")
 public class CustomerDetailsController extends HttpServlet {
@@ -34,13 +36,14 @@ public class CustomerDetailsController extends HttpServlet {
             request.getRequestDispatcher("error.jsp").forward(request, response);
             return;
         }
+        System.out.println("Customer ID*********************************"+customer.getId());
+
+        orderService = new OrderService();
+        List<OrderViewDTO> orderList = orderService.getAllOrdersOfSpecificCustomer(customer.getId());
+        System.out.println("Order size*********************************"+orderList.size());
         request.setAttribute("customer", customer);
+        request.setAttribute("orders", orderList);
 
-        // Fetch customer orders
-//        List<OrderDTO> orders = orderService.getOrdersByCustomer(userName);
-//        request.setAttribute("orders", orders);
-
-        // Forward to JSP
         request.getRequestDispatcher("customerDetails.jsp").forward(request, response);
     }
 }

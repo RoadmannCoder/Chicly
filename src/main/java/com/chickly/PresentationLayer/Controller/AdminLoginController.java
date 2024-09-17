@@ -25,7 +25,7 @@ public class AdminLoginController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         adminService = new AdminService();
         if (adminService.isAdminAuthenticated(req)) {
-            HttpSession session = req.getSession();
+            HttpSession session = req.getSession(true);
             session.setAttribute("role", "admin");
             session.setAttribute("adminName", req.getParameter("username"));
             resp.sendRedirect(req.getContextPath() + "/AdminDashBoardController");
@@ -33,6 +33,7 @@ public class AdminLoginController extends HttpServlet {
             req.setAttribute("error", "Username or password is incorrect");
             req.getRequestDispatcher("adminLogin.jsp").forward(req, resp);
         }
+
     }
 
 
