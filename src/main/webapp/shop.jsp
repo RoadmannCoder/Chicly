@@ -275,7 +275,7 @@
             // Create an object to send to the server
             const productData = {
                 id: productId,
-                name: productName,
+                productName: productName,
                 price: productPrice,
                 imageURL: productImage,
                 stock: productStock,
@@ -322,6 +322,7 @@
             success: function (response) {
                 // Save the entire CartService object to localStorage
                 localStorage.setItem("cartService", JSON.stringify(response.cart));
+                localStorage.setItem("cartPrevious", JSON.stringify(response.cart));
                 console.log("CartService successfully saved to localStorage.");
             },
             error: function (xhr, status, error) {

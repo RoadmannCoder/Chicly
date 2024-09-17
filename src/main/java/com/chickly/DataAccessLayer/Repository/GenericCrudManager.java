@@ -70,6 +70,18 @@ public abstract class GenericCrudManager<T, U extends Object> {
             throw new RuntimeException("Failed to delete entity", e);
         }
     }
+    public void deleteAll(){
+        EntityManager entityManager1 = getEntityManager();
+        try{
+            String jpql = "DELETE FROM " + objectClass.getSimpleName() ;
+            Query query = getEntityManager().createQuery(jpql);
+            query.executeUpdate();
+            LOGGER.info("Deleted All Records successfully");
+        }catch (Exception e) {
+            throw new RuntimeException("Failed to delete the table", e);
+        }
+
+    }
 
     public T deleteById(int id) throws RuntimeException {
         try {

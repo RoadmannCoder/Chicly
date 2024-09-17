@@ -64,7 +64,10 @@ public class ProductDetailsController extends HttpServlet {
         }else {
             int Quantity = cartService.getQuantityOfSubProduct(product)==null?0:cartService.getQuantityOfSubProduct(product);
             if (product.getQuantity() + Quantity <= product.getStock()) {
-                cartService.addCartItem(product, product.getQuantity() + Quantity);
+                int q = product.getQuantity() + Quantity;
+                product.setQuantity(q);
+                cartService.addCartItem(product, q);
+
                 req.getSession().setAttribute("cart", cartService);
                 resp.setContentType("application/json");
                 PrintWriter out = resp.getWriter();

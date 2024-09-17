@@ -1,14 +1,14 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Ashion Template">
-    <meta name="keywords" content="Ashion, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ashion | Template</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <title>CHICLY</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
@@ -25,6 +25,37 @@
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <style>
+        /*start of Notification Style*/
+        .notification {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #f44336; /* Red background for error */
+            color: white;
+            text-align: center;
+            padding: 15px;
+            z-index: 1000; /* Make sure it appears on top */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.hidden {
+            transform: translateY(-100%); /* Slide out of view */
+        }
+
+        .close-btn {
+            margin-left: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        /*end of Notification Style*/
         .pro-qtyy {
             display: flex;
             align-items: center;
@@ -75,14 +106,18 @@
     </div>
 
    <jsp:include page="common/header.jsp"/>
-
+<!--Notification Section -->
+    <div id="notification" class="notification hidden">
+        <span id="notification-message"></span>
+        <button id="close-notification" class="close-btn">&times;</button>
+    </div>
     <!-- Breadcrumb Begin -->
     <div class="breadcrumb-option">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb__links">
-                        <a href="index.jsp"><i class="fa fa-home"></i> Home</a>
+                        <a href="/"><i class="fa fa-home"></i> Home</a>
                         <span>Shopping cart</span>
                     </div>
                 </div>
@@ -166,7 +201,7 @@
                             <li>TotalQuantity <span>${cart.totalQuantity}</span></li>
                             <li>Subtotal <span>$ ${cart.totalPrice}</span></li>
                         </ul>
-                        <a href="#" class="primary-btn">Proceed to checkout</a>
+                        <a href="/checkout" class="primary-btn">Proceed to checkout</a>
                     </div>
                 </div>
             </div>
@@ -174,62 +209,7 @@
     </section>
     <!-- Shop Cart Section End -->
 
-    <!-- Instagram Begin -->
-    <div class="instagram">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
-                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-1.jpg">
-                        <div class="instagram__text">
-                            <i class="fa fa-instagram"></i>
-                            <a href="#">@ ashion_shop</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
-                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-2.jpg">
-                        <div class="instagram__text">
-                            <i class="fa fa-instagram"></i>
-                            <a href="#">@ ashion_shop</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
-                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-3.jpg">
-                        <div class="instagram__text">
-                            <i class="fa fa-instagram"></i>
-                            <a href="#">@ ashion_shop</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
-                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-4.jpg">
-                        <div class="instagram__text">
-                            <i class="fa fa-instagram"></i>
-                            <a href="#">@ ashion_shop</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
-                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-5.jpg">
-                        <div class="instagram__text">
-                            <i class="fa fa-instagram"></i>
-                            <a href="#">@ ashion_shop</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
-                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-6.jpg">
-                        <div class="instagram__text">
-                            <i class="fa fa-instagram"></i>
-                            <a href="#">@ ashion_shop</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Instagram End -->
+
 <jsp:include page="common/footer.jsp"/>
 
     <!-- Js Plugins -->
@@ -244,6 +224,22 @@
     <script src="js/jquery.nicescroll.min.js"></script>
     <script src="js/main.js"></script>
     <script>
+        /*Function Notification*/
+        var errorMessage = '<c:out value="${requestScope.errorMessage}" escapeXml="true" />';
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const notificationMessage = document.getElementById('notification-message');
+
+            // Set the message and show the notification
+            notificationMessage.textContent = message;
+            notification.classList.remove('hidden');
+
+            // Automatically hide after 3 seconds
+            setTimeout(() => {
+                notification.classList.add('hidden');
+            }, 5000);
+        }
+        /*Function Notification*/
 
         // Function to calculate and update the subtotal and total quantity
         function updateSubtotalAndQuantity() {
@@ -303,6 +299,7 @@
                 success: function (response) {
                     // Save the entire CartService object to localStorage
                     localStorage.setItem("cartService", JSON.stringify(response.cart));
+                    localStorage.setItem("cartPrevious", JSON.stringify(response.cart));
                     console.log("CartService successfully saved to localStorage.");
                 },
                 error: function (xhr, status, error) {
@@ -313,11 +310,16 @@
 
         // DOM Content Loaded event
         document.addEventListener('DOMContentLoaded', function () {
+            if (errorMessage) {
+                showNotification(errorMessage);
+            }
 
             // Function to handle quantity update
             function updateQuantity(input, isIncrement) {
                 let quantity = parseInt(input.value);
                 const pricePerUnit = parseFloat(input.getAttribute('data-price'));
+                const productRow = input.closest('tr'); // Get the closest 'tr' element
+                const productId = productRow.getAttribute('data-product-id');
                 let maxStock = parseInt(input.getAttribute('data-max'));
                 console.log(maxStock);
                 // Increment or decrement the quantity
@@ -334,11 +336,36 @@
 
                 // Update the input value
                 input.value = quantity;
-
+                const requestData = {
+                    productId: productId,
+                    quantity: quantity
+                };
+                console.log(requestData);
                 // Update the total price for this product row
-                const totalPrice = pricePerUnit * quantity;
-                const totalPriceElement = input.closest('tr').querySelector('.total-value');
-                totalPriceElement.textContent = totalPrice.toFixed(2);  // Update total for this product
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', 'cartupdate', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        const data = JSON.parse(xhr.responseText);
+                        if (data.success) {
+                            // Update the total price for this product row
+                            const totalPrice = pricePerUnit * quantity;
+                            const totalPriceElement = input.closest('tr').querySelector('.total-value');
+                            totalPriceElement.textContent = totalPrice.toFixed(2);
+
+                            // Recalculate and update the overall subtotal and total quantity
+                            document.querySelector('.cart__total__procced li:nth-child(1) span').textContent = data.totalQuantity;
+                            document.querySelector('.cart__total__procced li:nth-child(2) span').textContent = '$ ' + data.totalPrice.toFixed(2);
+                        } else {
+                            alert('Failed to update the product quantity.');
+                        }
+                    }
+                };
+                xhr.send(JSON.stringify(requestData));
+                  // Update total for this product
+
 
                 // Recalculate and update the overall subtotal and total quantity
                 updateSubtotalAndQuantity();

@@ -128,7 +128,7 @@
                 <div class="header__right">
                     <div class="header__right__auth">
                         <c:choose>
-                            <c:when test="${empty sessionScope.user}">
+                            <c:when test="${sessionScope.user==null}">
                                 <a href="login">Login</a>
                                 <a href="registration.jsp">Register</a>
                             </c:when>
@@ -164,6 +164,16 @@
                                 </c:otherwise>
                             </c:choose>
                         </a></li>
+                        <li>
+                            <c:choose>
+                                <c:when test="${empty sessionScope.user}">
+                                    <span>$ 0.00</span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span>$ ${sessionScope.user.creditLimit}</span>
+                                </c:otherwise>
+                            </c:choose>
+                        </li>
                     </ul>
                 </div>
             </div>

@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 public class OrderItem {
 
     private Integer quantity = 1;
+
     private BigDecimal price;
 
     @Id

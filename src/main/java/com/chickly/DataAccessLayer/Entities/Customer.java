@@ -32,6 +32,8 @@ public class Customer{
     @NonNull
     private String lastName;
 
+
+
     @NotNull
     @NonNull
     private BigDecimal creditLimit;
@@ -67,7 +69,7 @@ public class Customer{
 
     @OneToMany(mappedBy ="customer")
     private Set<Order> orders = new HashSet<>();
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "customer", cascade = {CascadeType.MERGE,CascadeType.PERSIST}, orphanRemoval = true)
     private Set<CartItems> shoppingCart = new HashSet<>();
 
 
@@ -78,6 +80,7 @@ public class Customer{
             inverseJoinColumns = @JoinColumn(name = "interest_id")
     )
     private Set<Interest> interests = new HashSet<>();
+
 
     public void addOrder(Order order){
         order.setCustomer(this);

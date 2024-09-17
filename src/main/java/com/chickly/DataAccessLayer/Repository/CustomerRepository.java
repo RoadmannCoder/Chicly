@@ -142,4 +142,7 @@ public class CustomerRepository extends GenericCrudManager<Customer, Object> {
         criteriaUpdate.where(criteriaBuilder.equal(root.get("id"), customer.getId()));
         entityManager.createQuery(criteriaUpdate).executeUpdate();
     }
+    public void merge(Customer customer){
+        getEntityManager().merge(customer);
+    }
 }

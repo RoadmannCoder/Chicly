@@ -15,6 +15,7 @@ public class TransactionFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         EntityManager em = EntityManagerUtil.getEntityManager();
         EntityTransaction transaction = em.getTransaction();
+
         try {
             transaction.begin();
             chain.doFilter(request, response);

@@ -127,4 +127,13 @@ public class SubProductRepository extends GenericCrudManager<SubProduct,Object> 
         TypedQuery<Long> query = entityManager.createQuery(criteriaQuery);
         return query.getSingleResult();
     }
+    public void UpdateStock(SubProduct subProduct){
+        try {
+            LOGGER.info("Updating......");
+            getEntityManager().merge(subProduct);
+        } catch (RuntimeException ex) {
+            LOGGER.error("Failed to Update SubProduct Stock: ", ex);
+            throw ex;
+        }
+    }
 }

@@ -212,6 +212,7 @@
             success: function (response) {
                 // Save the entire CartService object to localStorage
                 localStorage.setItem("cartService", JSON.stringify(response.cart));
+                localStorage.setItem("cartPrevious", JSON.stringify(response.cart));
                 console.log("CartService successfully saved to localStorage.");
             },
             error: function (xhr, status, error) {

@@ -9,13 +9,16 @@ import com.chickly.DTO.SubProductForAdminDTO;
 import com.chickly.DataAccessLayer.Entities.Product;
 import com.chickly.DataAccessLayer.Entities.SubProduct;
 import com.chickly.DataAccessLayer.Repository.ProductRepository;
+import com.chickly.DataAccessLayer.Repository.SubProductRepository;
 import com.chickly.Enums.Color;
 import com.chickly.Enums.Size;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-public class SubProductMapper {
+public class SubProductMapper implements Serializable {
 
     public static SubProductDTO convertEntityToDTO(SubProduct subProduct) {
         if (subProduct == null) {
@@ -100,5 +103,12 @@ public class SubProductMapper {
         subProduct.setProduct(product);
         subProduct.setImageURL(subProductDTO.getImageURL());
         return subProduct;
+    }
+    public static SubProduct convertSubProductCartDTOToEntity(SubProductDTO subProductDTO){
+        SubProductRepository subProductRepository = new SubProductRepository();
+        SubProduct product = subProductRepository.findBy("id",subProductDTO.getId());
+        return product;
+
+
     }
 }

@@ -1,5 +1,6 @@
 package com.chickly.DataAccessLayer.Entities;
 
+import com.chickly.Enums.Status;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -31,12 +32,8 @@ public class Order{
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "order", cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH}, orphanRemoval = true)
     private Set<OrderItem> orderItems = new HashSet<OrderItem>();
 
-    public enum Status {
-        PENDING,
-        WAITING,
-        COMPLETED
-    }
+
 }
