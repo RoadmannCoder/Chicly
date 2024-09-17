@@ -57,7 +57,7 @@ public class OrderService {
             order.getOrderItems().clear();
             order.getOrderItems().addAll(orderItems);
             customer.setCreditLimit(customer.getCreditLimit().subtract(cartService.getTotalPrice()));
-            Set<CartItems> testCart = customer.getShoppingCart();
+            List<CartItems> testCart = cartRepository.findAllByID(customer.getId()).get();
             if(!testCart.isEmpty()) {
                 Iterator<CartItems> iterator = customer.getShoppingCart().iterator();
 
