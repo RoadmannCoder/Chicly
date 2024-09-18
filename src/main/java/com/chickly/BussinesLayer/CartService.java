@@ -64,11 +64,13 @@ public class CartService implements Serializable {
     }
     public void addToDB(List<CartItems> cartItems, Customer customer, CartService cartService){
         CustomerRepository customerRepository = new CustomerRepository();
+        CartRepository cartRepository = new CartRepository();
         List<SubProductDTO> subProductList = cartService.getItems().keySet().stream().collect(Collectors.toList());
 
         cartItems.clear();
         if (!subProductList.isEmpty()) {
-            Set<CartItems> currentCartItems = customer.getShoppingCart();
+//            Set<CartItems> currentCartItems = customer.getShoppingCart();
+            List<CartItems> currentCartItems = cartRepository.findAllByID(customer.getId()).get();
 
             Set<Integer> newSubProductIds = subProductList.stream()
                     .map(SubProductDTO::getId)
@@ -100,7 +102,7 @@ public class CartService implements Serializable {
                     currentCartItems.add(newCartItem);
                 }
             });
-
+            customer.setShoppingCart(currentCartItems.stream().collect(Collectors.toSet()));
             customerRepository.merge(customer);
         }
     }
