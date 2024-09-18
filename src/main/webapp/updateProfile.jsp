@@ -43,9 +43,17 @@
         .dropdown-checkbox.open .dropdown-menu-checkbox {
             display: block;
         }
-    </style>
-
-    <style>
+        .site-btn {
+            font-size: 14px;
+            color: #ffffff;
+            background: #ca1515;
+            font-weight: 600;
+            border: none;
+            text-transform: uppercase;
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 50px;
+        }
         body {
             background-color: #f9f9f9;
         }
@@ -95,7 +103,7 @@
                     <input type="text" class="form-control" id="lastName" name="lastName" value="${sessionScope.user.lastName}">
                 </div>
                 <div class="form-group dropdown-checkbox">
-                    <label for="interests">Interests:</label>
+                    <label for="interestsDropdown">Interests:</label>
                     <button class="form-control" id="interestsDropdown" type="button" onclick="toggleDropdown()">Select Interests</button>
                     <div class="dropdown-menu-checkbox" id="dropdownMenuCheckbox">
                         <c:forEach var="interest" items="${availableInterests}">
@@ -153,7 +161,8 @@
                 </div>
             </div>
         </div>
-        <button id="updateBtn" type="submit"  class="btn btn-primary" onmouseover="checkCondition()">
+        <br>
+        <button id="updateBtn" type="submit"  class="site-btn" onmouseover="checkCondition()">
             <i class="fas fa-edit"></i> Update profile
         </button>
         <p data-email="${sessionScope.user.email}" id="emailSession" hidden="hidden"></p>

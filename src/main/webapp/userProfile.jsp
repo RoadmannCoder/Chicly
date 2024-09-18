@@ -41,12 +41,47 @@
         p {
             font-size: 18px;
         }
+        .site-btn {
+             font-size: 14px;
+             color: #ffffff;
+             background: #ca1515;
+             font-weight: 600;
+             border: none;
+             text-transform: uppercase;
+             display: inline-block;
+             padding: 12px 30px;
+             border-radius: 50px;
+        }
+        .order-history-title {
+            font-family: 'Montserrat', sans-serif; /* Use a nice modern font */
+            font-weight: 700; /* Make the text bold */
+            font-size: 32px; /* Larger font size */
+            color: #ca1515; /* A bold red color matching the theme */
+            background-color: #f8f9fa; /* Light background for contrast */
+            padding: 10px 20px; /* Add padding for spacing */
+            border-radius: 50px; /* Rounded corners */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            display: inline-block; /* Keeps it inline but with block properties */
+            text-transform: uppercase; /* Makes the text uppercase */
+            letter-spacing: 2px; /* Adds spacing between letters */
+        }
     </style>
 </head>
 <jsp:include page="common/header.jsp" />
 <body>
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a href="/"><i class="fa fa-home"></i> Home</a>
+                    <span class="order-history-title">User Profile</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container mt-5">
-    <h2 class="mb-4">User Profile</h2>
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">User Information</h4>
@@ -63,8 +98,8 @@
 
     <!-- Update Button -->
     <div class="mt-4">
-        <a href="updatecustomer" class="btn btn-primary">
-            <i class="fas fa-edit"></i>Update Profile</a>
+        <a href="updatecustomer" class="site-btn">
+            <i class="fas fa-edit"></i> Update Profile</a>
     </div>
 </div>
 </body>

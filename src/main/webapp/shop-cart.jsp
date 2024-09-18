@@ -95,6 +95,19 @@
             border: 1px solid #ddd;
             border-radius: 5px;
         }
+        .order-history-title {
+            font-family: 'Montserrat', sans-serif; /* Use a nice modern font */
+            font-weight: 700; /* Make the text bold */
+            font-size: 32px; /* Larger font size */
+            color: #ca1515; /* A bold red color matching the theme */
+            background-color: #f8f9fa; /* Light background for contrast */
+            padding: 10px 20px; /* Add padding for spacing */
+            border-radius: 50px; /* Rounded corners */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            display: inline-block; /* Keeps it inline but with block properties */
+            text-transform: uppercase; /* Makes the text uppercase */
+            letter-spacing: 2px; /* Adds spacing between letters */
+        }
     </style>
 
 </head>
@@ -118,7 +131,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb__links">
                         <a href="/"><i class="fa fa-home"></i> Home</a>
-                        <span>Shopping cart</span>
+                        <span class="order-history-title">Shopping Cart</span>
                     </div>
                 </div>
             </div>

@@ -36,11 +36,10 @@ public class CustomerDetailsController extends HttpServlet {
             request.getRequestDispatcher("error.jsp").forward(request, response);
             return;
         }
-        System.out.println("Customer ID*********************************"+customer.getId());
 
         orderService = new OrderService();
         List<OrderViewDTO> orderList = orderService.getAllOrdersOfSpecificCustomer(customer.getId());
-        System.out.println("Order size*********************************"+orderList.size());
+
         request.setAttribute("customer", customer);
         request.setAttribute("orders", orderList);
 
