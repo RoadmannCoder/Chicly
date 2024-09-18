@@ -22,10 +22,11 @@ public class ProductRepository extends GenericCrudManager<Product,Object> {
 //        subProductCriteriaQuery.select(subProductRoot).where(query.equal(subProductRoot.get("product").get("id"),product.getId()));
 //        return entityManager.createQuery(subProductCriteriaQuery).getResultList();
         String jpql = "Select sub From "+SubProduct.class.getSimpleName()+" sub "+" WHERE sub.product.id = "+product.getId();
-        return entityManager.createQuery(jpql,SubProduct.class).getResultList();
+        return getEntityManager().createQuery(jpql,SubProduct.class).getResultList();
     }
 
     public Long countAllProducts() {
+        EntityManager entityManager = getEntityManager();
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
         Root<Product> root = criteriaQuery.from(Product.class);

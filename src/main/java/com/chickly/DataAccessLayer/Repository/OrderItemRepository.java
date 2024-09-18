@@ -21,6 +21,6 @@ public class OrderItemRepository extends GenericCrudManager<OrderItem,Object> {
         CriteriaQuery<OrderItem> q = cb.createQuery(OrderItem.class);
         Root<OrderItem> sub = q.from(OrderItem.class);
         q.select(sub).where(cb.equal(sub.get("order").get("id"), orderId));
-        return entityManager.createQuery(q).getResultList();
+        return getEntityManager().createQuery(q).getResultList();
     }
 }

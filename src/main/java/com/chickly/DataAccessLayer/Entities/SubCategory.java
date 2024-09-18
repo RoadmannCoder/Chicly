@@ -31,21 +31,6 @@ public class SubCategory {
         this.name = name;
     }
 
-    @OneToMany(mappedBy = "subCategory")
-    private Set<Product> products;
-
-
-
-    public void addProduct(Product product) {
-        products.add(product);
-        product.setSubCategory(this);
-    }
-
-    public void removeProduct(Product product) {
-        products.remove(product);
-        product.setSubCategory(null);
-    }
-
 
 
 }

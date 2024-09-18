@@ -32,10 +32,11 @@ public class OrderRepository extends GenericCrudManager<Order ,Object>{
         Root<Order> sub = q.from(Order.class);
         q.select(sub).where(cb.equal(sub.get("customer").get("id"), id));
 
-        return entityManager.createQuery(q).getResultList();
+        return getEntityManager().createQuery(q).getResultList();
     }
 
     public void updateOrderStatus(int id, Status status) {
+        EntityManager entityManager = getEntityManager();
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaUpdate<Order> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(Order.class);
         Root<Order> root = criteriaUpdate.from(Order.class);

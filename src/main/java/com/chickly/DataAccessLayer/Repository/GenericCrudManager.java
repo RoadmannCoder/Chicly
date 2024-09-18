@@ -13,10 +13,8 @@ public abstract class GenericCrudManager<T, U extends Object> {
 
     protected final Logger LOGGER = LoggerFactory.getLogger(getClass());
     private final Class<T> objectClass;
-    protected EntityManager entityManager;
 
     protected GenericCrudManager(Class<T> objectClass) {
-        entityManager = EntityManagerUtil.getEntityManager();
         this.objectClass = objectClass;
     }
 
@@ -48,7 +46,7 @@ public abstract class GenericCrudManager<T, U extends Object> {
     public Optional<List<T>> findAll() {
 
         String jpql = "SELECT all FROM " + objectClass.getSimpleName() + " all";
-        return (Optional<List<T>>) Optional.ofNullable((T) entityManager.createQuery(jpql,objectClass).getResultList());
+        return (Optional<List<T>>) Optional.ofNullable((T) getEntityManager().createQuery(jpql,objectClass).getResultList());
     }
 
     public T update(T entityObject) {

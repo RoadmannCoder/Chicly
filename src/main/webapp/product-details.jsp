@@ -170,7 +170,7 @@
 <%--                                </li>--%>
 
                                 <li>
-                                    <span>Available size:</span>
+                                    <span>Available Color:</span>
                                     <div class="size__btn">
                                         <label for="xs-btn" class="active">
                                             <input type="radio" id="xs-btn">
@@ -219,7 +219,8 @@
                 </div>
 <%--                relatedProducts--%>
                 <c:forEach var="relatedProduct" items="${relatedProducts}">
-                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <c:if test="${relatedProduct.id != product.id}">
+                    <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="product__item">
                         <div class="product__item__pic set-bg" data-setbg="${relatedProduct.imageURL}">
                             <ul class="product__hover">
@@ -234,6 +235,7 @@
                         </div>
                     </div>
                 </div>
+                    </c:if>
                 </c:forEach>
             </div>
         </div>

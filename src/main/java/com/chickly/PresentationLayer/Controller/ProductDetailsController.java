@@ -26,7 +26,7 @@ public class ProductDetailsController extends HttpServlet {
         SubProductDTO subProductDTO = subProductService.findSubProductByID(req);
 
         SubProductFilterDTO relatedFilterDTO = new SubProductFilterDTO();
-        relatedFilterDTO.setPageSize(4);
+        relatedFilterDTO.setPageSize(5);
         relatedFilterDTO.setPageNumber(1);
         relatedFilterDTO.setSubCategoryName(subProductDTO.getSubCategoryName());
 

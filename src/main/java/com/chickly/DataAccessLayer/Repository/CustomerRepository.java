@@ -26,7 +26,7 @@ public class CustomerRepository extends GenericCrudManager<Customer, Object> {
         CriteriaQuery<Customer> q = cb.createQuery(Customer.class);
         Root<Customer> cus = q.from(Customer.class);
         q.select(cus).where(cb.like(cus.get("email"),email));
-        List<Customer> result3 = this.entityManager.createQuery(q).getResultList();
+        List<Customer> result3 = getEntityManager().createQuery(q).getResultList();
         if(!result3.isEmpty()){
             return true;
         }
@@ -37,7 +37,7 @@ public class CustomerRepository extends GenericCrudManager<Customer, Object> {
         CriteriaQuery<Customer> q = cb.createQuery(Customer.class);
         Root<Customer> cus = q.from(Customer.class);
         q.select(cus).where(cb.like(cus.get("account").get("userName"),username));
-        List<Customer> result3 = this.entityManager.createQuery(q).getResultList();
+        List<Customer> result3 = getEntityManager().createQuery(q).getResultList();
         if(!result3.isEmpty()){
             return true;
         }
@@ -48,7 +48,7 @@ public class CustomerRepository extends GenericCrudManager<Customer, Object> {
         CriteriaQuery<Customer> q = cb.createQuery(Customer.class);
         Root<Customer> cus = q.from(Customer.class);
         q.select(cus).where(cb.like(cus.get("phoneNumber"),phoneNumber));
-        List<Customer> result3 = this.entityManager.createQuery(q).getResultList();
+        List<Customer> result3 = getEntityManager().createQuery(q).getResultList();
         if(!result3.isEmpty()){
             return true;
         }
@@ -72,7 +72,7 @@ public class CustomerRepository extends GenericCrudManager<Customer, Object> {
                         cb.equal(cus.get("account").get("password"), password)
                 ));
         try {
-            this.entityManager.createQuery(q).getSingleResult();
+            getEntityManager().createQuery(q).getSingleResult();
             return true;
         } catch (NoResultException e) {
             return false;
@@ -82,7 +82,7 @@ public class CustomerRepository extends GenericCrudManager<Customer, Object> {
         String jpql = "Select all from Customer all where all.account.userName = :username";
         Customer customer = null;
         try {
-             customer = entityManager.createQuery(jpql, Customer.class)
+             customer = getEntityManager().createQuery(jpql, Customer.class)
                     .setParameter("username", username)
                     .getSingleResult();
         } catch (NoResultException e) {
@@ -107,7 +107,7 @@ public class CustomerRepository extends GenericCrudManager<Customer, Object> {
         q.select(cus).where(predicate);
         Customer customer=null;
         try {
-            customer = this.entityManager.createQuery(q).getSingleResult();
+            customer = getEntityManager().createQuery(q).getSingleResult();
             return customer;
         } catch (NoResultException e) {
             return customer;
@@ -116,6 +116,7 @@ public class CustomerRepository extends GenericCrudManager<Customer, Object> {
     }
 
     public Long countAllCustomers() {
+        EntityManager entityManager = getEntityManager();
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
         Root<Customer> root = criteriaQuery.from(Customer.class);
@@ -125,6 +126,7 @@ public class CustomerRepository extends GenericCrudManager<Customer, Object> {
     }
 
     public void updateCustomer(Customer customer) {
+        EntityManager entityManager = getEntityManager();
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaUpdate<Customer> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(Customer.class);
         Root<Customer> root = criteriaUpdate.from(Customer.class);

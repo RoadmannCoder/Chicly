@@ -6,6 +6,8 @@ import com.chickly.DataAccessLayer.DBContext.JpaUtil;
 import com.chickly.DataAccessLayer.Entities.Product;
 import com.chickly.DataAccessLayer.Entities.SubProduct;
 import com.chickly.DataAccessLayer.Util.PredicateBuilder;
+import jakarta.persistence.EntityGraph;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import java.math.BigDecimal;
@@ -21,7 +23,7 @@ public class SubProductRepository extends GenericCrudManager<SubProduct,Object> 
         CriteriaQuery<SubProduct> q = cb.createQuery(SubProduct.class);
         Root<SubProduct> sub = q.from(SubProduct.class);
         q.select(sub).where(cb.equal(sub.get("product").get("id"),product.getId()));
-        return entityManager.createQuery(q).getResultList();
+        return getEntityManager().createQuery(q).getResultList();
     }
     public List<SubProduct> findSubProductsByCategory(int categoryId) {
 
@@ -31,22 +33,27 @@ public class SubProductRepository extends GenericCrudManager<SubProduct,Object> 
         return query.getResultList();
     }
     public List<SubProduct> findSubProductsByFilters(SubProductFilterDTO filterDTO) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<SubProduct> cq = cb.createQuery(SubProduct.class);
         Root<SubProduct> subProductRoot = cq.from(SubProduct.class);
 
         List<Predicate> predicates = new PredicateBuilder().buildSubProductPredicates(cb, subProductRoot, filterDTO);
-
         cq.where(predicates.toArray(new Predicate[0]));
 
-        TypedQuery<SubProduct> query = entityManager.createQuery(cq);
+        EntityGraph<SubProduct> graph = getEntityManager().createEntityGraph(SubProduct.class);
+        graph.addSubgraph("product");
+
+        TypedQuery<SubProduct> query = getEntityManager().createQuery(cq)
+                .setHint("javax.persistence.fetchgraph", graph);
         query.setFirstResult((filterDTO.getPageNumber() - 1) * filterDTO.getPageSize());
         query.setMaxResults(filterDTO.getPageSize());
 
         return query.getResultList();
     }
 
+
     public long countSubProductsByFilters(SubProductFilterDTO filterDTO) {
+        EntityManager entityManager = getEntityManager();
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<SubProduct> subProductRoot = cq.from(SubProduct.class);
@@ -60,6 +67,7 @@ public class SubProductRepository extends GenericCrudManager<SubProduct,Object> 
 
 
     public void updateSubProduct(String subProductId, Integer stock, BigDecimal price,String imageUrl) {
+        EntityManager entityManager = getEntityManager();
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaUpdate<SubProduct> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(SubProduct.class);
         Root<SubProduct> root = criteriaUpdate.from(SubProduct.class);
@@ -77,6 +85,7 @@ public class SubProductRepository extends GenericCrudManager<SubProduct,Object> 
     }
 
     public void deleteSubproductById(String subProductId) {
+        EntityManager entityManager = getEntityManager();
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaUpdate<SubProduct> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(SubProduct.class);
         Root<SubProduct> root = criteriaUpdate.from(SubProduct.class);
@@ -86,6 +95,7 @@ public class SubProductRepository extends GenericCrudManager<SubProduct,Object> 
     }
 
     public List<SubProduct> findBySubCategoryName(String subcategoryId) {
+        EntityManager entityManager = getEntityManager();
         CriteriaBuilder cb = JpaUtil.getEntityManagerFactory().getCriteriaBuilder();
         CriteriaQuery<SubProduct> q = cb.createQuery(SubProduct.class);
         Root<SubProduct> sub = q.from(SubProduct.class);
@@ -99,6 +109,7 @@ public class SubProductRepository extends GenericCrudManager<SubProduct,Object> 
     }
 
     public SubProduct findSubCategoryById(String searchId) {
+        EntityManager entityManager = getEntityManager();
         CriteriaBuilder cb = JpaUtil.getEntityManagerFactory().getCriteriaBuilder();
         CriteriaQuery<SubProduct> q = cb.createQuery(SubProduct.class);
         Root<SubProduct> sub = q.from(SubProduct.class);
@@ -112,6 +123,7 @@ public class SubProductRepository extends GenericCrudManager<SubProduct,Object> 
     }
 
     public List<SubProduct> findAllSubCategories() {
+        EntityManager entityManager = getEntityManager();
         CriteriaBuilder cb = JpaUtil.getEntityManagerFactory().getCriteriaBuilder();
         CriteriaQuery<SubProduct> q = cb.createQuery(SubProduct.class);
         Root<SubProduct> sub = q.from(SubProduct.class);
@@ -120,6 +132,7 @@ public class SubProductRepository extends GenericCrudManager<SubProduct,Object> 
     }
 
     public Long countAllSubproducts() {
+        EntityManager entityManager = getEntityManager();
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
         Root<SubProduct> root = criteriaQuery.from(SubProduct.class);

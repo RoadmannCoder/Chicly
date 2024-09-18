@@ -23,7 +23,7 @@ public class AdminRepository extends GenericCrudManager<Admin,Object>{
         CriteriaQuery<Admin> q = cb.createQuery(Admin.class);
         Root<Admin> admin = q.from(Admin.class);
         q.select(admin).where(cb.like(admin.get("account").get("userName"),userName));
-        List<Admin> result = this.entityManager.createQuery(q).getResultList();
+        List<Admin> result = getEntityManager().createQuery(q).getResultList();
         if(!result.isEmpty()){
             return true;
         }
@@ -47,7 +47,7 @@ public class AdminRepository extends GenericCrudManager<Admin,Object>{
                         cb.equal(admin.get("account").get("password"), password)
                 ));
         try {
-           this.entityManager.createQuery(q).getSingleResult();
+           getEntityManager().createQuery(q).getSingleResult();
             return true;
         } catch (NoResultException e) {
             return false;

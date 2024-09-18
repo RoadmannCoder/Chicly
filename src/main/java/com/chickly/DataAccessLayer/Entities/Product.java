@@ -42,17 +42,4 @@ public class Product implements Serializable {
     private SubCategory subCategory;
 
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private Set<SubProduct> subProducts;
-
-
-    public void addSubProduct(SubProduct subProduct) {
-        subProducts.add(subProduct);
-        subProduct.setProduct(this);
-    }
-
-    public void removeSubProduct(SubProduct subProduct) {
-        subProducts.remove(subProduct);
-        subProduct.setProduct(null);
-    }
 }

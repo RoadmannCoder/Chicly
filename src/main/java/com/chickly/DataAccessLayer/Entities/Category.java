@@ -23,16 +23,5 @@ public class Category {
     @Column(unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL )
-    private Set<SubCategory> subCategories;
 
-    public void addSubCategory(SubCategory subCategory) {
-        subCategories.add(subCategory);
-        subCategory.setCategory(this);
-    }
-
-    public void removeSubCategory(SubCategory subCategory) {
-        subCategories.remove(subCategory);
-        subCategory.setCategory(null);
-    }
 }

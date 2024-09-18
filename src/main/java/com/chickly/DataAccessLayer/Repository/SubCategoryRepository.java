@@ -25,19 +25,19 @@ public class SubCategoryRepository extends GenericCrudManager<SubCategory, Objec
         CriteriaQuery<SubCategory> q = cb.createQuery(SubCategory.class);
         Root<SubCategory> sub = q.from(SubCategory.class);
         q.select(sub).where(cb.equal(sub.get("category").get("id"),category.getId()));
-        return entityManager.createQuery(q).getResultList();
+        return getEntityManager().createQuery(q).getResultList();
     }
     public List<SubCategory> findSubCategoriesByCategoryID(Integer category){
         CriteriaBuilder cb = JpaUtil.getEntityManagerFactory().getCriteriaBuilder();
         CriteriaQuery<SubCategory> q = cb.createQuery(SubCategory.class);
         Root<SubCategory> sub = q.from(SubCategory.class);
         q.select(sub).where(cb.equal(sub.get("category").get("id"),category));
-        return entityManager.createQuery(q).getResultList();
+        return getEntityManager().createQuery(q).getResultList();
     }
     public Optional<List<SubCategory>> findAllExceptAccessories() {
 
         String jpql = "SELECT all FROM " + SubCategory.class.getSimpleName() + " all WHERE all.category.id != 3";
-        return Optional.ofNullable(entityManager.createQuery(jpql, SubCategory.class).getResultList());
+        return Optional.ofNullable(getEntityManager().createQuery(jpql, SubCategory.class).getResultList());
     }
 
 
