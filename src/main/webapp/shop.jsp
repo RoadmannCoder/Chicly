@@ -330,13 +330,12 @@
                     $('#notification')
                         .removeClass('alert-danger')
                         .addClass('alert-success')
-                        .text('Product added to cart successfully!')
+                        .text(response.message)
                         .fadeIn().delay(3000).fadeOut();
-
                     // Optionally, update the cart UI with the updated cart count
                     $('.icon_bag_alt').siblings('.tip').text(response.cartItemCount);
                     saveCart();
-                    alert("Product added to cart successfully!");
+                    alert(response.message);
 
                     // Optionally, update the cart UI or display cart details
                     // Example: $('#cart-count').text(response.cartItemCount);

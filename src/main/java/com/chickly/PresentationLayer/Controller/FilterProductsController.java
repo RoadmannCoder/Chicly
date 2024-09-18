@@ -67,12 +67,22 @@ public class FilterProductsController extends HttpServlet {
 
         Gson gson = new Gson();
         SubProductDTO product = gson.fromJson(jsonData.toString(), SubProductDTO.class);
-        cartService.addCartItem(product);
-        req.getSession().setAttribute("cart",cartService);
-        resp.setContentType("application/json");
-        PrintWriter out = resp.getWriter();
-        out.print("{ \"message\": \"Product added to cart\", \"cartItemCount\": " + cartService.getTotalCartItems() + " }");
-        out.flush();
+        int Quantity = cartService.getQuantityOfSubProduct(product);
+        System.out.println(Quantity);
+        if(Quantity+product.getQuantity()<=product.getStock()) {
+            cartService.addCartItem(product);
+            req.getSession().setAttribute("cart", cartService);
+            resp.setContentType("application/json");
+            PrintWriter out = resp.getWriter();
+            out.print("{ \"message\": \"Product added to cart\", \"cartItemCount\": " + cartService.getTotalCartItems() + " }");
+            out.flush();
+        }else{
+            req.getSession().setAttribute("cart", cartService);
+            resp.setContentType("application/json");
+            PrintWriter out = resp.getWriter();
+            out.print("{ \"message\": \"Product exceeds the limit\", \"cartItemCount\": " + cartService.getTotalCartItems() + " }");
+            out.flush();
+        }
     }
 
     private BigDecimal parseBigDecimal(String value) {
