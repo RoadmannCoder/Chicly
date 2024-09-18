@@ -22,16 +22,28 @@ public class OrderService {
     CartRepository cartRepository = new CartRepository();
     public OrderProcessError createOrder(CartService cartService, Customer customer) {
         BigDecimal subTotal = customer.getCreditLimit().subtract(cartService.getTotalPrice());
+        List<SubProductDTO> subProductList = cartService.getItems().keySet().stream().collect(Collectors.toList());
+        AtomicBoolean redirect = new AtomicBoolean(false);
         Order order = new Order();
         OrderProcessError orderProcessError = new OrderProcessError();
+        subProductList.forEach(subProductDTO -> {
+                    SubProduct subProduct = subProductRepository.findBy("id", subProductDTO.getId());
+                    if (subProductDTO.getQuantity() > subProduct.getStock()) {
+                        orderProcessError.setSubProductDTO(subProductDTO);
+                        redirect.set(true);
+                        return;
+                    }
+        });
+        if(redirect.get()) {
+            orderProcessError.setOrder(null);
+            return orderProcessError;
+        }
         if (cartService != null && subTotal.compareTo(BigDecimal.ZERO) > 0) {
             order.setCustomer(customer);
             order.setCreatedAt(new Date());
             order.setStatus(Status.PENDING);
             orderRepository.create(order);
             Set<OrderItem> orderItems = new HashSet<>();
-            List<SubProductDTO> subProductList = cartService.getItems().keySet().stream().collect(Collectors.toList());
-            AtomicBoolean redirect = new AtomicBoolean(false);
             subProductList.forEach(subProductDTO -> {
                 SubProduct subProduct = subProductRepository.findBy("id", subProductDTO.getId());
                 if (subProductDTO.getQuantity() > subProduct.getStock()) {

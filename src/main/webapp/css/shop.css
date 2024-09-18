@@ -3,7 +3,14 @@
     display: inline-block;
     cursor: pointer;
     position: relative;
-    margin-right: 20px;
+    margin-right: 15px;
+    margin-bottom: 20px;
+}
+
+.color__checkbox {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 columns */
+    gap: 10px; /* Adjust gap between items if needed */
 }
 
 .color__checkbox label input:checked ~ .checkmark {
@@ -51,39 +58,85 @@
 
 .color__checkbox label .checkmark.red-bg {
     background: #D9304F;
+    border: 1px solid #272525;
+
 }
 
 .color__checkbox label .checkmark.black-bg {
     background: #1D1926;
+    border: 1px solid #272525;
 }
 
 .color__checkbox label .checkmark.white-bg {
-    background: #dccece;
-    border: 1px solid #ebebeb;
+    background: #f1eeee;
+    border: 1px solid #272525;
 }
 
 .color__checkbox label .checkmark.blue-bg {
     background: #171695;
+    border: 1px solid #272525;
+
 }
 
 .color__checkbox label .checkmark.green-bg {
     background: #07F26D;
+    border: 1px solid #272525;
+
 }
 
 .color__checkbox label .checkmark.violet-bg {
     background: #B562D9;
+    border: 1px solid #272525;
+
 }
 
 .color__checkbox label .checkmark.yellow-bg {
     background: #F2CB05;
+    border: 1px solid #272525;
+
 }
 
 .color__checkbox label .checkmark.orange-bg {
     background: #F2622E;
+    border: 1px solid #272525;
+
 }
+
 .color__checkbox label .checkmark.brown-bg {
     background: #8C6645;
+    border: 1px solid #272525;
+
 }
+
+.color__checkbox label .checkmark.pink-bg {
+    background: #FFC0CB; /* Light Pink */
+    border: 1px solid #272525;
+
+}
+
+.color__checkbox label .checkmark.grey-bg {
+    background: #A9A9A9; /* Dark Grey */
+    border: 1px solid #272525;
+
+}
+
+.color__checkbox label .checkmark.navy-bg {
+    background: #001F3F; /* Navy Blue */
+    border: 1px solid #272525;
+
+}
+
+.color__checkbox label .checkmark.mint-bg {
+    background: #98FF98; /* Mint Green */
+    border: 1px solid #272525;
+
+}
+.color__checkbox label .checkmark.sand-bg {
+    background: #FADFA1; /* Mint Green */
+    border: 1px solid #272525;
+
+}
+
 .filter-btn {
      padding: 5px 10px; /* Smaller padding */
      font-size: 12px; /* Smaller font */
