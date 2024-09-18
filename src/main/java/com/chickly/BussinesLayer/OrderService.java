@@ -16,18 +16,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 public class OrderService {
-
     OrderRepository orderRepository = new OrderRepository();
     SubProductRepository subProductRepository = new SubProductRepository();
     CustomerRepository customerRepository = new CustomerRepository();
     CartRepository cartRepository = new CartRepository();
-
     public OrderProcessError createOrder(CartService cartService, Customer customer) {
         BigDecimal subTotal = customer.getCreditLimit().subtract(cartService.getTotalPrice());
         Order order = new Order();
         OrderProcessError orderProcessError = new OrderProcessError();
         if (cartService != null && subTotal.compareTo(BigDecimal.ZERO) > 0) {
-
             order.setCustomer(customer);
             order.setCreatedAt(new Date());
             order.setStatus(Status.PENDING);
@@ -50,7 +47,6 @@ public class OrderService {
                 orderItems.add(orderItem);
                 subProduct.setStock(subProductDTO.getStock() - cartService.getQuantityOfSubProduct(subProductDTO));
                 subProductRepository.update(subProduct);
-
             });
             if(redirect.get()) {
                 orderProcessError.setOrder(null);
@@ -62,7 +58,6 @@ public class OrderService {
             List<CartItems> testCart = cartRepository.findAllByID(customer.getId()).get();
             if(!testCart.isEmpty()) {
                 Iterator<CartItems> iterator = customer.getShoppingCart().iterator();
-
                 while (iterator.hasNext()) {
                     CartItems cartItem = iterator.next();
                     iterator.remove(); // Safely remove the item from the cart
@@ -71,16 +66,13 @@ public class OrderService {
             customerRepository.merge(customer);
             orderProcessError.setOrder(order);
             orderProcessError.setSubProductDTO(null);
-
         }
         return orderProcessError;
     }
-
     public List<OrderViewDTO> getAllOrdersOfSpecificCustomer(String id) {
         OrderRepository orderRepository1 = new OrderRepository();
         return OrderMapper.convertEntityListToDTOList(orderRepository1.findOrdersByCustomerId(id));
     }
-
     public void updateOrderStatus(int id, Status status) {
         OrderRepository orderRepository1 = new OrderRepository();
         orderRepository1.updateOrderStatus(id, status);

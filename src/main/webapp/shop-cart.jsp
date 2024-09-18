@@ -120,10 +120,7 @@
 
    <jsp:include page="common/header.jsp"/>
 <!--Notification Section -->
-    <div id="notification" class="notification hidden">
-        <span id="notification-message"></span>
-        <button id="close-notification" class="close-btn">&times;</button>
-    </div>
+    <jsp:include page="common/WarningNotification.jsp"/>
     <!-- Breadcrumb Begin -->
     <div class="breadcrumb-option">
         <div class="container">
@@ -238,20 +235,7 @@
     <script src="js/main.js"></script>
     <script>
         /*Function Notification*/
-        var errorMessage = '<c:out value="${requestScope.errorMessage}" escapeXml="true" />';
-        function showNotification(message) {
-            const notification = document.getElementById('notification');
-            const notificationMessage = document.getElementById('notification-message');
 
-            // Set the message and show the notification
-            notificationMessage.textContent = message;
-            notification.classList.remove('hidden');
-
-            // Automatically hide after 3 seconds
-            setTimeout(() => {
-                notification.classList.add('hidden');
-            }, 5000);
-        }
         /*Function Notification*/
 
         // Function to calculate and update the subtotal and total quantity
@@ -323,9 +307,7 @@
 
         // DOM Content Loaded event
         document.addEventListener('DOMContentLoaded', function () {
-            if (errorMessage) {
-                showNotification(errorMessage);
-            }
+
 
             // Function to handle quantity update
             function updateQuantity(input, isIncrement) {

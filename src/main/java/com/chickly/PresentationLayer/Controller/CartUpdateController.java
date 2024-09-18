@@ -41,8 +41,6 @@ public class CartUpdateController extends HttpServlet {
 //        PrintWriter out = resp.getWriter();
 //        out.write("{\"success\": true, \"totalQuantity\": " + totalQuantity + ", \"totalPrice\": " + totalPrice + "}");
 //        out.flush();
-
-
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
 
