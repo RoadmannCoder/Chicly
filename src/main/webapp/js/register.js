@@ -180,14 +180,34 @@ function prevStep() {
 function validateCurrentStep() {
     let valid = true;
     const stepElement = document.getElementById('step-' + currentStep);
+
+    if (currentStep === 1) {
+        const password = document.getElementById('password');
+        if (password.value.length < 8) {
+            document.getElementById('password').setCustomValidity("Password must be at least 8 characters");
+            valid = false;
+            password.reportValidity();
+        } else {
+            document.getElementById('password').setCustomValidity(""); // Reset the message if valid
+        }
+    }
     stepElement.querySelectorAll('input[required]').forEach((input) => {
         if (!input.checkValidity()) {
             valid = false;
             input.reportValidity();
         }
     });
+
+    if (document.getElementById('usernameerror').textContent !== "" ||
+        document.getElementById('crediterror').textContent !== "" ||
+        document.getElementById('emailerror').textContent !== "" ||
+        document.getElementById('phoneerror').textContent !== "") {
+        valid = false;
+    }
+
     return valid;
 }
 
 // Initialize
 showStep(currentStep);
+
