@@ -64,44 +64,78 @@ public class CartService implements Serializable {
     }
     public void addToDB(List<CartItems> cartItems, Customer customer, CartService cartService){
         CustomerRepository customerRepository = new CustomerRepository();
+        CartRepository cartRepository = new CartRepository();
         List<SubProductDTO> subProductList = cartService.getItems().keySet().stream().collect(Collectors.toList());
 
         cartItems.clear();
         if (!subProductList.isEmpty()) {
-            Set<CartItems> currentCartItems = customer.getShoppingCart();
-
-            Set<Integer> newSubProductIds = subProductList.stream()
-                    .map(SubProductDTO::getId)
-                    .collect(Collectors.toSet());
-            Set<CartItems> itemsToRemove = new HashSet<>(currentCartItems);
-            itemsToRemove.forEach(cartItem -> {
-                if (!newSubProductIds.contains(cartItem.getSubProduct().getId())) {
-                    currentCartItems.remove(cartItem);
-                }
-            });
-
-
-            subProductList.forEach(subProductDTO -> {
-                CartItems existingCartItem = currentCartItems.stream()
-                        .filter(cartItem -> cartItem.getSubProduct().getId().equals(subProductDTO.getId()))
-                        .findFirst()
-                        .orElse(null);
-
-                if (existingCartItem != null) {
-                    Integer newQuantity = cartService.getQuantityOfSubProduct(subProductDTO);
-                    if (!existingCartItem.getQuantity().equals(newQuantity)) {
-                        existingCartItem.setQuantity(newQuantity);
+//            Set<CartItems> currentCartItems = customer.getShoppingCart();
+            List<CartItems> currentCartItems = cartRepository.findAllByID(customer.getId()).get();
+            if(currentCartItems.size()==0) {
+                Set<Integer> newSubProductIds = subProductList.stream()
+                        .map(SubProductDTO::getId)
+                        .collect(Collectors.toSet());
+                Set<CartItems> itemsToRemove = new HashSet<>(currentCartItems);
+                itemsToRemove.forEach(cartItem -> {
+                    if (!newSubProductIds.contains(cartItem.getSubProduct().getId())) {
+                        currentCartItems.remove(cartItem);
                     }
-                } else {
-                    CartItems newCartItem = new CartItems();
-                    newCartItem.setCustomer(customer);
-                    newCartItem.setSubProduct(SubProductMapper.convertSubProductCartDTOToEntity(subProductDTO));
-                    newCartItem.setQuantity(cartService.getQuantityOfSubProduct(subProductDTO));
-                    currentCartItems.add(newCartItem);
-                }
-            });
+                });
 
-            customerRepository.merge(customer);
+                subProductList.forEach(subProductDTO -> {
+                    CartItems existingCartItem = currentCartItems.stream()
+                            .filter(cartItem -> cartItem.getSubProduct().getId().equals(subProductDTO.getId()))
+                            .findFirst()
+                            .orElse(null);
+
+                    if (existingCartItem != null) {
+                        Integer newQuantity = cartService.getQuantityOfSubProduct(subProductDTO);
+                        if (!existingCartItem.getQuantity().equals(newQuantity)) {
+                            existingCartItem.setQuantity(newQuantity);
+                        }
+                    } else {
+                        CartItems newCartItem = new CartItems();
+                        newCartItem.setCustomer(customer);
+                        newCartItem.setSubProduct(SubProductMapper.convertSubProductCartDTOToEntity(subProductDTO));
+                        newCartItem.setQuantity(cartService.getQuantityOfSubProduct(subProductDTO));
+                        currentCartItems.add(newCartItem);
+                    }
+                });
+                customer.setShoppingCart(currentCartItems.stream().collect(Collectors.toSet()));
+                customerRepository.merge(customer);
+            }else{
+                Set<CartItems> currentCartItem = customer.getShoppingCart();
+                Set<Integer> newSubProductIds = subProductList.stream()
+                        .map(SubProductDTO::getId)
+                        .collect(Collectors.toSet());
+                Set<CartItems> itemsToRemove = new HashSet<>(currentCartItem);
+                itemsToRemove.forEach(cartItem -> {
+                    if (!newSubProductIds.contains(cartItem.getSubProduct().getId())) {
+                        currentCartItem.remove(cartItem);
+                    }
+                });
+
+                subProductList.forEach(subProductDTO -> {
+                    CartItems existingCartItem = currentCartItem.stream()
+                            .filter(cartItem -> cartItem.getSubProduct().getId().equals(subProductDTO.getId()))
+                            .findFirst()
+                            .orElse(null);
+
+                    if (existingCartItem != null) {
+                        Integer newQuantity = cartService.getQuantityOfSubProduct(subProductDTO);
+                        if (!existingCartItem.getQuantity().equals(newQuantity)) {
+                            existingCartItem.setQuantity(newQuantity);
+                        }
+                    } else {
+                        CartItems newCartItem = new CartItems();
+                        newCartItem.setCustomer(customer);
+                        newCartItem.setSubProduct(SubProductMapper.convertSubProductCartDTOToEntity(subProductDTO));
+                        newCartItem.setQuantity(cartService.getQuantityOfSubProduct(subProductDTO));
+                        currentCartItem.add(newCartItem);
+                    }
+                });
+                customerRepository.merge(customer);
+            }
         }
     }
     public CartService mergeFromDBToSession( Customer customer, CartService service){

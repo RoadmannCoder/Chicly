@@ -25,6 +25,9 @@ public class LogoutController extends HttpServlet {
         if(cartService!=null) {
             cartService.addToDB(new ArrayList<>(),customer,cartService);
         }
+        if(customer !=null){
+
+        }
         session.removeAttribute("user");
         session.removeAttribute("cart");
         resp.sendRedirect("/");
