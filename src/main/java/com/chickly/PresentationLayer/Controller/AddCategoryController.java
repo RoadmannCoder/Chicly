@@ -25,10 +25,12 @@ public class AddCategoryController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         categoryService = new CategoryService();
         String catergoryName = req.getParameter("categoryname");
-        categoryService.createCategory(catergoryName);
-//        req.setAttribute("errorMessage","Added successfully");
-//        req.getRequestDispatcher("adminDashboard.jsp").forward(req,resp);
-        resp.sendRedirect("/adminDashboard.jsp");
+        try {
+            categoryService.createCategory(catergoryName);
+            resp.sendRedirect("adminDashboard.jsp?successMessage=Category+added+successful");
+        } catch (Exception e) {
+            resp.sendRedirect("adminDashboard.jsp?errorMessage=An+error+occurred:+Please+try+again");
+        }
 
     }
 }

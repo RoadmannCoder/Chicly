@@ -43,11 +43,15 @@ function checkCreditLimit() {
     var creditValue = document.getElementById("creditLimit").value;
     if (creditValue < 0) {
         document.getElementById("crediterror").innerText = "Credit limit must be more than 0";
+    } else if (creditValue > 1000000) {
+        document.getElementById("crediterror").innerText = "Credit limit must not exceed 1,000,000";
+    }else if (creditValue[0] === '0') {
+        document.getElementById("crediterror").innerText = "Credit limit must not start with 0";
     } else {
         document.getElementById("crediterror").innerText = "";
     }
-
 }
+
 // ////////////////////////////Handling Phone Number Validation//////////////////////////////////////////////////////////
 var phoneNumReq;
 
@@ -139,18 +143,13 @@ function handleUserReq() {
 function checkCondition() {
     var registerBtn = document.getElementById("registerBtn");
 
-    if (document.getElementById('usernameerror').textContent !=="") {
-        registerBtn.disabled = true; // Enable the button if the condition is met
-    } else if(document.getElementById('crediterror').textContent !==""){
-        registerBtn.disabled = true; // Disable the button if the condition is not met
-    }
-    else if(document.getElementById('emailerror').textContent !==""){
-        registerBtn.disabled = true; // Disable the button if the condition is not met
-    }
-    else if(document.getElementById('phoneerror').textContent !==""){
-        registerBtn.disabled = true; // Disable the button if the condition is not met
-    }else{
-        registerBtn.disabled = false;
+    if (document.getElementById('usernameerror').textContent !== "" ||
+        document.getElementById('crediterror').textContent !== "" ||
+        document.getElementById('emailerror').textContent !== "" ||
+        document.getElementById('phoneerror').textContent !== "") {
+        registerBtn.disabled = true; // Disable if any error messages exist
+    } else {
+        registerBtn.disabled = false; // Enable if no errors
     }
 }
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -162,7 +161,8 @@ function showStep(step) {
     });
     document.getElementById('step-' + step).style.display = 'block';
 }
-
+const today = new Date().toISOString().split('T')[0];
+document.getElementById('dateOfBirth').setAttribute('max', today);
 function nextStep() {
     if (validateCurrentStep()) {
         currentStep++;

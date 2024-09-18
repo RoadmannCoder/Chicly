@@ -34,6 +34,7 @@ public class ProductService {
         ProductRepository productRepository = new ProductRepository();
         SubCategory sub = subCategoryRepository.findBy("id",subCategoryId);
         product.setSubCategory(sub);
+
         productRepository.create(product);
     }
 

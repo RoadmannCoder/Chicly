@@ -169,11 +169,9 @@ form .buttons button , .backBtn{
         width: 100%;
     }
 }
-/* Flexbox to align buttons beside each other */
-/* Flexbox to align buttons beside each other */
 .buttons {
     display: flex;
-    justify-content: space-between; /* Distribute space evenly between buttons */
+    justify-content: space-between; /* Align buttons beside each other */
     margin-top: 20px;
 }
 
@@ -188,13 +186,29 @@ form .buttons button , .backBtn{
     display: flex;
     align-items: center;
     gap: 10px; /* Adds space between the text and the icon */
+    margin: 0; /* Remove extra margin to keep them aligned */
+    flex: 1; /* Ensures buttons are evenly spaced */
+    justify-content: center; /* Centers text and icon inside the button */
 }
 
 .prevBtn i, .nextBtn i {
     font-size: 18px;
 }
 
-/* Hover effect for the buttons */
 .prevBtn:hover, .nextBtn:hover {
     background-color: #0056b3;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* This centers both the logo and text horizontally */
+    margin-bottom: 20px;
+}
+
+.form-title {
+    font-size: 24px;
+    margin-left: 10px; /* Adds some spacing between the logo and the text */
+    font-weight: bold;
+    color: #333; /* Adjust the color to match your theme */
 }

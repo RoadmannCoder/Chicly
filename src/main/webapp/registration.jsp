@@ -12,7 +12,10 @@
 </head>
 <body>
 <div class="container">
-    <header><img src="img/logo.png" width="98" height="31" alt=""></header>
+    <header>
+        <img src="img/logo.png" width="98" height="31" alt="">
+        <span class="form-title">Registration Form</span>
+    </header>
     <form method="POST" action="register" id="registration-form">
         <!-- Step 1 -->
         <div class="form-step" id="step-1">
@@ -74,12 +77,12 @@
             </div>
             <div class="buttons">
                 <button type="button" class="prevBtn" onclick="prevStep()">
-                    <i class="uil uil-arrow-left"></i> Previous</button>
+                    <i class="uil uil-arrow-left"></i> Previous
+                </button>
                 <button type="button" class="nextBtn" onclick="nextStep()">
                     Next <i class="uil uil-arrow-right"></i>
                 </button>
             </div>
-
         </div>
 
         <!-- Step 3 -->
@@ -107,11 +110,14 @@
                     </div>
                 </div>
             </div>
-            <button type="button" class="prevBtn" onclick="prevStep()">Previous</button>
-            <button class="nextBtn" type="submit" id="registerBtn" onmouseover="checkCondition()">
-                <span class="btnText">Register</span>
-                <i class="uil uil-navigator"></i>
-            </button>
+            <div class="buttons">
+                <button type="button" class="prevBtn" onclick="prevStep()">Previous</button>
+                <button class="nextBtn" type="submit" id="registerBtn" onmouseover="checkCondition()">
+                    <span class="btnText">Register</span>
+                    <i class="uil uil-navigator"></i>
+                </button>
+            </div>
+
         </div>
     </form>
 </div>

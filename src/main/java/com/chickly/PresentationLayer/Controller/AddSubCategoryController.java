@@ -35,11 +35,12 @@ public class AddSubCategoryController extends HttpServlet {
 
         String categoryId = req.getParameter("category");
         String subCategoryName = req.getParameter("subcategory");
-
-        subCategoryService.createSubCategory(categoryId,subCategoryName);
-
-        resp.sendRedirect("/adminDashboard.jsp");
-
+        try {
+            subCategoryService.createSubCategory(categoryId,subCategoryName);
+            resp.sendRedirect("adminDashboard.jsp?successMessage=SubCategory+added+successful");
+        } catch (Exception e) {
+            resp.sendRedirect("adminDashboard.jsp?errorMessage=An+error+occurred:+Please+try+again");
+        }
 
     }
 }
