@@ -37,10 +37,11 @@ public class RegistrationServlet extends HttpServlet {
             CustomerRegistrationDTO customerDTO = new CustomerRegistrationDTO(request);
             try {
                 customerService.createCustomer(customerDTO);
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
+                response.sendRedirect("login.jsp?successMessage=Operation+is+successful");
+            } catch (Exception e) {
+                response.sendRedirect("login.jsp?errorMessage=An+error+occurred:+Please+try+again");
             }
-            response.sendRedirect("login.jsp");
+            //            response.sendRedirect("login.jsp");
         }
 
     }

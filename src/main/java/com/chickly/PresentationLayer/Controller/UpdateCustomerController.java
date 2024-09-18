@@ -30,12 +30,27 @@ public class UpdateCustomerController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        customerService = new CustomerService();
+//        Customer customer = (Customer)req.getSession().getAttribute("user");
+//
+//        customerService.updateCustomer(req,customer);
+//        req.getSession().removeAttribute("user");
+//        Customer customerNew = customerService.getCustomerById(customer.getId());
+//        req.getSession().setAttribute("user",customerNew);
+//        resp.sendRedirect("updatecustomer");
         customerService = new CustomerService();
         Customer customer = (Customer)req.getSession().getAttribute("user");
-        customerService.updateCustomer(req,customer);
-        req.getSession().removeAttribute("user");
-        Customer customerNew = customerService.getCustomerById(customer.getId());
-        req.getSession().setAttribute("user",customerNew);
-        resp.sendRedirect("updatecustomer");
+
+        try {
+            customerService.updateCustomer(req,customer);
+            req.getSession().removeAttribute("user");
+            Customer customerNew = customerService.getCustomerById(customer.getId());
+            req.getSession().setAttribute("user",customerNew);
+            resp.sendRedirect("updatecustomer?successMessage=Profile+updated+successful");
+        } catch (Exception e) {
+            resp.sendRedirect("updatecustomer?errorMessage=An+error+occurred:+Please+try+again");
+        }
+
+//        resp.sendRedirect("updatecustomer");
     }
 }
