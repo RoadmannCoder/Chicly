@@ -26,7 +26,9 @@ public class TransactionFilter implements Filter {
             if (transaction.isActive()) {
                 transaction.rollback();
             }
-            throw new ServletException(e);
+            request.setAttribute("errorMessage", "Transaction failed. Please try again.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("common/WarningNotification.jsp");
+            dispatcher.include(request, response);
         } finally {
             EntityManagerUtil.closeEntityManager();
         }

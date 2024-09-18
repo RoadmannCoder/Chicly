@@ -203,7 +203,7 @@
                                         </c:if>
                                         <ul class="product__hover">
                                             <li><a href="${subProduct.imageURL}" class="image-popup"><span class="arrow_expand"></span></a></li>
-                                            <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+<%--                                            <li><a href="#"><span class="icon_heart_alt"></span></a></li>--%>
                                             <li><a class="buttonAddToCart" data-id="${subProduct.id}" data-name="${subProduct.productName}" data-price="${subProduct.price}" data-image="${subProduct.imageURL}" data-stock="${subProduct.stock}"><span class="icon_bag_alt"></span></a></li>
                                         </ul>
                                     </div>
