@@ -162,6 +162,10 @@
                                     <input type="radio" name="color" id="green" value="green" ${param.color == 'green' ? 'checked' : ''} />
                                     <span class="checkmark green-bg"></span>
                                 </label>
+                                <label for="orange">
+                                    <input type="radio" name="color" id="orange" value="orange" ${param.color == 'orange' ? 'checked' : ''} />
+                                    <span class="checkmark orange-bg"></span>
+                                </label>
                                 <label for="violet">
                                     <input type="radio" name="color" id="violet" value="violet" ${param.color == 'violet' ? 'checked' : ''} />
                                     <span class="checkmark violet-bg"></span>
@@ -173,6 +177,26 @@
                                 <label for="brown">
                                     <input type="radio" name="color" id="brown" value="brown" ${param.color == 'brown' ? 'checked' : ''} />
                                     <span class="checkmark brown-bg"></span>
+                                </label>
+                                <label for="pink">
+                                    <input type="radio" name="color" id="pink" value="pink" ${param.color == 'pink' ? 'checked' : ''} />
+                                    <span class="checkmark pink-bg"></span>
+                                </label>
+                                <label for="grey">
+                                    <input type="radio" name="color" id="grey" value="grey" ${param.color == 'grey' ? 'checked' : ''} />
+                                    <span class="checkmark grey-bg"></span>
+                                </label>
+                                <label for="navy">
+                                    <input type="radio" name="color" id="navy" value="navy" ${param.color == 'navy' ? 'checked' : ''} />
+                                    <span class="checkmark navy-bg"></span>
+                                </label>
+                                <label for="mint">
+                                    <input type="radio" name="color" id="mint" value="mint" ${param.color == 'mint' ? 'checked' : ''} />
+                                    <span class="checkmark mint-bg"></span>
+                                </label>
+                                <label for="sand">
+                                    <input type="radio" name="color" id="sand" value="sand" ${param.color == 'sand' ? 'checked' : ''} />
+                                    <span class="checkmark sand-bg"></span>
                                 </label>
                             </div>
                         </div>
