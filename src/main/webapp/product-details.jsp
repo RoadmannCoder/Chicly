@@ -136,37 +136,45 @@
                                 </div>
                             </div>
                             <a class="cart-btn" onclick="addToCart(${product.id}, '${product.productName}', '${product.imageURL}', ${product.price}, ${product.stock})"><span class="icon_bag_alt"></span> Add to cart</a>
-                            <ul>
-                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                <li><a href="#"><span class="icon_adjust-horiz"></span></a></li>
-                            </ul>
+<%--                            <ul>--%>
+<%--                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>--%>
+<%--                                <li><a href="#"><span class="icon_adjust-horiz"></span></a></li>--%>
+<%--                            </ul>--%>
                         </div>
                         <div class="product__details__widget">
                             <ul>
                                 <li>
                                     <span>Availability:</span>
                                     <div class="stock__checkbox">
-                                        <label for="stockin">
                                              ${product.stock}  In Stock
-                                            <input type="checkbox" id="stockin">
-                                            <span class="checkmark"></span>
-                                        </label>
+<%--                                            <input type="checkbox" id="stockin">--%>
+<%--                                            <span class="checkmark"></span>--%>
                                     </div>
                                 </li>
+<%--                                <li>--%>
+<%--                                    <span>Available color:</span>--%>
+<%--                                    <div class="color__checkbox">--%>
+<%--                                        <label for="red">--%>
+<%--                                            <input type="radio" name="color__radio" id="red" checked>--%>
+<%--                                            <span class="checkmark"></span>--%>
+<%--                                        </label>--%>
+<%--                                        <label for="black">--%>
+<%--                                            <input type="radio" name="color__radio" id="black">--%>
+<%--                                            <span class="checkmark black-bg"></span>--%>
+<%--                                        </label>--%>
+<%--                                        <label for="grey">--%>
+<%--                                            <input type="radio" name="color__radio" id="grey">--%>
+<%--                                            <span class="checkmark grey-bg"></span>--%>
+<%--                                        </label>--%>
+<%--                                    </div>--%>
+<%--                                </li>--%>
+
                                 <li>
-                                    <span>Available color:</span>
-                                    <div class="color__checkbox">
-                                        <label for="red">
-                                            <input type="radio" name="color__radio" id="red" checked>
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label for="black">
-                                            <input type="radio" name="color__radio" id="black">
-                                            <span class="checkmark black-bg"></span>
-                                        </label>
-                                        <label for="grey">
-                                            <input type="radio" name="color__radio" id="grey">
-                                            <span class="checkmark grey-bg"></span>
+                                    <span>Available size:</span>
+                                    <div class="size__btn">
+                                        <label for="xs-btn" class="active">
+                                            <input type="radio" id="xs-btn">
+                                            ${product.color}
                                         </label>
                                     </div>
                                 </li>
@@ -179,10 +187,10 @@
                                         </label>
                                     </div>
                                 </li>
-                                <li>
-                                    <span>Promotions:</span>
-                                    <p>Free shipping</p>
-                                </li>
+<%--                                <li>--%>
+<%--                                    <span>Promotions:</span>--%>
+<%--                                    <p>Free shipping</p>--%>
+<%--                                </li>--%>
                             </ul>
                         </div>
                     </div>
@@ -216,12 +224,12 @@
                         <div class="product__item__pic set-bg" data-setbg="${relatedProduct.imageURL}">
                             <ul class="product__hover">
                                 <li><a href="${relatedProduct.imageURL}" class="image-popup"><span class="arrow_expand"></span></a></li>
-                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+<%--                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>--%>
                                 <li><a href="/cart"><span class="icon_bag_alt"></span></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">
-                            <h6><a href="/product-details?product=${relatedProduct.id}">${relatedProduct.productName}r</a></h6>
+                            <h6><a href="/product-details?product=${relatedProduct.id}">${relatedProduct.productName}</a></h6>
                             <div class="product__price">$ ${relatedProduct.price}</div>
                         </div>
                     </div>

@@ -108,12 +108,12 @@
                     </c:if>
                     <ul class="product__hover">
                         <li><a href="${subProduct.imageURL}" class="image-popup"><span class="arrow_expand"></span></a></li>
-                        <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+<%--                        <li><a href="#"><span class="icon_heart_alt"></span></a></li>--%>
                         <li><a href="#"><span class="icon_bag_alt"></span></a></li>
                     </ul>
                 </div>
                 <div class="product__item__text">
-                    <h6><a href="#">${subProduct.productName}</a></h6>
+                    <h6><a href="/product-details?product=${subProduct.id}">${subProduct.productName}</a></h6>
                     <div class="product__price">${subProduct.price}</div>
                 </div>
             </div>
@@ -134,21 +134,21 @@
                         <div class="banner__text">
                             <span>The Chloe Collection</span>
                             <h1>The Project Jacket</h1>
-                            <a href="filterProducts">Shop now</a>
+                            <a href="filterProducts?searchkeyword=jacket">Shop now</a>
                         </div>
                     </div>
                     <div class="banner__item">
                         <div class="banner__text">
                             <span>The Chloe Collection</span>
                             <h1>The Project Jacket</h1>
-                            <a href="filterProducts">Shop now</a>
+                            <a href="filterProducts?searchkeyword=jacket">Shop now</a>
                         </div>
                     </div>
                     <div class="banner__item">
                         <div class="banner__text">
                             <span>The Chloe Collection</span>
                             <h1>The Project Jacket</h1>
-                            <a href="filterProducts">Shop now</a>
+                            <a href="filterProducts?searchkeyword=jacket">Shop now</a>
                         </div>
                     </div>
                 </div>
