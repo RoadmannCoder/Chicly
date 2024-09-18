@@ -48,7 +48,10 @@ public class CartService implements Serializable {
         this.cart.clear();
     }
     public Integer getQuantityOfSubProduct(SubProductDTO subProductDTO){
-        return cart.get(subProductDTO);
+        if(cart.containsKey(subProductDTO))
+             return cart.get(subProductDTO);
+        else
+            return 0;
     }
     public int getTotalCartItems(){
         return this.cart.size();
@@ -136,6 +139,19 @@ public class CartService implements Serializable {
                 });
                 customerRepository.merge(customer);
             }
+        }else{
+            Set<CartItems> currentCartItem = customer.getShoppingCart();
+            Set<Integer> newSubProductIds = subProductList.stream()
+                    .map(SubProductDTO::getId)
+                    .collect(Collectors.toSet());
+            Set<CartItems> itemsToRemove = new HashSet<>(currentCartItem);
+            itemsToRemove.forEach(cartItem -> {
+                if (!newSubProductIds.contains(cartItem.getSubProduct().getId())) {
+                    currentCartItem.remove(cartItem);
+                }
+            });
+            customerRepository.merge(customer);
+
         }
     }
     public CartService mergeFromDBToSession( Customer customer, CartService service){
