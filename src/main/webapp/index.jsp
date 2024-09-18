@@ -42,8 +42,7 @@
                      data-setbg="img/categories/female.jpg">
                     <div class="categories__text">
                         <h1>Women’s fashion</h1>
-                        <p>Sitamet, consectetur adipiscing elit, sed do eiusmod tempor incidid-unt labore
-                            edolore magna aliquapendisse ultrices gravida.</p>
+                        <p>Embrace your unique fashion journey and express yourself with our stunning collection. From chicly everyday essentials to bold statement pieces, we have everything you need.</p>
                         <a href="filterProducts?gender=female">Shop now</a>
                     </div>
                 </div>
