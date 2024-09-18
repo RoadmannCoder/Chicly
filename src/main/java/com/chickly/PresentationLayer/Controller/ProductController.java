@@ -28,7 +28,12 @@ public class ProductController extends HttpServlet {
 
         subProductService = new SubProductService();
 
+        String successMessage = req.getParameter("successMessage");
+        String errorMessage = req.getParameter("errorMessage");
 
+        // Pass the messages to the JSP
+        req.setAttribute("successMessage", successMessage);
+        req.setAttribute("errorMessage", errorMessage);
         List<SubProductForAdminDTO> subProductList = subProductService.getAllSubProductForAdminDTOs(req);
         req.setAttribute("subProducts", subProductList);
 

@@ -32,7 +32,12 @@ public class UpdateSubProductController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         subProductService = new SubProductService();
-        subProductService.updateSubProduct(request);
-        response.sendRedirect("productView");
+        try {
+            subProductService.updateSubProduct(request);
+            response.sendRedirect("productView?successMessage=Operation+is+successful");
+        } catch (Exception e) {
+            response.sendRedirect("productView?errorMessage=An+error+occurred:+Please+try+again");
+        }
+//        response.sendRedirect("productView");
     }
 }

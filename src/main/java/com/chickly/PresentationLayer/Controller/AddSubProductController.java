@@ -38,33 +38,14 @@ public class AddSubProductController extends HttpServlet {
         subProductService = new SubProductService();
         SubProductDTO subProduct = subProductService.createSubProductDTO(request);
 
-        subProductService.addSubProduct(subProduct,subProduct.getProductName());
-        response.sendRedirect("productView");
+        try {
+            subProductService.addSubProduct(subProduct, subProduct.getProductName());
+            response.sendRedirect("productView?successMessage=Operation+is+successful");
+        } catch (Exception e) {
+            response.sendRedirect("productView?errorMessage=An+error+occurred:+Please+try+again");
+        }
+//        response.sendRedirect("productView");
 
     }
-//    @Override
-//    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        response.setContentType("text/html");
-//        PrintWriter out = response.getWriter();
-//
-//        out.println("<html><body>");
-//        out.println("<h2>Debugging Information:</h2>");
-//        out.println("<p>Content Type: " + request.getContentType() + "</p>");
-//
-//        out.println("<h3>Request Parameters:</h3>");
-//        Enumeration<String> parameterNames = request.getParameterNames();
-//        while (parameterNames.hasMoreElements()) {
-//            String paramName = parameterNames.nextElement();
-//            String[] paramValues = request.getParameterValues(paramName);
-//            out.println("<p>" + paramName + ": " + String.join(", ", paramValues) + "</p>");
-//        }
-//
-//        out.println("<h3>Request Parts:</h3>");
-//        for (Part part : request.getParts()) {
-//            out.println("<p>Part Name: " + part.getName() + ", Size: " + part.getSize() + "</p>");
-//        }
-//
-//        out.println("</body></html>");
-//    }
 
 }

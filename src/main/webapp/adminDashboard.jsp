@@ -9,12 +9,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="admin-dashboard/css/adminDashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 <div class="d-flex" id="wrapper">
-    <!-- Sidebar -->
     <div class="bg-black border-right" id="sidebar-wrapper">
         <div class="sidebar-heading text-white"><img src="img/admin-logo.png" width="130" height="130" alt=""></div>
         <div class="list-group list-group-flush">
@@ -43,10 +41,6 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
             <div class="container-fluid d-flex justify-content-between align-items-center">
                 <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
-<%--                <div id="notification" class="notification hidden">--%>
-<%--                    <span id="notification-message"></span>--%>
-<%--                    <button id="close-notification" class="close-btn">&times;</button>--%>
-<%--                </div>--%>
                 <div class="ml-auto">
                     <img src="img/logo.png" width="100" height="50" alt="Project Logo">
                     <p >Admin ${sessionScope.adminName}</p>
@@ -58,7 +52,24 @@
         <div class="container-fluid">
             <h1 class="mt-4">Welcome, Admin</h1>
             <p>Use the sidebar to manage the website.</p>
-
+            <c:choose>
+                <c:when test="${not empty param.successMessage}">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" style="font-size: 1.1em; font-weight: bold;">
+                        <i class="fas fa-check-circle"></i> ${param.successMessage}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="removeQueryParam()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </c:when>
+                <c:when test="${not empty param.errorMessage}">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-size: 1.1em; font-weight: bold;">
+                        <i class="fas fa-exclamation-triangle"></i> ${param.errorMessage}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="removeQueryParam()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </c:when>
+            </c:choose>
             <div class="row">
                 <div class="col-md-4">
                     <div class="card mb-4">
@@ -100,31 +111,19 @@
     </div>
 </div>
 
-<!-- Chart.js Script for Sales Data -->
 <script>
     // Toggle Menu Script
     document.getElementById("menu-toggle").addEventListener("click", function(e) {
         e.preventDefault();
         document.getElementById("wrapper").classList.toggle("toggled");
     });
-    <%--var errorMessage = '<c:out value="${requestScope.errorMessage}" escapeXml="true" />';--%>
-    <%--function showNotification(message) {--%>
-    <%--    const notification = document.getElementById('notification');--%>
-    <%--    const notificationMessage = document.getElementById('notification-message');--%>
-
-    <%--    // Set the message and show the notification--%>
-    <%--    notificationMessage.textContent = message;--%>
-    <%--    notification.classList.remove('hidden');--%>
-
-    <%--    // Automatically hide after 3 seconds--%>
-    <%--    setTimeout(() => {--%>
-    <%--        notification.classList.add('hidden');--%>
-    <%--    }, 5000);--%>
-    <%--}--%>
-
+    function removeQueryParam() {
+        const url = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        window.history.replaceState({}, document.title, url);
+    }
 </script>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

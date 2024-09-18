@@ -32,13 +32,13 @@ public class AddProductController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
         productService = new ProductService();
-        productService.createProduct(req);
 
-        resp.sendRedirect("/adminDashboard.jsp");
-
-
+        try {
+            productService.createProduct(req);
+            resp.sendRedirect("adminDashboard.jsp?successMessage=Product+added+successful");
+        } catch (Exception e) {
+            resp.sendRedirect("adminDashboard.jsp?errorMessage=An+error+occurred:+Please+try+again");
+        }
     }
 }

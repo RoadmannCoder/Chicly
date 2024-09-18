@@ -22,7 +22,13 @@ public class DeleteSubProductController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         subProductService = new SubProductService();
-        subProductService.deleteSubProduct(req);
-        resp.sendRedirect("productView");
+
+        try {
+            subProductService.deleteSubProduct(req);
+            resp.sendRedirect("productView?successMessage=Operation+is+successful");
+        } catch (Exception e) {
+            resp.sendRedirect("productView?errorMessage=An+error+occurred:+Please+try+again");
+        }
+//        resp.sendRedirect("productView");
     }
 }
