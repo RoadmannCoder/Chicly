@@ -28,11 +28,25 @@ public class CartController extends HttpServlet {
 //        int stock = Integer.parseInt(req.getParameter("stock"));
         String errorMessage = req.getParameter("error");
         String stock = req.getParameter("stock");
+        String action = req.getParameter("action");
 
-        if (errorMessage != null && !errorMessage.isEmpty()) {
-            req.setAttribute("errorMessage", errorMessage+" = "+stock);
-            System.out.println(errorMessage);
+        if("1".equals(action)){
+            String result = switch (stock) {
+                case "0" -> " Out Of Stock";
+                default -> " Available Stock  = "+stock;
+            };
+            if (errorMessage != null && !errorMessage.isEmpty()) {
+                req.setAttribute("errorMessage", errorMessage+ result);
+                System.out.println(errorMessage);
+            }
         }
+        if("2".equals(action)){
+            if (errorMessage != null && !errorMessage.isEmpty()) {
+                req.setAttribute("errorMessage", errorMessage);
+                System.out.println(errorMessage);
+            }
+        }
+
 
         setCartInSession(req);
         req.getRequestDispatcher("shop-cart.jsp").forward(req,resp);

@@ -26,13 +26,15 @@
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
-<body>
+<body >
 <!-- Page Preloder -->
 <div id="preloder">
     <div class="loader"></div>
 </div>
 <jsp:include page="common/header.jsp" />
 <!-- Header Section End -->
+<jsp:include page="common/VNotification.jsp"/>
+<jsp:include page="common/WNotification.jsp"/>
 <!-- Categories Section Begin -->
 <section class="categories">
     <div class="container-fluid">
@@ -88,6 +90,7 @@
 </section>
 <!-- Categories Section End -->
 
+
 <section class="product spad">
     <div class="container">
         <div class="row">
@@ -108,7 +111,7 @@
                     <ul class="product__hover">
                         <li><a href="${subProduct.imageURL}" class="image-popup"><span class="arrow_expand"></span></a></li>
 <%--                        <li><a href="#"><span class="icon_heart_alt"></span></a></li>--%>
-                        <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                        <li><a class="buttonAddToCart" data-id="${subProduct.id}" data-name="${subProduct.productName}" data-price="${subProduct.price}" data-image="${subProduct.imageURL}" data-stock="${subProduct.stock}"><span class="icon_bag_alt"></span></a></li>
                     </ul>
                 </div>
                 <div class="product__item__text">
@@ -175,35 +178,111 @@
 <script src="js/jquery.nicescroll.min.js"></script>
 <script src="js/main.js"></script>
 <script src="js/product-display.js"></script>
+<script src="js/saveCart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script>
+
+    var user = '<c:out value="${sessionScope.user}" />';
+    $(document).ready(function () {
+        // Event listener for all Add to Cart buttons
+        $(".buttonAddToCart").click(function (e) {
+            e.preventDefault(); // Prevent the default action of the anchor tag
+
+            // Get product details from data attributes
+            const productId = $(this).data("id");
+            const productName = $(this).data("name");
+            const productPrice = $(this).data("price");
+            const productImage = $(this).data("image");
+            const productStock = $(this).data("stock");
+
+            // Create an object to send to the server
+            const productData = {
+                id: productId,
+                productName: productName,
+                price: productPrice,
+                imageURL: productImage,
+                stock: productStock,
+                quantity: 1 // Default to 1, or you can let the user input the quantity
+            };
+
+            // Send product details via Ajax to the backend (Servlet)
+            $.ajax({
+                url: '/filterProducts', // URL of the servlet that handles adding to cart
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(productData),
+                success: function (response) {
+                    $('#notification')
+                        .removeClass('alert-danger')
+                        .addClass('alert-success')
+                        .text(response.message)
+                        .fadeIn().delay(3000).fadeOut();
+                    // Optionally, update the cart UI with the updated cart count
+                    $('.icon_bag_alt').siblings('.tip').text(response.cartItemCount);
+
+                    saveCart();
+
+                    VshowNotification("Product Added To Cart");
+
+                    // Optionally, update the cart UI or display cart details
+                    // Example: $('#cart-count').text(response.cartItemCount);
+                },
+                error: function (xhr, status, error) {
+                    $('#notification')
+                        .removeClass('alert-success')
+                        .addClass('alert-danger')
+                        .text('Error adding product to cart. Please try again.')
+                        .fadeIn().delay(3000).fadeOut();
+                    WshowNotification("Error adding product to cart. Please try again.");
+                }
+            });
+        });
+    });
+
+
+
     function removeQueryParam() {
         const url = window.location.protocol + "//" + window.location.host + window.location.pathname;
         window.history.replaceState({}, document.title, url);
     }
     // Function to load CartService from localStorage
     function loadCart() {
-        const cart = localStorage.getItem("cartService");
-
-        if (cart) {
-            const cartData = JSON.parse(cart);
-            console.log("Restoring CartService from localStorage:", cartData);
-
-            // Send the cart data to the server to restore in the session
-            $.ajax({
-                url: "/cartlocal",
-                type: "POST",
-                contentType: "application/json",
-                data: JSON.stringify(cartData),
-                success: function (response) {
-                    console.log("CartService successfully restored on the server.");
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error restoring CartService:", error);
+        if (!user) {
+             const cart = localStorage.getItem("cartService");
+            if (cart) {
+                const cartData = JSON.parse(cart);
+                console.log("Restoring CartService from localStorage:", cartData);
+                if (cartData.cartItems) {
+                    $('.icon_bag_alt').siblings('.tip').text(cartData.cartItems.length); // Assuming cartItems is an array
                 }
-            });
+
+
+                // Send the cart data to the server to restore in the session
+                $.ajax({
+                    url: "/cartlocal",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(cartData),
+                    success: function (response) {
+                        console.log("CartService successfully restored on the server.");
+                        $('.icon_bag_alt').siblings('.tip').text(response.cartItemCount);
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error restoring CartService:", error);
+
+                    }
+                });
+            }
+
+        }else {
+            localStorage.clear();
         }
+
+
+
+
     }
 
     // Function to save CartService to localStorage
@@ -215,7 +294,8 @@
             success: function (response) {
                 // Save the entire CartService object to localStorage
                 localStorage.setItem("cartService", JSON.stringify(response.cart));
-                localStorage.setItem("cartPrevious", JSON.stringify(response.cart));
+                $('.icon_bag_alt').siblings('.tip').text(response.cartItemCount);
+
                 console.log("CartService successfully saved to localStorage.");
             },
             error: function (xhr, status, error) {
@@ -223,16 +303,20 @@
             }
         });
     }
-
     // Load CartService from localStorage when the page loads
-    $(document).ready(function () {
-        loadCart();
-    });
-
     // Save CartService to localStorage before the page is unloaded
     window.addEventListener("beforeunload", function (event) {
         saveCart();
     });
+    window.onload = function() {
+            if (user){
+                localStorage.removeItem("cartService");
+                localStorage.clear();
+            }else {
+                loadCart();
+            }
+
+    };
 </script>
 
 </body>

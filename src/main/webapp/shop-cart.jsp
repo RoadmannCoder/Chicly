@@ -228,6 +228,7 @@
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/jquery.nicescroll.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/saveCart.js"></script>
     <script>
         /*Function Notification*/
 
@@ -275,7 +276,9 @@
 
                         // Optionally update cart count in header (if needed)
                         $('.icon_bag_alt').siblings('.tip').text(data.cartItemCount);
-                        saveCart();
+
+                            saveCart();
+
                     } else {
                         alert('Failed to remove the product.');
                     }
@@ -291,7 +294,6 @@
                 success: function (response) {
                     // Save the entire CartService object to localStorage
                     localStorage.setItem("cartService", JSON.stringify(response.cart));
-                    localStorage.setItem("cartPrevious", JSON.stringify(response.cart));
                     console.log("CartService successfully saved to localStorage.");
                 },
                 error: function (xhr, status, error) {
