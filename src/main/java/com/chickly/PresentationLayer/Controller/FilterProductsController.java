@@ -72,12 +72,14 @@ public class FilterProductsController extends HttpServlet {
         if(Quantity+product.getQuantity()<=product.getStock()) {
             cartService.addCartItem(product);
             req.getSession().setAttribute("cart", cartService);
+            req.setAttribute("validMessage","Product Added To Cart");
             resp.setContentType("application/json");
             PrintWriter out = resp.getWriter();
             out.print("{ \"message\": \"Product added to cart\", \"cartItemCount\": " + cartService.getTotalCartItems() + " }");
             out.flush();
         }else{
             req.getSession().setAttribute("cart", cartService);
+            req.setAttribute("errorMessage","Product exceeds the limit");
             resp.setContentType("application/json");
             PrintWriter out = resp.getWriter();
             out.print("{ \"message\": \"Product exceeds the limit\", \"cartItemCount\": " + cartService.getTotalCartItems() + " }");

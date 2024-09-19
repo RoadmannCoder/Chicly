@@ -20,6 +20,8 @@ public class AuthenticationService {
 
     public Customer isAuthenticatedCustomer(String userName, String password) {
         Customer customer = customerRepository.findyByUser(userName);
+        if(customer==null)
+            return null;
         System.out.println(userName+"   "+password);
         return password.equals(customer.getAccount().getPassword())?customer:null;
     }
