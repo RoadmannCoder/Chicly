@@ -178,6 +178,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script>
+    function removeQueryParam() {
+        const url = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        window.history.replaceState({}, document.title, url);
+    }
     // Function to load CartService from localStorage
     function loadCart() {
         const cart = localStorage.getItem("cartService");
