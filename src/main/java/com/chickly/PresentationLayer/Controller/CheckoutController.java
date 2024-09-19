@@ -71,14 +71,14 @@ public class CheckoutController extends HttpServlet {
                                                 try {
                                                     SubProductRepository subProductRepository = new SubProductRepository();
                                                     SubProduct subProduct = subProductRepository.findBy("id",optionalOrderProcessError.get().getSubProductDTO().getId());
-                                                    resp.sendRedirect("/cart?error=" + optionalOrderProcessError.get().getSubProductDTO().getProductName() + " exceeds available stock&id=" + optionalOrderProcessError.get().getSubProductDTO().getId() + "&stock=" + subProduct.getStock());                                                } catch (IOException e) {
+                                                    resp.sendRedirect("/cart?action=1&error=" + optionalOrderProcessError.get().getSubProductDTO().getProductName() + "&id=" + optionalOrderProcessError.get().getSubProductDTO().getId() + "&stock=" + subProduct.getStock());                                                } catch (IOException e) {
                                                     throw new RuntimeException(e);
                                                 }
                                             },
                                             () -> {
                                                 // Handle the case where both Order and SubProductDTO are null
                                                 try {
-                                                    resp.sendRedirect("/cart?error= Your Credit Limit So Low To Proceed Your Order Recharge and Comeback Again");
+                                                    resp.sendRedirect("/cart?action=2&error= Your Credit Limit So Low To Proceed Your Order Recharge and Comeback Again");
                                                 } catch (IOException e) {
                                                     throw new RuntimeException(e);
                                                 }
