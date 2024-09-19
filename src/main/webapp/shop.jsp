@@ -37,6 +37,8 @@
 </div>
 <jsp:include page="common/header.jsp" />
 
+<jsp:include page="common/VNotification.jsp"/>
+<jsp:include page="common/WNotification.jsp"/>
 <!-- Shop Section Begin -->
 <section class="shop spad">
     <div class="container">
@@ -298,6 +300,8 @@
 <script src="js/main.js"></script>
 <script src="js/product-display.js"></script>
 <script>
+    var user = '<c:out value="${sessionScope.user}" escapeXml="true" />';
+
     $(document).ready(function () {
         // Event listener for all Add to Cart buttons
         $(".buttonAddToCart").click(function (e) {
@@ -334,8 +338,10 @@
                         .fadeIn().delay(3000).fadeOut();
                     // Optionally, update the cart UI with the updated cart count
                     $('.icon_bag_alt').siblings('.tip').text(response.cartItemCount);
-                    saveCart();
-                    alert(response.message);
+
+                        saveCart();
+
+                        VshowNotification("Product Added To Cart");
 
                     // Optionally, update the cart UI or display cart details
                     // Example: $('#cart-count').text(response.cartItemCount);
@@ -346,11 +352,12 @@
                         .addClass('alert-danger')
                         .text('Error adding product to cart. Please try again.')
                         .fadeIn().delay(3000).fadeOut();
-                    alert("Error adding product to cart. Please try again.");
+                    WshowNotification("Error adding product to cart. Please try again.");
                 }
             });
         });
     });
+
     function saveCart() {
         // Send an AJAX request to get the CartService from the session
         $.ajax({
@@ -359,7 +366,6 @@
             success: function (response) {
                 // Save the entire CartService object to localStorage
                 localStorage.setItem("cartService", JSON.stringify(response.cart));
-                localStorage.setItem("cartPrevious", JSON.stringify(response.cart));
                 console.log("CartService successfully saved to localStorage.");
             },
             error: function (xhr, status, error) {

@@ -101,6 +101,9 @@
         </div>
     </div>
     <!-- Breadcrumb End -->
+    <jsp:include page="common/VNotification.jsp"/>
+    <jsp:include page="common/WNotification.jsp"/>
+
 
     <!-- Product Details Section Begin -->
     <section class="product-details spad">
@@ -314,6 +317,7 @@
     <script src="js/jquery.nicescroll.min.js"></script>
     <script src="js/main.js"></script>
     <script>
+        var user = '<c:out value="${sessionScope.user}" escapeXml="true" />';
         document.addEventListener("DOMContentLoaded", function() {
             const stock = ${product.stock};  // Available stock from your product object
             let quantity = 1;  // Initial quantity
@@ -361,10 +365,12 @@
                 success: function(response) {
                     if (response.status === "success") {
                         $('.icon_bag_alt').siblings('.tip').text(response.cartItemCount);
-                        saveCart();
-                        alert('Product added to cart!');
+                            console.log(user);
+                            saveCart();
+
+                       VshowNotification("Product Added To Cart");
                     } else if (response.status === "fail") {
-                        alert(response.message);
+                        WshowNotification(response.message);
                     }
 
                 },
@@ -381,7 +387,6 @@
                 success: function (response) {
                     // Save the entire CartService object to localStorage
                     localStorage.setItem("cartService", JSON.stringify(response.cart));
-                    localStorage.setItem("cartPrevious", JSON.stringify(response.cart));
                     console.log("CartService successfully saved to localStorage.");
                 },
                 error: function (xhr, status, error) {

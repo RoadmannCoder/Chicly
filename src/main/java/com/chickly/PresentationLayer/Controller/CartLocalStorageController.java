@@ -8,6 +8,7 @@ import com.chickly.DataAccessLayer.Repository.CartRepository;
 import com.chickly.DataAccessLayer.Repository.CustomerRepository;
 import com.chickly.DataAccessLayer.Util.ObjectMapperConfig;
 import com.chickly.Mappers.SubProductMapper;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -40,11 +41,13 @@ public class CartLocalStorageController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CartService cartService = new CartService();
-        ObjectMapper mapper = ObjectMapperConfig.configureObjectMapper();
-// Serialize or Deserialize objects using this mapper
-         cartService = mapper.readValue(req.getReader(), CartService.class);
-        req.getSession().setAttribute("cart", cartService);
-        resp.setStatus(HttpServletResponse.SC_OK);
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        cartService = mapper.readValue(req.getReader(), CartService.class);
+        req.getSession().setAttribute("cart",cartService);
+        doGet(req,resp);
+        //doGet(req,resp);
+
 
     }
 }

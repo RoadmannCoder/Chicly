@@ -1,5 +1,6 @@
 package com.chickly.BussinesLayer;
 
+import com.chickly.DTO.CartItemDTO;
 import com.chickly.DTO.SubProductDTO;
 import com.chickly.DataAccessLayer.DBContext.EntityManagerUtil;
 import com.chickly.DataAccessLayer.Entities.CartItems;
@@ -8,6 +9,9 @@ import com.chickly.DataAccessLayer.Entities.SubProduct;
 import com.chickly.DataAccessLayer.Repository.CartRepository;
 import com.chickly.DataAccessLayer.Repository.CustomerRepository;
 import com.chickly.Mappers.SubProductMapper;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -15,9 +19,20 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class CartService implements Serializable {
+
+    @JsonIgnore
     private Map<SubProductDTO, Integer> cart = new HashMap<>();
 
 
+    public CartService(){
+
+
+    }
+    @JsonCreator
+    public CartService(@JsonProperty("cartItems") List<CartItemDTO> cartItems) {
+        this.cart = cartItems.stream()
+                .collect(Collectors.toMap(CartItemDTO::getSubProduct, CartItemDTO::getQuantity));
+    }
     public void addCartItem(SubProductDTO subProductDTO){
         if(cart.containsKey(subProductDTO)){
             Integer quantity = cart.get(subProductDTO) + 1;
@@ -32,6 +47,7 @@ public class CartService implements Serializable {
     public boolean removeCartItem(SubProductDTO subProductDTO){
         try{cart.remove(subProductDTO); return  true;}catch (Exception e){e.printStackTrace(); return false;}
     }
+
     public int getTotalQuantity(){
          return cart.values().stream().mapToInt(Integer::intValue).sum();
     }
@@ -41,6 +57,8 @@ public class CartService implements Serializable {
                 .map(entry -> entry.getKey().getPrice().multiply(BigDecimal.valueOf(entry.getValue())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
+
+    @JsonIgnore
     public Map<SubProductDTO, Integer> getItems(){
         return this.cart;
     }
@@ -53,7 +71,7 @@ public class CartService implements Serializable {
         else
             return 0;
     }
-    public int getTotalCartItems(){
+    public int getTotalCartItems() {
         return this.cart.size();
     }
     public void updateProductQuantity(SubProductDTO subProductDTO, int quantity) {
@@ -64,6 +82,12 @@ public class CartService implements Serializable {
                 cart.remove(subProductDTO);
             }
         }
+    }
+    @JsonProperty("cartItems")
+    public List<CartItemDTO> getCartItemsForJson() {
+        return cart.entrySet().stream()
+                .map(entry -> new CartItemDTO(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
     }
     public void addToDB(List<CartItems> cartItems, Customer customer, CartService cartService){
         CustomerRepository customerRepository = new CustomerRepository();
@@ -78,12 +102,7 @@ public class CartService implements Serializable {
                 Set<Integer> newSubProductIds = subProductList.stream()
                         .map(SubProductDTO::getId)
                         .collect(Collectors.toSet());
-                Set<CartItems> itemsToRemove = new HashSet<>(currentCartItems);
-                itemsToRemove.forEach(cartItem -> {
-                    if (!newSubProductIds.contains(cartItem.getSubProduct().getId())) {
-                        currentCartItems.remove(cartItem);
-                    }
-                });
+
 
                 subProductList.forEach(subProductDTO -> {
                     CartItems existingCartItem = currentCartItems.stream()
@@ -104,7 +123,9 @@ public class CartService implements Serializable {
                         currentCartItems.add(newCartItem);
                     }
                 });
-                customer.setShoppingCart(currentCartItems.stream().collect(Collectors.toSet()));
+                customer.getShoppingCart().clear();
+                customer.getShoppingCart().addAll(currentCartItems.stream().collect(Collectors.toSet()));
+
                 customerRepository.merge(customer);
             }else{
                 Set<CartItems> currentCartItem = customer.getShoppingCart();

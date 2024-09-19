@@ -26,13 +26,15 @@
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
-<body>
+<body >
 <!-- Page Preloder -->
 <div id="preloder">
     <div class="loader"></div>
 </div>
 <jsp:include page="common/header.jsp" />
 <!-- Header Section End -->
+<jsp:include page="common/ValidNotification.jsp"/>
+<jsp:include page="common/WNotification.jsp"/>
 <!-- Categories Section Begin -->
 <section class="categories">
     <div class="container-fluid">
@@ -87,6 +89,7 @@
     </div>
 </section>
 <!-- Categories Section End -->
+
 
 <section class="product spad">
     <div class="container">
@@ -175,31 +178,50 @@
 <script src="js/jquery.nicescroll.min.js"></script>
 <script src="js/main.js"></script>
 <script src="js/product-display.js"></script>
+<script src="js/saveCart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script>
+
+    var user = '<c:out value="${sessionScope.user}" />';
+
     // Function to load CartService from localStorage
     function loadCart() {
-        const cart = localStorage.getItem("cartService");
-
-        if (cart) {
-            const cartData = JSON.parse(cart);
-            console.log("Restoring CartService from localStorage:", cartData);
-
-            // Send the cart data to the server to restore in the session
-            $.ajax({
-                url: "/cartlocal",
-                type: "POST",
-                contentType: "application/json",
-                data: JSON.stringify(cartData),
-                success: function (response) {
-                    console.log("CartService successfully restored on the server.");
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error restoring CartService:", error);
+        if (!user) {
+             const cart = localStorage.getItem("cartService");
+            if (cart) {
+                const cartData = JSON.parse(cart);
+                console.log("Restoring CartService from localStorage:", cartData);
+                if (cartData.cartItems) {
+                    $('.icon_bag_alt').siblings('.tip').text(cartData.cartItems.length); // Assuming cartItems is an array
                 }
-            });
+
+
+                // Send the cart data to the server to restore in the session
+                $.ajax({
+                    url: "/cartlocal",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(cartData),
+                    success: function (response) {
+                        console.log("CartService successfully restored on the server.");
+                        $('.icon_bag_alt').siblings('.tip').text(response.cartItemCount);
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error restoring CartService:", error);
+
+                    }
+                });
+            }
+
+        }else {
+            localStorage.clear();
         }
+
+
+
+
     }
 
     // Function to save CartService to localStorage
@@ -211,7 +233,8 @@
             success: function (response) {
                 // Save the entire CartService object to localStorage
                 localStorage.setItem("cartService", JSON.stringify(response.cart));
-                localStorage.setItem("cartPrevious", JSON.stringify(response.cart));
+                $('.icon_bag_alt').siblings('.tip').text(response.cartItemCount);
+
                 console.log("CartService successfully saved to localStorage.");
             },
             error: function (xhr, status, error) {
@@ -219,16 +242,20 @@
             }
         });
     }
-
     // Load CartService from localStorage when the page loads
-    $(document).ready(function () {
-        loadCart();
-    });
-
     // Save CartService to localStorage before the page is unloaded
     window.addEventListener("beforeunload", function (event) {
         saveCart();
     });
+    window.onload = function() {
+            if (user){
+                localStorage.removeItem("cartService");
+                localStorage.clear();
+            }else {
+                loadCart();
+            }
+
+    };
 </script>
 
 </body>

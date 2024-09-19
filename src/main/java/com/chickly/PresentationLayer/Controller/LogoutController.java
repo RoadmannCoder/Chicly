@@ -28,9 +28,14 @@ public class LogoutController extends HttpServlet {
         if(customer !=null){
 
         }
-        session.removeAttribute("user");
-        session.removeAttribute("cart");
-        resp.sendRedirect("/");
+
+        if (session != null) {
+            session.removeAttribute("user");
+            session.invalidate();
+        }
+
+
+        resp.sendRedirect("logout.jsp");
     }
 
     @Override
