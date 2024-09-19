@@ -196,18 +196,17 @@
                         <p>${requestScope.date}</p>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-12 text-center">
-                        <div class="order-deliverd-date">
-                            <p>Your Order Will Be Delivered on <span>${requestScope.date}</span></p>
-                        </div>
-                    </div>
-                </div>
             </c:otherwise>
         </c:choose>
         </div>
 
-
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="order-deliverd-date">
+                    <p>Your Order Will Be Delivered on <span>${requestScope.date}</span></p>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="order-details-wrap">
