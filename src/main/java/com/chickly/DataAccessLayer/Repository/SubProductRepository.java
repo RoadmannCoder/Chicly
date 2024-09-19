@@ -12,7 +12,6 @@ import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 public class SubProductRepository extends GenericCrudManager<SubProduct,Object> {
     public SubProductRepository() {
@@ -44,7 +43,7 @@ public class SubProductRepository extends GenericCrudManager<SubProduct,Object> 
         graph.addSubgraph("product");
 
         TypedQuery<SubProduct> query = getEntityManager().createQuery(cq)
-                .setHint("javax.persistence.fetchgraph", graph);
+                .setHint("jakarta.persistence.fetchgraph", graph);
         query.setFirstResult((filterDTO.getPageNumber() - 1) * filterDTO.getPageSize());
         query.setMaxResults(filterDTO.getPageSize());
 

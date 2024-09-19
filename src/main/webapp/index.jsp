@@ -113,7 +113,7 @@
                 </div>
                 <div class="product__item__text">
                     <h6><a href="/product-details?product=${subProduct.id}">${subProduct.productName}</a></h6>
-                    <div class="product__price">${subProduct.price}</div>
+                    <div class="product__price">$ ${subProduct.price}</div>
                 </div>
             </div>
         </div>
