@@ -89,6 +89,11 @@ public class OrderService {
         OrderRepository orderRepository1 = new OrderRepository();
         orderRepository1.updateOrderStatus(id, status);
     }
+
+    public Order getOrderById(String orderId) {
+        OrderRepository orderRepository1 = new OrderRepository();
+        return orderRepository1.findBy("id",orderId);
+    }
 }
 
 

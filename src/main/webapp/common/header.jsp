@@ -113,7 +113,6 @@
                     <ul class="user-submenu">
                         <li><a href="userProfile.jsp">Profile</a></li>
                         <li><a href="/orders">My Orders</a></li>
-                        <li><a href="/wishlist">Wishlist</a></li>
                         <li><a href="/logout">Logout</a></li>
                     </ul>
                 </div>
@@ -160,7 +159,6 @@
                                     <ul class="user-submenu">
                                         <li><a href="userProfile.jsp">Profile</a></li>
                                         <li><a href="/orders">My Orders</a></li>
-                                        <li><a href="/wishlist">Wishlist</a></li>
                                         <li><a href="/logout">Logout</a></li>
                                     </ul>
                                 </div>

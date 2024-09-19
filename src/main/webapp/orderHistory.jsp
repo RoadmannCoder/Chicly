@@ -6,10 +6,9 @@
     <meta charset="UTF-8">
     <title>Order History</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
@@ -21,51 +20,48 @@
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <style>
-        .order-list {
-            cursor: pointer;
-        }
-        .order-list:hover {
-            background-color: #f8f9fa;
-        }
         .btn-black {
             background-color: #000;
             color: #fff;
         }
+
         .btn-black:hover {
             background-color: #444;
             color: #fff;
         }
-        /* Styling for table headers */
-        .table th {
-            background-color: #ca1515; /* Example background color */
-            color: white; /* Text color */
-            font-weight: bold;
+
+        .table th, .table td {
             text-align: center;
+            vertical-align: middle;
         }
 
-        /* Ensure that <td> aligns with <th> */
-        .table td, .table th {
-            text-align: center; /* Align text to center */
-            vertical-align: middle; /* Aligns content vertically in the middle */
-        }
-
-        /* Table layout to keep structure consistent */
-        .table {
-            table-layout: auto; /* Ensures column widths are auto-adjusted */
-            width: 100%; /* Table takes full width */
-        }
         .order-history-title {
-            font-family: 'Montserrat', sans-serif; /* Use a nice modern font */
-            font-weight: 700; /* Make the text bold */
-            font-size: 32px; /* Larger font size */
-            color: #ca1515; /* A bold red color matching the theme */
-            background-color: #f8f9fa; /* Light background for contrast */
-            padding: 10px 20px; /* Add padding for spacing */
-            border-radius: 50px; /* Rounded corners */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-            display: inline-block; /* Keeps it inline but with block properties */
-            text-transform: uppercase; /* Makes the text uppercase */
-            letter-spacing: 2px; /* Adds spacing between letters */
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 32px;
+            color: #ca1515;
+            background-color: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Modal Styles */
+        .modal-body {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .btn-cancelled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .btn-cancelled:hover {
+            background-color: #6c757d;
         }
     </style>
 </head>
@@ -77,14 +73,14 @@
             <div class="col-lg-12">
                 <div class="breadcrumb__links">
                     <a href="/"><i class="fa fa-home"></i> Home</a>
-                    <span class="order-history-title">Order History</span>
+                    <span class="order-history-title">Order history</span>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <div class="container mt-5">
-    <div class="row">
+    <div class="row mt-4">
         <c:if test="${not empty orders}">
             <table class="table table-striped">
                 <thead>
@@ -93,6 +89,7 @@
                     <th>Created Date</th>
                     <th>Destination</th>
                     <th>Status</th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -102,6 +99,17 @@
                         <td>${order.createdAt}</td>
                         <td>${order.destination}</td>
                         <td>${order.status}</td>
+                        <td>
+                            <a href="OrderTrackingController?orderId=${order.id}" class="btn btn-primary">View Order Details</a>
+                            <c:choose>
+                                <c:when test="${order.status == 'CANCELLED'}">
+                                    <button class="btn btn-cancelled" disabled>Cancelled</button>
+                                </c:when>
+                                <c:otherwise>
+                                    <button class="btn btn-danger cancel-order" data-order-id="${order.id}">Cancel Order</button>
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -113,8 +121,123 @@
     </div>
 </div>
 
+<div class="modal fade" id="orderDetailsModal" tabindex="-1" role="dialog" aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="orderDetailsModalLabel">Order Items</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                    </thead>
+                    <tbody id="order-items-body">
+                    <!-- Order items will be injected here -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cancellation Confirmation Modal -->
+<div class="modal fade" id="cancelOrderModal" tabindex="-1" role="dialog" aria-labelledby="cancelOrderModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cancelOrderModalLabel">Confirm Cancellation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to cancel this order? This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirm-cancel">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
 <script>
+    $(document).ready(function () {
+        var orderIdToCancel = null;
+
+        // View order details (order items)
+        $('.view-details').on('click', function () {
+            var orderId = $(this).data('order-id');
+            $.ajax({
+                url: 'OrderItemsController',
+                type: 'GET',
+                data: { orderId: orderId },
+                success: function (response) {
+                    var orderItemsBody = $('#order-items-body');
+                    orderItemsBody.empty();
+                    if (response.length > 0) {
+                        response.forEach(function (item) {
+                            orderItemsBody.append('<tr>' +
+                                '<td>' + item.productName + '</td>' +
+                                '<td>' + item.quantity + '</td>' +
+                                '<td>' + item.price + '</td>' +
+                                '</tr>');
+                        });
+                    } else {
+                        orderItemsBody.append('<tr><td colspan="3">No items found for this order.</td></tr>');
+                    }
+                    $('#orderDetailsModal').modal('show');
+                },
+                error: function () {
+                    alert('Failed to fetch order details.');
+                }
+            });
+        });
+
+        // Trigger cancel order confirmation modal
+        $('.cancel-order').on('click', function () {
+            orderIdToCancel = $(this).data('order-id');
+            $('#cancelOrderModal').modal('show');
+        });
+
+        // Confirm cancel order
+        $('#confirm-cancel').on('click', function () {
+            if (orderIdToCancel) {
+                $.ajax({
+                    url: 'OrderStatusController',
+                    type: 'POST',
+                    data: {
+                        orderId: orderIdToCancel,
+                        status: 'CANCELLED'
+                    },
+                    success: function () {
+                        alert('Order canceled successfully.');
+                        location.reload();
+                    },
+                    error: function () {
+                        alert('Failed to cancel the order.');
+                    }
+                });
+                $('#cancelOrderModal').modal('hide');
+            }
+        });
+    });
 </script>
+
 <jsp:include page="common/footer.jsp"/>
 </body>
 </html>

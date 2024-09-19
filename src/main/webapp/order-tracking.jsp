@@ -1,4 +1,3 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -6,258 +5,262 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="shortcut icon" href="favicon.ico">
-    <title>CHCILY</title>
-
-    <!-- Google Font -->
+    <title>Order Tracking</title>
     <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
-          rel="stylesheet">
-
-
-    <!-- Css Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
     <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
-    <!-- CSS Files -->
-    <!--==== Google Fonts ====-->
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900%7CRoboto+Condensed:300,400,700" rel="stylesheet">
-    
-    <!--==== Bootstrap css file ====-->
-    <link rel="stylesheet" href="order/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/shop.css" type="text/css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f9f9f9;
+        }
 
-    <!--==== Font-Awesome css file ====-->
-    <link rel="stylesheet" href="order/css/font-awesome.min.css">
+        .breadcrumb__links {
+            margin-top: 20px;
+            font-size: 16px;
+        }
 
-    <!-- Owl Carusel css file -->
-    <link rel="stylesheet" href="order/plugins/owl-carousel/owl.carousel.min.css">
+        .breadcrumb__links a {
+            color: #333;
+            text-decoration: none;
+        }
 
-    <!-- Magnific-Popup css file -->
-    <link rel="stylesheet" href="order/plugins/Magnific-Popup/magnific-popup.css">
+        .breadcrumb__links span {
+            font-weight: bold;
+            color: #000;
+        }
 
-    <!-- animate css file -->
-    <link rel="stylesheet" href="order/plugins/animate-css/animate.min.css">
+        .page-title-inner {
+            background: url('order/img/page-titlebg.png') no-repeat center center/cover;
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+        }
 
-    <!-- swiper -->
-    <link rel="stylesheet" href="order/plugins/swiper/swiper.min.css">
+        .page-title-inner h1 {
+            font-size: 36px;
+            text-transform: uppercase;
+        }
 
-    <!--==== Style css file ====-->
-    <link rel="stylesheet" href="order/css/style.css">
+        .track-lines .single-tracking-inner {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
 
-    <!--==== Responsive css file ====-->
-    <link rel="stylesheet" href="order/css/responsive.css">
+        .track-lines .single-tracking-inner:hover {
+            transform: translateY(-10px);
+        }
 
-    <!--==== Custom css file ====-->
-    <link rel="stylesheet" href="order/css/custom.css">
+        .single-tracking-inner h5 {
+            font-size: 18px;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        .single-tracking-inner img {
+            max-width: 50px;
+        }
+
+        .order-details-wrap {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .order-details-heading h5 {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .order-items-section table {
+            width: 100%;
+            background: #fff;
+            margin-top: 20px;
+        }
+
+        .order-items-section table thead th {
+            background-color: #ca1515;
+            color: #fff;
+            padding: 10px;
+        }
+
+        .order-items-section table tbody tr td {
+            padding: 10px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .order-deliverd-date {
+            margin-top: 40px;
+            font-size: 20px;
+        }
+
+        .order-deliverd-date span {
+            font-weight: bold;
+            color: #ca1515;
+        }
+
+        .order-details-wrap .shipping-to-area h5, .billing-to-area h5 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .order-history-title {
+            font-family: 'Montserrat', sans-serif; /* Use a nice modern font */
+            font-weight: 700; /* Make the text bold */
+            font-size: 32px; /* Larger font size */
+            color: #ca1515; /* A bold red color matching the theme */
+            background-color: #f8f9fa; /* Light background for contrast */
+            padding: 10px 20px; /* Add padding for spacing */
+            border-radius: 50px; /* Rounded corners */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            display: inline-block; /* Keeps it inline but with block properties */
+            text-transform: uppercase; /* Makes the text uppercase */
+            letter-spacing: 2px; /* Adds spacing between letters */
+        }
+    </style>
 </head>
 
 <body>
-  <jsp:include page="common/header.jsp"/>
+<jsp:include page="common/header.jsp"/>
 
-
-    <!-- End of offcanvas menu-->
-
-    <!-- page title -->
-    <section class="page-title-inner" data-bg-img='order/img/page-titlebg.png'>
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <!-- page title inner -->
-                    <div class="page-title-wrap">
-                        <div class="page-title-heading"><h1 class="h2">Order Tracking<span>Tracking</span></h1></div>
-                        <ul class="list-unstyled mb-0">
-                            <li><a href="/">home</a></li>
-                            <li><a href="#">Order</a></li>
-                            <li class="active"><a href="#">Tracking</a></li>
-                        </ul>
-                    </div>
-                    <!-- End of page title inner -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a href="/orders"><i class="fa icon_profile"></i> Order History</a>
+                    <span class="order-history-title">Order Tracking</span>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- End of page title -->
-    
-    <!-- tracking wrap -->
-    <section class="pt-100 pb-100">
-        <div class="container">
-            <div class="row track-lines">
+    </div>
+</div>
+
+<section class="page-title-inner">
+    <div class="container">
+        <h1>Track Your Order</h1>
+    </div>
+</section>
+
+<section class="pt-100 pb-100">
+    <div class="container">
+        <div class="row track-lines">
+            <c:choose>
+                <c:when test="${requestScope.order.status eq 'CANCELLED'}">
+                    <div class="canceled-status">
+                        Your order has been cancelled.
+                    </div>
+                </c:when>
+                <c:otherwise>
                 <div class="col-md-3 col-sm-3">
-                    <!-- single tracking inner -->
-                    <div class="single-tracking-inner text-center line-1">
-                        <div class="single-tracking-img">
-                            <img src="order/img/icons/torder.png" alt="">
-                        </div>
-                        <h5 class="lato">Order Placed</h5>
+                    <div class="single-tracking-inner text-center">
+                        <img src="order/img/icons/torder.png" alt="Order Placed">
+                        <h5>Order Placed</h5>
                         <p>${requestScope.order.createdAt}</p>
                     </div>
-                    <!-- End of single tracking inner -->
                 </div>
-
-                 <div class="col-md-3 col-sm-3">
-                    <!-- single tracking inner -->
-                    <div class="single-tracking-inner text-center ">
-                        <div class="single-tracking-img">
-                            <img src="order/img/icons/tpacked.png" alt="">
-                        </div>
-                        <h5 class="lato">Packed</h5>
+                <div class="col-md-3 col-sm-3">
+                    <div class="single-tracking-inner text-center">
+                        <img src="order/img/icons/tpacked.png" alt="Packed">
+                        <h5>Packed</h5>
                         <p>${requestScope.order.createdAt}</p>
                     </div>
-                    <!-- End of single tracking inner -->
                 </div>
-
                 <div class="col-md-3 col-sm-3">
-                    <!-- single tracking inner -->
                     <div class="single-tracking-inner text-center">
-                        <div class="single-tracking-img">
-                            <img src="order/img/icons/ttransit.png" alt="">
-                        </div>
-                        <h5 class="lato">In Transit</h5>
+                        <img src="order/img/icons/ttransit.png" alt="In Transit">
+                        <h5>In Transit</h5>
                         <p>${requestScope.date}</p>
                     </div>
-                    <!-- End of single tracking inner -->
                 </div>
-
                 <div class="col-md-3 col-sm-3">
-                    <!-- single tracking inner -->
                     <div class="single-tracking-inner text-center">
-                        <div class="single-tracking-img">
-                            <img src="order/img/icons/tdeliverd.png" alt="">
-                        </div>
-                        <h5 class="lato">Deliverd</h5>
+                        <img src="order/img/icons/tdeliverd.png" alt="Delivered">
+                        <h5>Delivered</h5>
                         <p>${requestScope.date}</p>
                     </div>
-                    <!-- End of single tracking inner -->
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <!--order deliverd date -->
-                    <div class="order-deliverd-date text-center">
-                        <p>Your Order Will Deliver on <span>${requestScope.date}</span></p>
-                    </div>
-                    <!--End of order deliverd date -->
-                </div>
-                <div class="col-md-12">
-                    <!-- order details wrap -->
-                    <div class="order-details-wrap">
-                        <div class="order-details-heading">
-                            <h5 class="lato">Order Detail:</h5>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <div class="order-deliverd-date">
+                            <p>Your Order Will Be Delivered on <span>${requestScope.date}</span></p>
                         </div>
-                        <div class="order-address-details">
-                            <div class="order-no">
-                                <p>Order No: <span>${requestScope.order.id}</span></p>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-11 offset-md-1">
-                                    <!-- order address inner -->
-                                    <div class="order-address-inner clearfix">
-                                        <div class="shipping-to-area">
-                                            <h5>Shipping To:</h5>
-                                            <p>${requestScope.order.customer.address.city}</p>
-                                            <p>${requestScope.order.customer.address.street},<br>${requestScope.order.customer.address.zip}</p>
-                                        </div>
+                    </div>
+                </div>
+            </c:otherwise>
+        </c:choose>
+        </div>
 
-                                        <div class="billing-to-area">
-                                            <h5>Products List:</h5>
-                                            <c:forEach var="item" items="${requestScope.order.orderItems}">
-                                            <p>${item.subProduct.product.name}</p>
-                                            </c:forEach>
-                                        </div>
-                                    </div>
-                                    <!-- End of order address inner -->
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="order-details-wrap">
+                    <div class="order-details-heading">
+                        <h5>Order Details</h5>
+                    </div>
+                    <div class="order-address-details">
+                        <div class="order-no">
+                            <p>Order No: <span>${requestScope.order.id}</span></p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="shipping-to-area">
+                                    <h5>Shipping To:</h5>
+                                    <p>${requestScope.order.customer.address.city} , ${requestScope.order.customer.address.street} , ${requestScope.order.customer.address.zip}</p>
                                 </div>
                             </div>
-                            
                         </div>
                     </div>
-                    <!-- order details wrap -->
                 </div>
             </div>
         </div>
-    </section>
-    <!-- End of tracking wrap -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="order-items-section mt-5">
+                    <h2>Order Items</h2>
+                    <table class="table table-bordered table-striped mt-3">
+                        <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="item" items="${orderItems}">
+                            <tr>
+                                <td>${item.productName}</td>
+                                <td>${item.quantity}</td>
+                                <td>${item.price}</td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
- <jsp:include page="common/footer.jsp"/>
-        <!-- End of footer area -->
-        
-
-        <!-- add add to cart notifacition -->
-    
-        <!-- JS Files -->
-       <!-- ==== JQuery 3.3.1 js file==== -->
-       <script src="order/js/jquery-3.3.1.min.js"></script>
-    
-       <!-- ==== Bootstrap js file==== -->
-       <script src="order/js/bootstrap.bundle.min.js"></script>
-    
-       <!-- ==== JQuery Waypoint js file==== -->
-       <script src="order/plugins/waypoints/jquery.waypoints.min.js"></script>
-    
-       <!-- ==== Parsley js file==== -->
-       <script src="order/plugins/parsley/parsley.min.js"></script>
-    
-       <!-- ==== Ratina js file==== -->
-       <script src="order/plugins/retinajs/retina.min.js"></script>
-    
-       <!--===parallax js file===-->
-       <script src="order/plugins/parallax/parallax.js"></script>
-    
-       <!--=== hori parallax js file===-->
-       <script src="order/plugins/parallax/parallaxh.min.js"></script>
-    
-       <!-- ==== Owl Carousel js file==== -->
-       <script src="order/plugins/owl-carousel/owl.carousel.min.js"></script>
-    
-       <!-- ====Magnific-Popup js file==== -->
-       <script src="order/plugins/Magnific-Popup/jquery.magnific-popup.min.js"></script>
-    
-       <!-- ====Counter js file=== -->
-       <script src="order/plugins/waypoints/jquery.counterup.min.js"></script>
-    
-       <!-- ====packery==== -->
-       <script src="order/plugins/isotope/packery.pkgd.min.js"></script>
-    
-       <!-- ====swiper==== -->
-       <script src="order/plugins/swiper/swiper.min.js"></script>
-    
-       <!-- ====Count down js==== -->
-       <script src="order/plugins/countdown/jquery.countdown.min.js"></script>
-    
-       <!-- ====zoom js==== -->
-       <script src="order/plugins/Magnific-Popup/jquery.elevateZoom-3.0.8.min.js"></script>
-    
-        <!-- ====tweenMax==== -->
-       <script src="order/plugins/tweenmax/TweenMax.min.js"></script>
-    
-       <!-- ====text animation==== -->
-        <script src="order/plugins/text-animation/anime.min.js"></script>
-
-        <!-- ====google map api key====-->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2D8wrWMY3XZnuHO6C31uq90JiuaFzGws"></script>
-    
-       <!-- ==== Script js file==== -->
-       <script src="order/js/scripts.js"></script>
-    
-       <!-- ==== Custom js file==== -->
-       <script src="order/js/custom.js"></script>
-  <script src="js/jquery-3.3.1.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/jquery-ui.min.js"></script>
-  <script src="js/mixitup.min.js"></script>
-  <script src="js/jquery.countdown.min.js"></script>
-  <script src="js/jquery.slicknav.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.nicescroll.min.js"></script>
-  <script src="js/main.js"></script>
-  <script src="js/product-display.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    
-    </body>
-    </html>
+<jsp:include page="common/footer.jsp"/>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
