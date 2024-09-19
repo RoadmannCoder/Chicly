@@ -180,7 +180,7 @@ public class CartService implements Serializable {
         List<CartItems> cartItems = cartRepository.findAllByID(customer.getId()).get();
         if (cartItems.size() != 0) {
             cartItems.forEach(cartItem -> {
-                service.addCartItem(SubProductMapper.convertEntityToDTO(cartItem.getSubProduct()));
+                service.addCartItem(SubProductMapper.convertEntityToDTO(cartItem.getSubProduct()),cartItem.getQuantity());
             });
             addToDB(cartItems,customer,service);
 
