@@ -60,7 +60,7 @@
     }
     document.addEventListener('DOMContentLoaded', function () {
         if (errorMessage) {
-            showNotification(errorMessage);
+            VshowNotification(errorMessage);
         }
     });
 </script>

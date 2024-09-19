@@ -69,7 +69,7 @@ public class Customer{
 
     @OneToMany(mappedBy ="customer")
     private Set<Order> orders = new HashSet<>();
-    @OneToMany(mappedBy = "customer", cascade = {CascadeType.MERGE,CascadeType.PERSIST}, orphanRemoval = true)
+    @OneToMany(mappedBy = "customer", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private Set<CartItems> shoppingCart = new HashSet<>();
 
 
