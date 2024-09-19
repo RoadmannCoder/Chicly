@@ -75,22 +75,51 @@ public class CustomerService {
     public void updateCustomer(HttpServletRequest req,Customer oldCustomer) {
         CustomerRepository customerRepository1 = new CustomerRepository();
         String firstName = req.getParameter("firstName");
+        if(firstName.isEmpty() || firstName==null){
+            firstName = oldCustomer.getFirstName();
+        }
         String lastName= req.getParameter("lastName");
+        if(lastName.isEmpty() || lastName==null){
+            lastName = oldCustomer.getLastName();
+        }
         BigDecimal creditLimit = new BigDecimal(req.getParameter("creditLimit"));
+        if(creditLimit==null){
+            creditLimit = oldCustomer.getCreditLimit();
+        }
         String email= req.getParameter("email");
+        if(email.isEmpty() || email==null){
+            email = oldCustomer.getEmail();
+        }
         String phoneNumber= req.getParameter("phoneNumber");
+        if(phoneNumber.isEmpty() || phoneNumber==null){
+            phoneNumber = oldCustomer.getPhoneNumber();
+        }
         String job= req.getParameter("job");
+        if(job.isEmpty() || job==null){
+            job = oldCustomer.getJob();
+        }
         String street= req.getParameter("street");
+        if(street.isEmpty() || street==null){
+            street = oldCustomer.getAddress().getStreet();
+        }
+
         String city= req.getParameter("city");
-        String zip= req.getParameter("zip");
-        String description= req.getParameter("description");
-        String userName = req.getParameter("userName");
-        String[] selectedInterestIds = req.getParameterValues("interests");
-
-
-        if(city==null || city.isEmpty()){
+        if(city.isEmpty() || city==null){
             city = oldCustomer.getAddress().getCity();
         }
+        String zip= req.getParameter("zip");
+        if(zip.isEmpty() || zip==null){
+            zip = oldCustomer.getAddress().getZip();
+        }
+        String description= req.getParameter("description");
+        if(description.isEmpty() || description==null){
+            description = oldCustomer.getAddress().getDescription();
+        }
+        String userName = req.getParameter("userName");
+        if(userName.isEmpty() || userName==null){
+            userName = oldCustomer.getAccount().getUserName();
+        }
+        String[] selectedInterestIds = req.getParameterValues("interests");
         Account account = new Account();account.setUserName(userName);account.setPassword(oldCustomer.getAccount().getPassword());
         Address address = new Address();address.setCity(city);address.setZip(zip);address.setDescription(description);
         address.setStreet(street);

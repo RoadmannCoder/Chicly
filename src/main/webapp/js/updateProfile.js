@@ -148,7 +148,7 @@ function handleUserReq() {
 }
 // ////////////////////////////Check Form Validation//////////////////////////////////////////////////////////
 function checkCondition() {
-    var registerBtn = document.getElementById("registerBtn");
+    var registerBtn = document.getElementById("updateBtn");
 
     if (document.getElementById('usernameerror').textContent !=="") {
         registerBtn.disabled = true; // Enable the button if the condition is met

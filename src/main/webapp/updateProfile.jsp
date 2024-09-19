@@ -191,7 +191,7 @@
                     <span class="error-message" id="phoneerror"></span>
                 </div>
                 <div class="card-text">
-                    <label for="job">Phone Number:</label>
+                    <label for="job">Job:</label>
                     <input type="text" class="form-control" id="job" name="job" value="${sessionScope.user.job}">
                 </div>
                 <div class="input-field">
@@ -244,6 +244,7 @@
     }
 </script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="js/updateProfile.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

@@ -56,8 +56,8 @@ public class CheckoutController extends HttpServlet {
                             req.setAttribute("date", newDate);
                             req.getSession().removeAttribute("cart");
                             try {
-                                req.getRequestDispatcher("order-tracking.jsp").forward(req, resp);
-                            } catch (ServletException | IOException e) {
+                                resp.sendRedirect("/orders");
+                            } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
                         },
