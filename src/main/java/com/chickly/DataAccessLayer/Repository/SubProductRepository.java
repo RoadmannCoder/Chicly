@@ -12,7 +12,6 @@ import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 public class SubProductRepository extends GenericCrudManager<SubProduct,Object> {
     public SubProductRepository() {
@@ -33,18 +32,19 @@ public class SubProductRepository extends GenericCrudManager<SubProduct,Object> 
         return query.getResultList();
     }
     public List<SubProduct> findSubProductsByFilters(SubProductFilterDTO filterDTO) {
-        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        EntityManager entityManager = getEntityManager();
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<SubProduct> cq = cb.createQuery(SubProduct.class);
         Root<SubProduct> subProductRoot = cq.from(SubProduct.class);
 
         List<Predicate> predicates = new PredicateBuilder().buildSubProductPredicates(cb, subProductRoot, filterDTO);
         cq.where(predicates.toArray(new Predicate[0]));
 
-        EntityGraph<SubProduct> graph = getEntityManager().createEntityGraph(SubProduct.class);
+        EntityGraph<SubProduct> graph = entityManager.createEntityGraph(SubProduct.class);
         graph.addSubgraph("product");
 
-        TypedQuery<SubProduct> query = getEntityManager().createQuery(cq)
-                .setHint("javax.persistence.fetchgraph", graph);
+        TypedQuery<SubProduct> query = entityManager.createQuery(cq)
+                .setHint("jakarta.persistence.fetchgraph", graph);
         query.setFirstResult((filterDTO.getPageNumber() - 1) * filterDTO.getPageSize());
         query.setMaxResults(filterDTO.getPageSize());
 
