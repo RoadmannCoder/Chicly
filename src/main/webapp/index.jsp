@@ -242,6 +242,10 @@
 
 
 
+    function removeQueryParam() {
+        const url = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        window.history.replaceState({}, document.title, url);
+    }
     // Function to load CartService from localStorage
     function loadCart() {
         if (!user) {

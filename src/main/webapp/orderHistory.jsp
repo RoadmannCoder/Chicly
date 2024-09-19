@@ -7,6 +7,8 @@
     <title>Order History</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Google Font -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
@@ -79,6 +81,20 @@
         </div>
     </div>
 </div>
+<div class="alert alert-success alert-dismissible fade" role="alert" id="successAlert" style="display:none;">
+    <strong>Success!</strong> <span id="successMessage"></span>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="alert alert-danger alert-dismissible fade" role="alert" id="errorAlert" style="display:none;">
+    <strong>Error!</strong> <span id="errorMessage"></span>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
 <div class="container mt-5">
     <div class="row mt-4">
         <c:if test="${not empty orders}">
@@ -171,8 +187,9 @@
         </div>
     </div>
 </div>
-
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
 <script>
@@ -218,24 +235,44 @@
         $('#confirm-cancel').on('click', function () {
             if (orderIdToCancel) {
                 $.ajax({
-                    url: 'OrderStatusController',
+                    url: 'cancelOrderController',
                     type: 'POST',
                     data: {
                         orderId: orderIdToCancel,
                         status: 'CANCELLED'
                     },
-                    success: function () {
-                        alert('Order canceled successfully.');
-                        location.reload();
+                    success: function (response) {
+                        if (response.success) {
+                            // Show success alert
+                            $('#successAlert').text(response.message).removeClass('fade').addClass('show');
+                            setTimeout(function () {
+                                $('#successAlert').removeClass('show').addClass('fade');
+                            }, 3000); // Hide after 3 seconds
+                            location.reload(); // Reload the page
+                        } else {
+                            // Show error alert
+                            $('#errorAlert').text(response.message).removeClass('fade').addClass('show');
+                            setTimeout(function () {
+                                $('#errorAlert').removeClass('show').addClass('fade');
+                            }, 3000); // Hide after 3 seconds
+                        }
                     },
                     error: function () {
-                        alert('Failed to cancel the order.');
+                        // Show error alert if AJAX fails
+                        $('#errorAlert').text('Failed to communicate with the server. Please try again.').removeClass('fade').addClass('show');
+                        setTimeout(function () {
+                            $('#errorAlert').removeClass('show').addClass('fade');
+                        }, 3000); // Hide after 3 seconds
                     }
                 });
                 $('#cancelOrderModal').modal('hide');
             }
         });
     });
+    function removeQueryParam() {
+        const url = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        window.history.replaceState({}, document.title, url);
+    }
 </script>
 
 <jsp:include page="common/footer.jsp"/>
