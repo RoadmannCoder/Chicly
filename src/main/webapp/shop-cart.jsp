@@ -91,7 +91,7 @@
 
    <jsp:include page="common/header.jsp"/>
 <!--Notification Section -->
-
+    <jsp:include page="common/WarningNotification.jsp"/>
     <!-- Breadcrumb Begin -->
     <div class="breadcrumb-option">
         <div class="container">
@@ -162,7 +162,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-6">
-                    <div class="discount__content">
+                    <div class="discount__content" hidden="hidden">
                         <h6>Discount codes</h6>
                         <form action="#">
                             <input type="text" placeholder="Enter your coupon code">
@@ -204,20 +204,6 @@
         /*Function Notification*/
 
         /*Function Notification*/
-        var errorMessage = '<c:out value="${requestScope.validMessage}" escapeXml="true" />';
-        function showNotification(message) {
-            const notification = document.getElementById('notification');
-            const notificationMessage = document.getElementById('notification-message');
-
-            // Set the message and show the notification
-            notificationMessage.textContent = message;
-            notification.classList.remove('hidden');
-
-            // Automatically hide after 3 seconds
-            setTimeout(() => {
-                notification.classList.add('hidden');
-            }, 5000);
-        }
 
         // Function to calculate and update the subtotal and total quantity
         function updateSubtotalAndQuantity() {
