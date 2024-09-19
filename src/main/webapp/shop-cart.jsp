@@ -25,36 +25,7 @@
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <style>
-        /*start of Notification Style*/
-        .notification {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background-color: #f44336; /* Red background for error */
-            color: white;
-            text-align: center;
-            padding: 15px;
-            z-index: 1000; /* Make sure it appears on top */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 16px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-        }
 
-        .notification.hidden {
-            transform: translateY(-100%); /* Slide out of view */
-        }
-
-        .close-btn {
-            margin-left: 20px;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 18px;
-            cursor: pointer;
-        }
         /*end of Notification Style*/
         .pro-qtyy {
             display: flex;
@@ -120,7 +91,7 @@
 
    <jsp:include page="common/header.jsp"/>
 <!--Notification Section -->
-    <jsp:include page="common/WarningNotification.jsp"/>
+
     <!-- Breadcrumb Begin -->
     <div class="breadcrumb-option">
         <div class="container">
@@ -233,6 +204,20 @@
         /*Function Notification*/
 
         /*Function Notification*/
+        var errorMessage = '<c:out value="${requestScope.validMessage}" escapeXml="true" />';
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const notificationMessage = document.getElementById('notification-message');
+
+            // Set the message and show the notification
+            notificationMessage.textContent = message;
+            notification.classList.remove('hidden');
+
+            // Automatically hide after 3 seconds
+            setTimeout(() => {
+                notification.classList.add('hidden');
+            }, 5000);
+        }
 
         // Function to calculate and update the subtotal and total quantity
         function updateSubtotalAndQuantity() {

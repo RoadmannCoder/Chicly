@@ -27,6 +27,35 @@
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <style>
+        .notification {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #2df800; /* Red background for error */
+            color: white;
+            text-align: center;
+            padding: 15px;
+            z-index: 1000; /* Make sure it appears on top */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.hidden {
+            transform: translateY(-100%); /* Slide out of view */
+        }
+
+        .close-btn {
+            margin-left: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
         .pro-qtyy {
             display: flex;
             justify-content: space-between;
@@ -101,8 +130,10 @@
         </div>
     </div>
     <!-- Breadcrumb End -->
-    <jsp:include page="common/VNotification.jsp"/>
-    <jsp:include page="common/WNotification.jsp"/>
+    <div id="notification" class="notification hidden">
+        <span id="notification-message"></span>
+        <button id="close-notification" class="close-btn">&times;</button>
+    </div>
 
 
     <!-- Product Details Section Begin -->
@@ -262,6 +293,19 @@
     <script src="js/main.js"></script>
     <script>
         var user = '<c:out value="${sessionScope.user}" escapeXml="true" />';
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const notificationMessage = document.getElementById('notification-message');
+
+            // Set the message and show the notification
+            notificationMessage.textContent = message;
+            notification.classList.remove('hidden');
+
+            // Automatically hide after 3 seconds
+            setTimeout(() => {
+                notification.classList.add('hidden');
+            }, 5000);
+        }
         $(document).ready(function () {
             // Event listener for all Add to Cart buttons
             $(".buttonAddToCart").click(function (e) {
@@ -301,7 +345,7 @@
 
                         saveCart();
 
-                        VshowNotification("Product Added To Cart");
+                        showNotification("Product Added To Cart");
 
                         // Optionally, update the cart UI or display cart details
                         // Example: $('#cart-count').text(response.cartItemCount);
@@ -312,7 +356,7 @@
                             .addClass('alert-danger')
                             .text('Error adding product to cart. Please try again.')
                             .fadeIn().delay(3000).fadeOut();
-                        WshowNotification("Error adding product to cart. Please try again.");
+                        showNotification("Error adding product to cart. Please try again.");
                     }
                 });
             });
@@ -343,7 +387,7 @@
             const quantity = document.getElementById('quantity').value;
 
             if (quantity > maxStock) {
-                alert('Quantity exceeds available stock.');
+                showNotification('Quantity exceeds available stock.');
                 return;
             }
 
@@ -369,9 +413,9 @@
                             console.log(user);
                             saveCart();
 
-                       VshowNotification("Product Added To Cart");
+                        showNotification("Product Added To Cart");
                     } else if (response.status === "fail") {
-                        WshowNotification(response.message);
+                        showNotification(response.message);
                     }
 
                 },

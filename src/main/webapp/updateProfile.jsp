@@ -191,7 +191,7 @@
                     <span class="error-message" id="phoneerror"></span>
                 </div>
                 <div class="card-text">
-                    <label for="job">Phone Number:</label>
+                    <label for="job">Job:</label>
                     <input type="text" class="form-control" id="job" name="job" value="${sessionScope.user.job}">
                 </div>
                 <div class="input-field">
