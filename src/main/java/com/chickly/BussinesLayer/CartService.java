@@ -2,10 +2,8 @@ package com.chickly.BussinesLayer;
 
 import com.chickly.DTO.CartItemDTO;
 import com.chickly.DTO.SubProductDTO;
-import com.chickly.DataAccessLayer.DBContext.EntityManagerUtil;
 import com.chickly.DataAccessLayer.Entities.CartItems;
 import com.chickly.DataAccessLayer.Entities.Customer;
-import com.chickly.DataAccessLayer.Entities.SubProduct;
 import com.chickly.DataAccessLayer.Repository.CartRepository;
 import com.chickly.DataAccessLayer.Repository.CustomerRepository;
 import com.chickly.Mappers.SubProductMapper;
@@ -89,105 +87,112 @@ public class CartService implements Serializable {
                 .map(entry -> new CartItemDTO(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
     }
+
+
+    //Cart Operations
+
+    public CartService mergeFromDBToSession( Customer customer, CartService service){
+        CartRepository cartRepository = new CartRepository();
+        List<CartItems> cartItems = getCartItemFromDB(customer,cartRepository);
+        if (!cartItems.isEmpty())
+            mergeCartItemToSession(cartItems,service);
+
+        addToDB(cartItems,customer,service);
+        return service;
+    }
+
+    private List<CartItems> getCartItemFromDB(Customer customer, CartRepository cartRepository){
+        return cartRepository.findAllByID(customer.getId()).orElse(Collections.EMPTY_LIST);
+    }
+    private void mergeCartItemToSession(List<CartItems> cartItems, CartService service){
+        cartItems.forEach(cartItem -> {
+            service.addCartItem(SubProductMapper.convertEntityToDTO(cartItem.getSubProduct())
+                                ,cartItem.getQuantity()
+            );
+        });
+    }
+
+    private List<SubProductDTO> convertCartServiceMapToList(CartService cartService){
+        return cartService.getItems().keySet().stream().collect(Collectors.toList());
+    }
+    private void removeOldCartItemsFromDB(Customer customer,List<SubProductDTO> subProductList, CustomerRepository customerRepository){
+        Set<CartItems> currentCartItem = customer.getShoppingCart();
+        Set<Integer> newSubProductIds = getSubProductIds(subProductList);
+        removeUnwantedCartItems(currentCartItem, newSubProductIds);
+        customerRepository.merge(customer);
+    }
+    private Set<Integer> getSubProductIds(List<SubProductDTO> subProductList) {
+        return subProductList.stream()
+                .map(SubProductDTO::getId)
+                .collect(Collectors.toSet());
+    }
+    private void removeUnwantedCartItems(Set<CartItems> currentCartItem, Set<Integer> newSubProductIds) {
+        currentCartItem.removeIf(cartItem -> !newSubProductIds.contains(cartItem.getSubProduct().getId()));
+    }
+    private void addNewCartItemsToDB(List<SubProductDTO> subProductList, Customer customer,CartService cartService,List<CartItems> currentCartItems){
+        subProductList.forEach(subProductDTO -> {
+            CartItems newCartItem = new CartItems();
+            newCartItem.setCustomer(customer);
+            newCartItem.setSubProduct(SubProductMapper.convertSubProductCartDTOToEntity(subProductDTO));
+            newCartItem.setQuantity(cartService.getQuantityOfSubProduct(subProductDTO));
+            currentCartItems.add(newCartItem);
+        });
+        customer.getShoppingCart().clear();
+        customer.getShoppingCart().addAll(currentCartItems);
+    }
+    private  void updateExistingCartItems (List<SubProductDTO> subProductList, Customer customer,CartService cartService,List<CartItems> currentCartItems){
+        Set<CartItems> currentCartItem = customer.getShoppingCart();
+        Set<Integer> newSubProductIds = getSubProductIds(subProductList);
+        removeUnwantedCartItems(currentCartItem, newSubProductIds);
+
+        subProductList.forEach(subProductDTO -> {
+            CartItems existingCartItem = findCartItemBySubProductId(currentCartItem, subProductDTO.getId());
+
+            if (existingCartItem != null) {
+                updateCartItemQuantity(existingCartItem, cartService, subProductDTO);
+            } else {
+                addNewCartItem(currentCartItem, customer, cartService, subProductDTO);
+            }
+        });
+    }
+    private CartItems findCartItemBySubProductId(Set<CartItems> cartItems, Integer subProductId) {
+        return cartItems.stream()
+                .filter(cartItem -> cartItem.getSubProduct().getId().equals(subProductId))
+                .findFirst()
+                .orElse(null);
+    }
+
+    private void updateCartItemQuantity(CartItems cartItem, CartService cartService, SubProductDTO subProductDTO) {
+        Integer newQuantity = cartService.getQuantityOfSubProduct(subProductDTO);
+        if (!cartItem.getQuantity().equals(newQuantity)) {
+            cartItem.setQuantity(newQuantity);
+        }
+    }
+
+    private void addNewCartItem(Set<CartItems> currentCartItem, Customer customer, CartService cartService, SubProductDTO subProductDTO) {
+        CartItems newCartItem = new CartItems();
+        newCartItem.setCustomer(customer);
+        newCartItem.setSubProduct(SubProductMapper.convertSubProductCartDTOToEntity(subProductDTO));
+        newCartItem.setQuantity(cartService.getQuantityOfSubProduct(subProductDTO));
+        currentCartItem.add(newCartItem);
+    }
     public void addToDB(List<CartItems> cartItems, Customer customer, CartService cartService){
         CustomerRepository customerRepository = new CustomerRepository();
         CartRepository cartRepository = new CartRepository();
-        List<SubProductDTO> subProductList = cartService.getItems().keySet().stream().collect(Collectors.toList());
-
-        cartItems.clear();
-        if (!subProductList.isEmpty()) {
-//            Set<CartItems> currentCartItems = customer.getShoppingCart();
-            List<CartItems> currentCartItems = cartRepository.findAllByID(customer.getId()).get();
-            if(currentCartItems.size()==0) {
-                Set<Integer> newSubProductIds = subProductList.stream()
-                        .map(SubProductDTO::getId)
-                        .collect(Collectors.toSet());
-
-
-                subProductList.forEach(subProductDTO -> {
-                    CartItems existingCartItem = currentCartItems.stream()
-                            .filter(cartItem -> cartItem.getSubProduct().getId().equals(subProductDTO.getId()))
-                            .findFirst()
-                            .orElse(null);
-
-                    if (existingCartItem != null) {
-                        Integer newQuantity = cartService.getQuantityOfSubProduct(subProductDTO);
-                        if (!existingCartItem.getQuantity().equals(newQuantity)) {
-                            existingCartItem.setQuantity(newQuantity);
-                        }
-                    } else {
-                        CartItems newCartItem = new CartItems();
-                        newCartItem.setCustomer(customer);
-                        newCartItem.setSubProduct(SubProductMapper.convertSubProductCartDTOToEntity(subProductDTO));
-                        newCartItem.setQuantity(cartService.getQuantityOfSubProduct(subProductDTO));
-                        currentCartItems.add(newCartItem);
-                    }
-                });
-                customer.getShoppingCart().clear();
-                customer.getShoppingCart().addAll(currentCartItems.stream().collect(Collectors.toSet()));
-
-                customerRepository.merge(customer);
-            }else{
-                Set<CartItems> currentCartItem = customer.getShoppingCart();
-                Set<Integer> newSubProductIds = subProductList.stream()
-                        .map(SubProductDTO::getId)
-                        .collect(Collectors.toSet());
-                Set<CartItems> itemsToRemove = new HashSet<>(currentCartItem);
-                itemsToRemove.forEach(cartItem -> {
-                    if (!newSubProductIds.contains(cartItem.getSubProduct().getId())) {
-                        currentCartItem.remove(cartItem);
-                    }
-                });
-
-                subProductList.forEach(subProductDTO -> {
-                    CartItems existingCartItem = currentCartItem.stream()
-                            .filter(cartItem -> cartItem.getSubProduct().getId().equals(subProductDTO.getId()))
-                            .findFirst()
-                            .orElse(null);
-
-                    if (existingCartItem != null) {
-                        Integer newQuantity = cartService.getQuantityOfSubProduct(subProductDTO);
-                        if (!existingCartItem.getQuantity().equals(newQuantity)) {
-                            existingCartItem.setQuantity(newQuantity);
-                        }
-                    } else {
-                        CartItems newCartItem = new CartItems();
-                        newCartItem.setCustomer(customer);
-                        newCartItem.setSubProduct(SubProductMapper.convertSubProductCartDTOToEntity(subProductDTO));
-                        newCartItem.setQuantity(cartService.getQuantityOfSubProduct(subProductDTO));
-                        currentCartItem.add(newCartItem);
-                    }
-                });
-                customerRepository.merge(customer);
-            }
-        }else{
-            Set<CartItems> currentCartItem = customer.getShoppingCart();
-            Set<Integer> newSubProductIds = subProductList.stream()
-                    .map(SubProductDTO::getId)
-                    .collect(Collectors.toSet());
-            Set<CartItems> itemsToRemove = new HashSet<>(currentCartItem);
-            itemsToRemove.forEach(cartItem -> {
-                if (!newSubProductIds.contains(cartItem.getSubProduct().getId())) {
-                    currentCartItem.remove(cartItem);
-                }
-            });
-            customerRepository.merge(customer);
-
+        List<SubProductDTO> subProductList = convertCartServiceMapToList(cartService);
+        if(subProductList.isEmpty()) {
+            removeOldCartItemsFromDB(customer, subProductList, customerRepository);
+            return;
         }
-    }
-    public CartService mergeFromDBToSession( Customer customer, CartService service){
-        CartRepository cartRepository = new CartRepository();
-        List<CartItems> cartItems = cartRepository.findAllByID(customer.getId()).get();
-        if (cartItems.size() != 0) {
-            cartItems.forEach(cartItem -> {
-                service.addCartItem(SubProductMapper.convertEntityToDTO(cartItem.getSubProduct()),cartItem.getQuantity());
-            });
-            addToDB(cartItems,customer,service);
-
-        }else{
-            addToDB(cartItems,customer,service);
+        List<CartItems> currentCartItems = getCartItemFromDB(customer,cartRepository);
+        if (currentCartItems.isEmpty()) {
+            addNewCartItemsToDB(subProductList, customer, cartService, currentCartItems);
+        } else {
+            updateExistingCartItems(subProductList, customer, cartService, currentCartItems);
         }
-        return service;
+        customerRepository.merge(customer);
+
+
     }
 
 }

@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebFilter(urlPatterns = {"/checkout","/checkout.jsp","/order-tracking.jsp","/orderHistory.jsp"
-        ,"/updateProfile.jsp","/userProfile.jsp","/logout","/updatecustomer","/order-tracking.jsp","/OrderTrackingController"})
+        ,"/updateProfile.jsp","/userProfile.jsp","/logout","/updatecustomer","/order-tracking.jsp","/OrderTrackingController","/orders"})
 public class UserAuthorizationFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

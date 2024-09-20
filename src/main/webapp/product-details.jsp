@@ -296,11 +296,9 @@
         function showNotification(message) {
             const notification = document.getElementById('notification');
             const notificationMessage = document.getElementById('notification-message');
-
             // Set the message and show the notification
             notificationMessage.textContent = message;
             notification.classList.remove('hidden');
-
             // Automatically hide after 3 seconds
             setTimeout(() => {
                 notification.classList.add('hidden');
@@ -342,11 +340,8 @@
                             .fadeIn().delay(3000).fadeOut();
                         // Optionally, update the cart UI with the updated cart count
                         $('.icon_bag_alt').siblings('.tip').text(response.cartItemCount);
-
                         saveCart();
-
                         showNotification("Product Added To Cart");
-
                         // Optionally, update the cart UI or display cart details
                         // Example: $('#cart-count').text(response.cartItemCount);
                     },
@@ -366,7 +361,6 @@
         document.addEventListener("DOMContentLoaded", function() {
             const stock = ${product.stock};  // Available stock from your product object
             let quantity = 1;  // Initial quantity
-
             // Update quantity when +/- buttons are clicked
             document.querySelector(".inc").addEventListener("click", function() {
                 if (quantity < stock) {

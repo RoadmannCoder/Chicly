@@ -20,62 +20,96 @@ public class OrderService {
     SubProductRepository subProductRepository = new SubProductRepository();
     CustomerRepository customerRepository = new CustomerRepository();
     CartRepository cartRepository = new CartRepository();
-    public OrderProcessError createOrder(CartService cartService, Customer customer) {
-        BigDecimal subTotal = customer.getCreditLimit().subtract(cartService.getTotalPrice());
-        List<SubProductDTO> subProductList = cartService.getItems().keySet().stream().collect(Collectors.toList());
-        AtomicBoolean redirect = new AtomicBoolean(false);
+    private BigDecimal decreaseCustomerCreditLimit(Customer customer, CartService cartService){
+        return customer.getCreditLimit().subtract(cartService.getTotalPrice());
+    }
+    private List<SubProductDTO> convertCartServiceMapToList(CartService cartService){
+        return cartService.getItems().keySet().stream().collect(Collectors.toList());
+    }
+    private boolean hasStockErrors(List<SubProductDTO> subProductList, OrderProcessError orderProcessError) {
+        for (SubProductDTO subProductDTO : subProductList) {
+            SubProduct subProduct = subProductRepository.findBy("id", subProductDTO.getId());
+            if (subProductDTO.getQuantity() > subProduct.getStock()) {
+                orderProcessError.setSubProductDTO(subProductDTO);
+                return true;
+            }
+        }
+        return false;
+    }
+    private boolean isOrderValid(CartService cartService, BigDecimal remainingCreditLimit) {
+        return cartService != null && remainingCreditLimit.compareTo(BigDecimal.ZERO) > 0;
+    }
+    private Order createPendingOrder(Customer customer) {
         Order order = new Order();
+        order.setCustomer(customer);
+        order.setCreatedAt(new Date());
+        order.setStatus(Status.PENDING);
+        orderRepository.create(order);
+        return order;
+    }
+
+    private Set<OrderItem> createOrderItems(List<SubProductDTO> subProductList, CartService cartService, Order order, OrderProcessError orderProcessError) {
+        Set<OrderItem> orderItems = new HashSet<>();
+
+        for (SubProductDTO subProductDTO : subProductList) {
+            SubProduct subProduct = subProductRepository.findBy("id", subProductDTO.getId());
+
+            if (subProductDTO.getQuantity() > subProduct.getStock()) {
+                orderProcessError.setSubProductDTO(subProductDTO);
+                return orderItems;
+            }
+
+            OrderItem orderItem = new OrderItem();
+            orderItem.setSubProduct(subProduct);
+            orderItem.setOrder(order);
+            orderItem.setQuantity(cartService.getQuantityOfSubProduct(subProductDTO));
+            orderItem.setPrice(subProductDTO.getPrice());
+            orderItems.add(orderItem);
+
+            updateSubProductStock(subProduct, subProductDTO, cartService);
+        }
+
+        return orderItems;
+    }
+    private void updateSubProductStock(SubProduct subProduct, SubProductDTO subProductDTO, CartService cartService) {
+        int newStock = subProduct.getStock() - cartService.getQuantityOfSubProduct(subProductDTO);
+        subProduct.setStock(newStock);
+        subProductRepository.update(subProduct);
+    }
+    private void finalizeOrder(Order order, Set<OrderItem> orderItems, Customer customer, CartService cartService) {
+        order.getOrderItems().clear();
+        order.getOrderItems().addAll(orderItems);
+
+        BigDecimal totalPrice = cartService.getTotalPrice();
+        customer.setCreditLimit(customer.getCreditLimit().subtract(totalPrice));
+
+        clearCustomerShoppingCart(customer);
+        customerRepository.merge(customer);
+    }
+
+    private void clearCustomerShoppingCart(Customer customer) {
+        List<CartItems> cartItems = cartRepository.findAllByID(customer.getId()).orElse(Collections.emptyList());
+        if (!cartItems.isEmpty()) {
+            customer.getShoppingCart().clear();
+        }
+    }
+    public OrderProcessError createOrder(CartService cartService, Customer customer) {
+        BigDecimal remainingCustomerCreditLimit = decreaseCustomerCreditLimit(customer,cartService);
+        List<SubProductDTO> subProductList = convertCartServiceMapToList(cartService);
         OrderProcessError orderProcessError = new OrderProcessError();
-        subProductList.forEach(subProductDTO -> {
-                    SubProduct subProduct = subProductRepository.findBy("id", subProductDTO.getId());
-                    if (subProductDTO.getQuantity() > subProduct.getStock()) {
-                        orderProcessError.setSubProductDTO(subProductDTO);
-                        redirect.set(true);
-                        return;
-                    }
-        });
-        if(redirect.get()) {
-            orderProcessError.setOrder(null);
+        if (hasStockErrors(subProductList, orderProcessError)) {
             return orderProcessError;
         }
-        if (cartService != null && subTotal.compareTo(BigDecimal.ZERO) > 0) {
-            order.setCustomer(customer);
-            order.setCreatedAt(new Date());
-            order.setStatus(Status.PENDING);
-            orderRepository.create(order);
-            Set<OrderItem> orderItems = new HashSet<>();
-            subProductList.forEach(subProductDTO -> {
-                SubProduct subProduct = subProductRepository.findBy("id", subProductDTO.getId());
-                if (subProductDTO.getQuantity() > subProduct.getStock()) {
-                    orderProcessError.setSubProductDTO(subProductDTO);
-                    redirect.set(true);
-                    return;
-                }
-                OrderItem orderItem = new OrderItem();
-                orderItem.setSubProduct(subProduct);
-                orderItem.setOrder(order);
-                orderItem.setQuantity(cartService.getQuantityOfSubProduct(subProductDTO));
-                orderItem.setPrice(subProductDTO.getPrice());
-                orderItems.add(orderItem);
-                subProduct.setStock(subProductDTO.getStock() - cartService.getQuantityOfSubProduct(subProductDTO));
-                subProductRepository.update(subProduct);
-            });
-            if(redirect.get()) {
-                orderProcessError.setOrder(null);
+
+        if (isOrderValid(cartService, remainingCustomerCreditLimit)) {
+            Order order = createPendingOrder(customer);
+            Set<OrderItem> orderItems = createOrderItems(subProductList, cartService, order, orderProcessError);
+
+            if (orderProcessError.getSubProductDTO() != null) {
                 return orderProcessError;
             }
-            order.getOrderItems().clear();
-            order.getOrderItems().addAll(orderItems);
-            customer.setCreditLimit(customer.getCreditLimit().subtract(cartService.getTotalPrice()));
-            List<CartItems> testCart = cartRepository.findAllByID(customer.getId()).get();
-            if(!testCart.isEmpty()) {
-                Iterator<CartItems> iterator = customer.getShoppingCart().iterator();
-                while (iterator.hasNext()) {
-                    CartItems cartItem = iterator.next();
-                    iterator.remove(); // Safely remove the item from the cart
-                }
-            }
-            customerRepository.merge(customer);
+
+            finalizeOrder(order, orderItems, customer, cartService);
             orderProcessError.setOrder(order);
             orderProcessError.setSubProductDTO(null);
         }

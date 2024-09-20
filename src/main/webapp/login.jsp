@@ -55,9 +55,7 @@
 					<i class="fas fa-sign-in-alt"></i> Login
 				</button>
 			</div>
-			<div class="form-group text-center">
-				<a href="forget-password.jsp">Forgot Password?</a>
-			</div>
+
 			<div class="sign-up form-group text-center">
 				<p>Not a member? <a href="registration.jsp">
 					signup now <i class="fas fa-user-plus"></i></a></p>
