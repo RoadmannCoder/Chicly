@@ -100,6 +100,26 @@ public class CartService implements Serializable {
         addToDB(cartItems,customer,service);
         return service;
     }
+    public void addToDB(List<CartItems> cartItems, Customer customer, CartService cartService){
+        CustomerRepository customerRepository = new CustomerRepository();
+        CartRepository cartRepository = new CartRepository();
+        List<SubProductDTO> subProductList = convertCartServiceMapToList(cartService);
+        if(subProductList.isEmpty()) {
+            removeOldCartItemsFromDB(customer, subProductList, customerRepository);
+            return;
+        }
+        List<CartItems> currentCartItems = getCartItemFromDB(customer,cartRepository);
+        if (currentCartItems.isEmpty()) {
+            addNewCartItemsToDB(subProductList, customer, cartService, currentCartItems);
+        } else {
+            updateExistingCartItems(subProductList, customer, cartService, currentCartItems);
+        }
+        customerRepository.merge(customer);
+
+
+    }
+
+    //End of Cart Operation
 
     private List<CartItems> getCartItemFromDB(Customer customer, CartRepository cartRepository){
         return cartRepository.findAllByID(customer.getId()).orElse(Collections.EMPTY_LIST);
@@ -176,23 +196,6 @@ public class CartService implements Serializable {
         newCartItem.setQuantity(cartService.getQuantityOfSubProduct(subProductDTO));
         currentCartItem.add(newCartItem);
     }
-    public void addToDB(List<CartItems> cartItems, Customer customer, CartService cartService){
-        CustomerRepository customerRepository = new CustomerRepository();
-        CartRepository cartRepository = new CartRepository();
-        List<SubProductDTO> subProductList = convertCartServiceMapToList(cartService);
-        if(subProductList.isEmpty()) {
-            removeOldCartItemsFromDB(customer, subProductList, customerRepository);
-            return;
-        }
-        List<CartItems> currentCartItems = getCartItemFromDB(customer,cartRepository);
-        if (currentCartItems.isEmpty()) {
-            addNewCartItemsToDB(subProductList, customer, cartService, currentCartItems);
-        } else {
-            updateExistingCartItems(subProductList, customer, cartService, currentCartItems);
-        }
-        customerRepository.merge(customer);
 
-
-    }
 
 }

@@ -93,6 +93,9 @@ public class OrderService {
             customer.getShoppingCart().clear();
         }
     }
+
+
+    //Order Operations
     public OrderProcessError createOrder(CartService cartService, Customer customer) {
         BigDecimal remainingCustomerCreditLimit = decreaseCustomerCreditLimit(customer,cartService);
         List<SubProductDTO> subProductList = convertCartServiceMapToList(cartService);
